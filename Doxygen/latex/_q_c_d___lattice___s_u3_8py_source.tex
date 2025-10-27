@@ -1,0 +1,601 @@
+\doxysection{QCD\+\_\+\+Lattice\+\_\+\+SU3.\+py}
+\hypertarget{_q_c_d___lattice___s_u3_8py_source}{}\label{_q_c_d___lattice___s_u3_8py_source}\mbox{\hyperlink{_q_c_d___lattice___s_u3_8py}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00001}\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3}{00001}}\ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00002}00002\ \textcolor{stringliteral}{@mainpage\ SU(3)\ Lattice\ Gauge\ Theory\ (Wilson\ action)\ —\ Cabibbo–Marinari\ Implementation}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00003}00003\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00004}00004\ \textcolor{stringliteral}{@file\ QCD\_Lattice\_SU3.py}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00005}00005\ \textcolor{stringliteral}{@brief\ SU(3)\ lattice\ gauge\ theory\ simulation\ using\ Cabibbo–Marinari\ SU(2)\ subgroup\ updates.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00006}00006\ \textcolor{stringliteral}{@details}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00007}00007\ \textcolor{stringliteral}{This\ module\ implements\ a\ pragmatic\ SU(3)\ lattice\ gauge\ theory\ code\ based\ on\ the\ Wilson\ action,}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00008}00008\ \textcolor{stringliteral}{using\ Cabibbo–Marinari\ updates\ (embedded\ SU(2)\ rotations)\ together\ with\ local\ ΔS\ computations}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00009}00009\ \textcolor{stringliteral}{(only\ plaquettes\ touching\ a\ link\ are\ recomputed)\ and\ reprojection\ to\ SU(3)\ via\ SVD\ to\ maintain}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00010}00010\ \textcolor{stringliteral}{unitarity\ and\ \$\(\backslash\)det\ U\ =\ 1\$.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00011}00011\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00012}00012\ \textcolor{stringliteral}{It\ contains:}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00013}00013\ \textcolor{stringliteral}{\ -\/\ Local\ Metropolis\ updates\ applying\ a\ sequence\ of\ small\ SU(2)\ rotations\ embedded\ into\ SU(3).}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00014}00014\ \textcolor{stringliteral}{\ -\/\ Efficient\ local\ plaquette\ recomputation\ for\ ΔS\ evaluations.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00015}00015\ \textcolor{stringliteral}{\ -\/\ Utilities\ for\ plaquette\ measurement,\ bootstrap\ error\ estimation,\ Wilson\ loops\ and\ static\ potential.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00016}00016\ \textcolor{stringliteral}{\ -\/\ Helpers\ to\ extract\ approximate\ gauge\ fields\ (A\string^a)\ and\ field-\/strength\ components\ F\string^\{\(\backslash\)mu\(\backslash\)nu\}\_a}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00017}00017\ \textcolor{stringliteral}{\ \ \ from\ link\ matrices\ for\ diagnostic/classical\ analysis.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00018}00018\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00019}00019\ \textcolor{stringliteral}{@section\ references\ Key\ references}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00020}00020\ \textcolor{stringliteral}{\ -\/\ K.\ G.\ Wilson,\ "{}Confinement\ of\ quarks,"{}\ Phys.\ Rev.\ D\ 10,\ 2445\ (1974).}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00021}00021\ \textcolor{stringliteral}{\ -\/\ N.\ Cabibbo\ and\ E.\ Marinari,\ "{}A\ new\ method\ for\ updating\ SU(N)\ matrices,"{}\ Phys.\ Lett.\ B119\ (1982).}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00022}00022\ \textcolor{stringliteral}{\ -\/\ G.\ P.\ Lepage\ lecture\ notes\ for\ pragmatic\ algorithmic\ choices.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00023}00023\ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00024}00024\ }
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00025}00025\ \textcolor{keyword}{import}\ numpy\ \textcolor{keyword}{as}\ np}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00026}00026\ \textcolor{keyword}{from}\ numpy\ \textcolor{keyword}{import}\ linalg\ \textcolor{keyword}{as}\ LA}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00027}00027\ \textcolor{keyword}{import}\ matplotlib.pyplot\ \textcolor{keyword}{as}\ plt}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00028}00028\ }
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00029}00029\ }
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00030}00030\ \textcolor{comment}{\#\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ Parameters\ (global\ simulation\ controls)\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00031}\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_aa6f2d1974f25956a32aa04ef50b3f1b2}{00031}}\ spatial\_dims\ =\ 1\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#:\ int:\ number\ of\ spatial\ dimensions\ (d)}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00032}\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a2f643156af520df0747ddf1cd4854f59}{00032}}\ lattice\_size\_L\ =\ 8\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#:\ int:\ lattice\ extent\ per\ dimension\ (L)}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00033}\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a534b44db7e14e3cc33dcb6e0faf9113c}{00033}}\ beta\ =\ 6.0\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#:\ float:\ gauge\ coupling\ parameter\ (Wilson\ action:\ β\ =\ 6/g²)}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00034}\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_ab5c95329b8df4f8e17b62aaf3e155727}{00034}}\ eps\_initial\ =\ 0.06\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#:\ float:\ initial\ SU(2)\ rotation\ amplitude\ for\ subgroup\ updates}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00035}\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a682d097050ca82ecdc8445bf11a20844}{00035}}\ burn\_in\_sweeps\ =\ 500\ \ \ \ \ \ \ \textcolor{comment}{\#:\ int:\ number\ of\ thermalization\ sweeps}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00036}\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a2ec881d04c3c76844046c63470ca721d}{00036}}\ MC\_sweeps\ =\ 2000\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#:\ int:\ number\ of\ Monte\ Carlo\ sweeps\ for\ measurements}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00037}\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a56e170acd295bce714a3b0584f376417}{00037}}\ MC\_measure\_interval\ =\ 5\ \ \ \ \textcolor{comment}{\#:\ int:\ sweeps\ between\ stored\ measurements\ (decorrelation\ interval)}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00038}\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a1eb83c00e6a1902f9bc4dc440a3abe69}{00038}}\ n\_boot\ =\ 300\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#:\ int:\ bootstrap\ samples\ for\ error\ estimation}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00039}00039\ }
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00040}00040\ \textcolor{comment}{\#\ Derived\ geometry\ /\ storage}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00041}\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a8014f922b10181acdcfca439b30ccc43}{00041}}\ D\ =\ spatial\_dims\ +\ 1\ \ \ \ \ \ \ \textcolor{comment}{\#:\ int:\ total\ spacetime\ dimensions\ (d\ +\ 1)}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00042}\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_aa68f8cd6158a81098b2c2ca22bc2e352}{00042}}\ x\_shape\ =\ (lattice\_size\_L,)\ *\ D}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00043}00043\ \textcolor{comment}{\#\ link\_matrix:\ shape\ (D,\ L,\ L,\ ...,\ 3,\ 3)\ storing\ SU(3)\ link\ matrices\ for\ each\ direction\ mu\ and\ site\ x}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00044}\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_ac7152d63eac85be58b05b89739ea831c}{00044}}\ link\_matrix\ =\ np.zeros((D,)\ +\ x\_shape\ +\ (3,\ 3),\ dtype=np.complex128)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00045}00045\ }
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00046}00046\ }
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00047}00047\ \textcolor{comment}{\#\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ Utilities\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00048}\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a44a464a27584fc9def02704f8e1fd0ac}{00048}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a44a464a27584fc9def02704f8e1fd0ac}{x\_neighbor}}(x,\ mu,\ shift=1):}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00049}00049\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00050}00050\ \textcolor{stringliteral}{\ \ \ \ @brief\ Periodic\ lattice\ neighbor\ coordinate.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00051}00051\ \textcolor{stringliteral}{\ \ \ \ @param\ x\ tuple:\ Lattice\ coordinate\ (length\ D).}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00052}00052\ \textcolor{stringliteral}{\ \ \ \ @param\ mu\ int:\ Direction\ index\ (0..D-\/1).}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00053}00053\ \textcolor{stringliteral}{\ \ \ \ @param\ shift\ int:\ Integer\ shift\ (positive\ forward,\ negative\ backward).}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00054}00054\ \textcolor{stringliteral}{\ \ \ \ @return\ tuple:\ New\ lattice\ coordinate\ (with\ periodic\ wrap).}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00055}00055\ \textcolor{stringliteral}{\ \ \ \ @details\ Implements\ periodic\ boundary\ conditions:\ (x\_mu\ +\ shift)\ mod\ L.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00056}00056\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00057}00057\ \ \ \ \ x\_new\ =\ list(x)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00058}00058\ \ \ \ \ x\_new[mu]\ =\ (x\_new[mu]\ +\ shift)\ \%\ lattice\_size\_L}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00059}00059\ \ \ \ \ \textcolor{keywordflow}{return}\ tuple(x\_new)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00060}00060\ }
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00061}00061\ }
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00062}\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a6e256f196d2097b382e42b227c3e7b97}{00062}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a6e256f196d2097b382e42b227c3e7b97}{su3\_matrices}}(M):}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00063}00063\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00064}00064\ \textcolor{stringliteral}{\ \ \ \ @brief\ Project\ a\ general\ complex\ 3x3\ matrix\ to\ SU(3)\ via\ unitary\ polar/SVD\ projection.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00065}00065\ \textcolor{stringliteral}{\ \ \ \ @param\ M\ (ndarray):\ 3x3\ complex\ matrix\ (candidate\ link).}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00066}00066\ \textcolor{stringliteral}{\ \ \ \ @return\ ndarray:\ Unitary\ 3x3\ matrix\ with\ det\ =\ 1\ (projection\ of\ M\ into\ SU(3)).}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00067}00067\ \textcolor{stringliteral}{\ \ \ \ @details}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00068}00068\ \textcolor{stringliteral}{\ \ \ \ We\ perform\ an\ SVD:\ M\ =\ U\ S\ V\string^H\ and\ set\ U\_proj\ =\ U\ V\string^H\ (closest\ unitary\ in\ Frobenius\ norm).}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00069}00069\ \textcolor{stringliteral}{\ \ \ \ A\ global\ phase\ is\ then\ removed\ to\ enforce\ det(U\_proj)\ =\ 1.\ If\ the\ projection\ yields}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00070}00070\ \textcolor{stringliteral}{\ \ \ \ a\ near-\/singular\ matrix\ we\ add\ a\ tiny\ perturbation\ as\ fallback.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00071}00071\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00072}00072\ \ \ \ \ U,\ s,\ Vh\ =\ LA.svd(M)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00073}00073\ \ \ \ \ U\_projection\ =\ U\ @\ Vh}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00074}00074\ \ \ \ \ determinant\ =\ LA.det(U\_projection)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00075}00075\ \ \ \ \ \textcolor{keywordflow}{if}\ determinant\ ==\ 0\ \textcolor{keywordflow}{or}\ np.isnan(determinant):}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00076}00076\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Numerical\ fallback:\ small\ perturbation\ then\ reproject}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00077}00077\ \ \ \ \ \ \ \ \ U\_projection\ =\ U\_projection\ +\ 1e-\/12\ *\ np.eye(3,\ dtype=complex)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00078}00078\ \ \ \ \ \ \ \ \ determinant\ =\ LA.det(U\_projection)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00079}00079\ \ \ \ \ \textcolor{comment}{\#\ Remove\ global\ phase\ to\ ensure\ unit\ determinant}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00080}00080\ \ \ \ \ phase\ =\ determinant\ **\ (1.0\ /\ 3.0)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00081}00081\ \ \ \ \ U\_projection\ /=\ phase}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00082}00082\ \ \ \ \ \textcolor{keywordflow}{return}\ U\_projection}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00083}00083\ }
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00084}00084\ }
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00085}00085\ \textcolor{comment}{\#\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ SU(2)\ small\ updater\ (embedded\ in\ SU(3))\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00086}\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a3ac4bd130c73714f342345ac26db64bc}{00086}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a3ac4bd130c73714f342345ac26db64bc}{su2\_random\_unitary}}(eps):}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00087}00087\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00088}00088\ \textcolor{stringliteral}{\ \ \ \ @brief\ Generate\ a\ small\ random\ SU(2)\ rotation\ matrix\ using\ Gaussian\ parameters.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00089}00089\ \textcolor{stringliteral}{\ \ \ \ @param\ eps\ float:\ amplitude\ controlling\ rotation\ angle\ scale\ (a\ =\ eps\ *\ |r|).}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00090}00090\ \textcolor{stringliteral}{\ \ \ \ @return\ ndarray:\ 2x2\ complex\ SU(2)\ matrix.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00091}00091\ \textcolor{stringliteral}{\ \ \ \ @details}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00092}00092\ \textcolor{stringliteral}{\ \ \ \ The\ parametrization\ uses\ R\ =\ cos(a)\ I\ +\ i\ sin(a)\ n·σ\ where\ n\ is\ a\ unit\ 3-\/vector}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00093}00093\ \textcolor{stringliteral}{\ \ \ \ and\ σ\_i\ are\ the\ Pauli\ matrices.\ We\ project\ via\ SVD\ to\ correct\ numerical\ drift\ and}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00094}00094\ \textcolor{stringliteral}{\ \ \ \ ensure\ exact\ unitarity,\ then\ enforce\ det=1.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00095}00095\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00096}00096\ \ \ \ \ r\ =\ np.random.normal(size=3)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00097}00097\ \ \ \ \ r\_norm\ =\ np.linalg.norm(r)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00098}00098\ \ \ \ \ \textcolor{keywordflow}{if}\ r\_norm\ ==\ 0:}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00099}00099\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ np.eye(2,\ dtype=complex)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00100}00100\ \ \ \ \ a\ =\ eps\ *\ r\_norm}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00101}00101\ \ \ \ \ n\ =\ r\ /\ r\_norm}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00102}00102\ \ \ \ \ \textcolor{comment}{\#\ Pauli\ matrices}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00103}00103\ \ \ \ \ sigma1\ =\ np.array([[0.0,\ 1.0],\ [1.0,\ 0.0]],\ dtype=complex)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00104}00104\ \ \ \ \ sigma2\ =\ np.array([[0.0,\ -\/1j],\ [1j,\ 0.0]],\ dtype=complex)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00105}00105\ \ \ \ \ sigma3\ =\ np.array([[1.0,\ 0.0],\ [0.0,\ -\/1.0]],\ dtype=complex)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00106}00106\ \ \ \ \ ndotsigma\ =\ n[0]\ *\ sigma1\ +\ n[1]\ *\ sigma2\ +\ n[2]\ *\ sigma3}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00107}00107\ \ \ \ \ R\ =\ np.cos(a)\ *\ np.eye(2,\ dtype=complex)\ +\ 1j\ *\ np.sin(a)\ *\ ndotsigma}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00108}00108\ \ \ \ \ \textcolor{comment}{\#\ Project\ R\ to\ exact\ SU(2)\ via\ SVD/polar\ projection\ and\ fix\ determinant}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00109}00109\ \ \ \ \ U,\ s,\ Vh\ =\ LA.svd(R)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00110}00110\ \ \ \ \ R\_projection\ =\ U\ @\ Vh}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00111}00111\ \ \ \ \ det\ =\ LA.det(R\_projection)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00112}00112\ \ \ \ \ R\_projection\ /=\ (det\ **\ 0.5)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00113}00113\ \ \ \ \ \textcolor{keywordflow}{return}\ R\_projection}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00114}00114\ }
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00115}00115\ }
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00116}\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_adeae0b97628f158be1526ce1f346b16c}{00116}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_adeae0b97628f158be1526ce1f346b16c}{embed\_su2\_into\_su3}}(R2,\ i,\ j):}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00117}00117\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00118}00118\ \textcolor{stringliteral}{\ \ \ \ @brief\ Embed\ a\ 2x2\ SU(2)\ matrix\ into\ SU(3)\ acting\ on\ indices\ (i,\ j).}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00119}00119\ \textcolor{stringliteral}{\ \ \ \ @param\ R2\ ndarray:\ 2x2\ SU(2)\ matrix.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00120}00120\ \textcolor{stringliteral}{\ \ \ \ @param\ i\ int:\ first\ SU(2)\ index\ (0..2).}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00121}00121\ \textcolor{stringliteral}{\ \ \ \ @param\ j\ int:\ second\ SU(2)\ index\ (0..2),\ must\ satisfy\ i\ <\ j.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00122}00122\ \textcolor{stringliteral}{\ \ \ \ @return\ ndarray:\ 3x3\ matrix\ equal\ to\ identity\ except\ the\ 2x2\ block\ at\ (i,j)\ replaced\ by\ R2.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00123}00123\ \textcolor{stringliteral}{\ \ \ \ @details\ This\ is\ the\ standard\ Cabibbo–Marinari\ embedding\ that\ extends\ SU(2)\ subgroup\ rotations}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00124}00124\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ to\ SU(3)\ by\ acting\ non-\/trivially\ on\ a\ chosen\ 2D\ subspace.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00125}00125\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00126}00126\ \ \ \ \ R\ =\ np.eye(3,\ dtype=complex)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00127}00127\ \ \ \ \ R[i,\ i]\ =\ R2[0,\ 0]}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00128}00128\ \ \ \ \ R[i,\ j]\ =\ R2[0,\ 1]}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00129}00129\ \ \ \ \ R[j,\ i]\ =\ R2[1,\ 0]}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00130}00130\ \ \ \ \ R[j,\ j]\ =\ R2[1,\ 1]}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00131}00131\ \ \ \ \ \textcolor{keywordflow}{return}\ R}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00132}00132\ }
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00133}00133\ }
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00134}00134\ \textcolor{comment}{\#\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ Plaquette\ helpers\ \&\ local\ ΔS\ computation\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00135}\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_aee4d750fbbf3dc3b58cfbf755074a68b}{00135}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_aee4d750fbbf3dc3b58cfbf755074a68b}{plaquette\_matrix}}(x,\ mu,\ nu,\ link\_sites):}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00136}00136\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00137}00137\ \textcolor{stringliteral}{\ \ \ \ @brief\ Construct\ the\ plaquette\ matrix\ U\_mu(x)\ U\_nu(x+mu)\ U\_mu\string^\(\backslash\)dagger(x+nu)\ U\_nu\string^\(\backslash\)dagger(x).}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00138}00138\ \textcolor{stringliteral}{\ \ \ \ @param\ x\ tuple:\ lattice\ coordinate.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00139}00139\ \textcolor{stringliteral}{\ \ \ \ @param\ mu\ int:\ direction\ index\ mu.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00140}00140\ \textcolor{stringliteral}{\ \ \ \ @param\ nu\ int:\ direction\ index\ nu.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00141}00141\ \textcolor{stringliteral}{\ \ \ \ @param\ link\_sites\ ndarray:\ link\ variable\ array.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00142}00142\ \textcolor{stringliteral}{\ \ \ \ @return\ ndarray:\ 3x3\ plaquette\ matrix\ P\_\{mu,nu\}(x).}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00143}00143\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00144}00144\ \ \ \ \ x\_plus\_mu\ =\ \mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a44a464a27584fc9def02704f8e1fd0ac}{x\_neighbor}}(x,\ mu,\ 1)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00145}00145\ \ \ \ \ x\_plus\_nu\ =\ \mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a44a464a27584fc9def02704f8e1fd0ac}{x\_neighbor}}(x,\ nu,\ 1)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00146}00146\ \ \ \ \ U\_mu\ =\ link\_sites[(mu,)\ +\ x]}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00147}00147\ \ \ \ \ U\_nu\_xmu\ =\ link\_sites[(nu,)\ +\ x\_plus\_mu]}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00148}00148\ \ \ \ \ U\_mu\_xnu\ =\ link\_sites[(mu,)\ +\ x\_plus\_nu]}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00149}00149\ \ \ \ \ U\_nu\ =\ link\_sites[(nu,)\ +\ x]}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00150}00150\ \ \ \ \ P\ =\ U\_mu\ @\ U\_nu\_xmu\ @\ U\_mu\_xnu.conj().T\ @\ U\_nu.conj().T}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00151}00151\ \ \ \ \ \textcolor{keywordflow}{return}\ P}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00152}00152\ }
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00153}00153\ }
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00154}\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a000af2b4b1fc71ae6fa651b88b6eef3b}{00154}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a000af2b4b1fc71ae6fa651b88b6eef3b}{real\_trace\_plaquette}}(x,\ mu,\ nu,\ link\_sites):}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00155}00155\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00156}00156\ \textcolor{stringliteral}{\ \ \ \ @brief\ Compute\ the\ real\ part\ of\ the\ trace\ of\ the\ plaquette\ matrix.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00157}00157\ \textcolor{stringliteral}{\ \ \ \ @return\ float:\ Re\ Tr[P\_\{mu,nu\}(x)].}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00158}00158\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00159}00159\ \ \ \ \ P\ =\ \mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_aee4d750fbbf3dc3b58cfbf755074a68b}{plaquette\_matrix}}(x,\ mu,\ nu,\ link\_sites)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00160}00160\ \ \ \ \ trace\ =\ np.trace(P)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00161}00161\ \ \ \ \ \textcolor{keywordflow}{return}\ float(np.real(trace))}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00162}00162\ }
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00163}00163\ }
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00164}\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a51f76f98325616f820bcc40f2d106a02}{00164}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a51f76f98325616f820bcc40f2d106a02}{plaquettes\_touching\_link}}(x,\ mu,\ link\_sites):}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00165}00165\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00166}00166\ \textcolor{stringliteral}{\ \ \ \ @brief\ List\ plaquettes\ that\ include\ the\ link\ at\ (mu,\ x).}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00167}00167\ \textcolor{stringliteral}{\ \ \ \ @param\ x\ tuple:\ lattice\ coordinate\ of\ the\ starting\ site\ of\ the\ link.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00168}00168\ \textcolor{stringliteral}{\ \ \ \ @param\ mu\ int:\ link\ direction.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00169}00169\ \textcolor{stringliteral}{\ \ \ \ @param\ link\_sites\ ndarray:\ array\ of\ link\ matrices.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00170}00170\ \textcolor{stringliteral}{\ \ \ \ @return\ list:\ entries\ [((x\_plaq,\ mu,\ nu),\ real\_trace),\ ...]\ for\ all\ plaquettes\ touching\ the\ link.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00171}00171\ \textcolor{stringliteral}{\ \ \ \ @details}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00172}00172\ \textcolor{stringliteral}{\ \ \ \ For\ each\ nu\ !=\ mu,\ the\ link\ (mu,x)\ sits\ in\ two\ elementary\ plaquettes:}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00173}00173\ \textcolor{stringliteral}{\ \ \ \ \ \ -\/\ the\ plaquette\ at\ x\ in\ the\ (mu,nu)\ plane,}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00174}00174\ \textcolor{stringliteral}{\ \ \ \ \ \ -\/\ the\ plaquette\ at\ x\ -\/\ e\_nu\ in\ the\ (mu,nu)\ plane.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00175}00175\ \textcolor{stringliteral}{\ \ \ \ Only\ these\ plaquettes\ are\ required\ to\ compute\ the\ local\ change\ in\ action\ when\ U\_mu(x)\ is\ updated.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00176}00176\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00177}00177\ \ \ \ \ p\_list\ =\ []}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00178}00178\ \ \ \ \ \textcolor{keywordflow}{for}\ nu\ \textcolor{keywordflow}{in}\ range(D):}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00179}00179\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ nu\ ==\ mu:}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00180}00180\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00181}00181\ \ \ \ \ \ \ \ \ trace\_1\ =\ \mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a000af2b4b1fc71ae6fa651b88b6eef3b}{real\_trace\_plaquette}}(x,\ mu,\ nu,\ link\_sites)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00182}00182\ \ \ \ \ \ \ \ \ p\_list.append(((x,\ mu,\ nu),\ trace\_1))}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00183}00183\ \ \ \ \ \ \ \ \ x\_minus\_nu\ =\ \mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a44a464a27584fc9def02704f8e1fd0ac}{x\_neighbor}}(x,\ nu,\ -\/1)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00184}00184\ \ \ \ \ \ \ \ \ trace\_2\ =\ \mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a000af2b4b1fc71ae6fa651b88b6eef3b}{real\_trace\_plaquette}}(x\_minus\_nu,\ mu,\ nu,\ link\_sites)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00185}00185\ \ \ \ \ \ \ \ \ p\_list.append(((x\_minus\_nu,\ mu,\ nu),\ trace\_2))}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00186}00186\ \ \ \ \ \textcolor{keywordflow}{return}\ p\_list}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00187}00187\ }
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00188}00188\ }
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00189}00189\ \textcolor{comment}{\#\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ Local\ update:\ Metropolis\ with\ embedded\ SU(2)\ updates\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00190}\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_ae51e7ab33070cfee14de6989b7c4a57b}{00190}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_ae51e7ab33070cfee14de6989b7c4a57b}{metropolis\_update}}(link\_sites,\ eps\_sub=0.06):}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00191}00191\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00192}00192\ \textcolor{stringliteral}{\ \ \ \ @brief\ Perform\ a\ single\ Metropolis\ sweep\ over\ all\ links\ applying\ embedded\ SU(2)\ updates.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00193}00193\ \textcolor{stringliteral}{\ \ \ \ @param\ link\_sites\ ndarray:\ link\ variable\ array\ (modified\ in-\/place).}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00194}00194\ \textcolor{stringliteral}{\ \ \ \ @param\ eps\_sub\ float:\ SU(2)\ proposal\ amplitude\ for\ each\ embedded\ sub-\/update.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00195}00195\ \textcolor{stringliteral}{\ \ \ \ @return\ tuple:\ (accepted\ int,\ proposals\ int)}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00196}00196\ \textcolor{stringliteral}{\ \ \ \ @details}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00197}00197\ \textcolor{stringliteral}{\ \ \ \ For\ each\ link\ U\_mu(x)\ we\ cycle\ through\ the\ three\ SU(2)\ subgroups\ (0,1),\ (0,2),\ (1,2).}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00198}00198\ \textcolor{stringliteral}{\ \ \ \ For\ each\ subgroup:}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00199}00199\ \textcolor{stringliteral}{\ \ \ \ \ \ 1.\ compute\ sum\_old\ =\ Σ\ Re\ Tr(P)\ over\ plaquettes\ touching\ the\ link,}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00200}00200\ \textcolor{stringliteral}{\ \ \ \ \ \ 2.\ propose\ an\ SU(2)\ rotation\ R2,\ embed\ into\ SU(3)\ →\ R3,}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00201}00201\ \textcolor{stringliteral}{\ \ \ \ \ \ 3.\ set\ U\_candidate\ =\ R3\ @\ U\_old\ and\ reproject\ to\ SU(3),}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00202}00202\ \textcolor{stringliteral}{\ \ \ \ \ \ 4.\ compute\ sum\_new\ and\ ΔS\ =\ -\/\ (β/3)\ (sum\_new\ -\/\ sum\_old),}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00203}00203\ \textcolor{stringliteral}{\ \ \ \ \ \ 5.\ accept/reject\ with\ Metropolis\ probability.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00204}00204\ \textcolor{stringliteral}{\ \ \ \ Using\ only\ touching\ plaquettes\ makes\ ΔS\ computation\ local\ and\ efficient.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00205}00205\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00206}00206\ \ \ \ \ accepted\ =\ 0}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00207}00207\ \ \ \ \ proposals\ =\ 0}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00208}00208\ \ \ \ \ su2\_pairs\ =\ [(0,\ 1),\ (0,\ 2),\ (1,\ 2)]}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00209}00209\ \ \ \ \ \textcolor{keywordflow}{for}\ mu\ \textcolor{keywordflow}{in}\ range(D):}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00210}00210\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ x\ \textcolor{keywordflow}{in}\ np.ndindex(*x\_shape):}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00211}00211\ \ \ \ \ \ \ \ \ \ \ \ \ U\_old\ =\ link\_sites[(mu,)\ +\ x].copy()}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00212}00212\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i,\ j)\ \textcolor{keywordflow}{in}\ su2\_pairs:}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00213}00213\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ plist\ =\ \mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a51f76f98325616f820bcc40f2d106a02}{plaquettes\_touching\_link}}(x,\ mu,\ link\_sites)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00214}00214\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sum\_old\ =\ sum(trace\ \textcolor{keywordflow}{for}\ (\_meta,\ trace)\ \textcolor{keywordflow}{in}\ plist)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00215}00215\ }
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00216}00216\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ R2\ =\ \mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a3ac4bd130c73714f342345ac26db64bc}{su2\_random\_unitary}}(eps\_sub)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00217}00217\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ R3\ =\ \mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_adeae0b97628f158be1526ce1f346b16c}{embed\_su2\_into\_su3}}(R2,\ i,\ j)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00218}00218\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ link\_sites[(mu,)\ +\ x]\ =\ R3\ @\ U\_old}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00219}00219\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Reproject\ to\ SU(3)\ to\ correct\ numerical\ drift}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00220}00220\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ link\_sites[(mu,)\ +\ x]\ =\ \mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a6e256f196d2097b382e42b227c3e7b97}{su3\_matrices}}(link\_sites[(mu,)\ +\ x])}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00221}00221\ }
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00222}00222\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ new\_p\_list\ =\ \mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a51f76f98325616f820bcc40f2d106a02}{plaquettes\_touching\_link}}(x,\ mu,\ link\_sites)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00223}00223\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sum\_new\ =\ sum(trace\ \textcolor{keywordflow}{for}\ (\_meta,\ trace)\ \textcolor{keywordflow}{in}\ new\_p\_list)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00224}00224\ }
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00225}00225\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dS\ =\ -\/\ (beta\ /\ 3.0)\ *\ (sum\_new\ -\/\ sum\_old)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00226}00226\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ proposals\ +=\ 1}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00227}00227\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Metropolis\ acceptance:\ accept\ if\ dS\ <=\ 0\ or\ with\ probability\ exp(-\/dS)}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00228}00228\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ dS\ >\ 0\ \textcolor{keywordflow}{and}\ np.exp(-\/dS)\ <\ np.random.rand():}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00229}00229\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ reject:\ revert\ this\ subgroup\ update\ (resume\ next\ subgroup\ from\ U\_old)}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00230}00230\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ link\_sites[(mu,)\ +\ x]\ =\ U\_old.copy()}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00231}00231\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00232}00232\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ accept:\ update\ U\_old\ so\ subsequent\ subgroup\ multiplications\ act\ on\ accepted\ matrix}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00233}00233\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ U\_old\ =\ link\_sites[(mu,)\ +\ x].copy()}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00234}00234\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ accepted\ +=\ 1}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00235}00235\ \ \ \ \ \textcolor{keywordflow}{return}\ accepted,\ proposals}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00236}00236\ }
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00237}00237\ }
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00238}00238\ \textcolor{comment}{\#\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ Observables\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00239}\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a765077dbd81395bf149cab91574eb395}{00239}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a765077dbd81395bf149cab91574eb395}{average\_plaquette\_su3}}(link\_sites):}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00240}00240\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00241}00241\ \textcolor{stringliteral}{\ \ \ \ @brief\ Compute\ the\ normalized\ average\ plaquette\ ⟨Re\ Tr\ P⟩/3\ over\ the\ lattice.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00242}00242\ \textcolor{stringliteral}{\ \ \ \ @param\ link\_sites\ ndarray:\ link\ array.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00243}00243\ \textcolor{stringliteral}{\ \ \ \ @return\ float:\ average\ plaquette\ normalized\ by\ color\ factor\ (3).}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00244}00244\ \textcolor{stringliteral}{\ \ \ \ @details\ The\ Wilson\ action\ density\ per\ plaquette\ is\ proportional\ to\ (1\ -\/\ Re\ Tr\ P\ /\ 3).}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00245}00245\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00246}00246\ \ \ \ \ total\ =\ 0.0}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00247}00247\ \ \ \ \ count\ =\ 0}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00248}00248\ \ \ \ \ \textcolor{keywordflow}{for}\ x\ \textcolor{keywordflow}{in}\ np.ndindex(*x\_shape):}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00249}00249\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ mu\ \textcolor{keywordflow}{in}\ range(D):}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00250}00250\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ nu\ \textcolor{keywordflow}{in}\ range(mu\ +\ 1,\ D):}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00251}00251\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ trace\ =\ \mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a000af2b4b1fc71ae6fa651b88b6eef3b}{real\_trace\_plaquette}}(x,\ mu,\ nu,\ link\_sites)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00252}00252\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ total\ +=\ trace}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00253}00253\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ count\ +=\ 1}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00254}00254\ \ \ \ \ \textcolor{comment}{\#\ Normalize\ by\ color\ dimension\ (Tr\ 1\ =\ 3)}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00255}00255\ \ \ \ \ \textcolor{keywordflow}{return}\ (total\ /\ count)\ /\ 3.0}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00256}00256\ }
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00257}00257\ }
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00258}\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_ab3d3370b04f8187b8e0d16e5302c3842}{00258}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_ab3d3370b04f8187b8e0d16e5302c3842}{bootstrap\_mean\_std}}(values,\ nboot=300):}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00259}00259\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00260}00260\ \textcolor{stringliteral}{\ \ \ \ @brief\ Estimate\ mean\ and\ bootstrap\ standard\ error\ for\ a\ 1D\ array\ of\ samples.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00261}00261\ \textcolor{stringliteral}{\ \ \ \ @param\ values\ array-\/like:\ measurement\ samples.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00262}00262\ \textcolor{stringliteral}{\ \ \ \ @param\ nboot\ int:\ number\ of\ bootstrap\ resamples.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00263}00263\ \textcolor{stringliteral}{\ \ \ \ @return\ tuple:\ (boot\_mean,\ boot\_std)}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00264}00264\ \textcolor{stringliteral}{\ \ \ \ @details\ We\ resample\ with\ replacement\ and\ compute\ sample\ means\ for\ each\ bootstrap}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00265}00265\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ realization;\ the\ returned\ std\ is\ the\ bootstrap\ estimate\ of\ the\ error.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00266}00266\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00267}00267\ \ \ \ \ vals\ =\ np.asarray(values)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00268}00268\ \ \ \ \ N\ =\ len(vals)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00269}00269\ \ \ \ \ boots\ =\ np.zeros(nboot)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00270}00270\ \ \ \ \ \textcolor{keywordflow}{for}\ i\ \textcolor{keywordflow}{in}\ range(nboot):}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00271}00271\ \ \ \ \ \ \ \ \ inds\ =\ np.random.randint(0,\ N,\ size=N)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00272}00272\ \ \ \ \ \ \ \ \ boots[i]\ =\ np.mean(vals[inds])}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00273}00273\ \ \ \ \ \textcolor{keywordflow}{return}\ boots.mean(),\ boots.std(ddof=1)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00274}00274\ }
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00275}00275\ }
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00276}00276\ \textcolor{comment}{\#\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ Tuner\ \&\ Runner\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00277}\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_adeb248c505c926e2fe3efc854dd3d5fd}{00277}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_adeb248c505c926e2fe3efc854dd3d5fd}{tune\_eps\_su3}}(matrix0,\ target=0.5,\ initial\_eps=0.06,\ tries=10,\ test\_sweeps=150):}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00278}00278\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00279}00279\ \textcolor{stringliteral}{\ \ \ \ @brief\ Tune\ the\ SU(2)\ proposal\ amplitude\ eps\ so\ that\ acceptance\ fraction\ \string~\ target.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00280}00280\ \textcolor{stringliteral}{\ \ \ \ @param\ matrix0\ ndarray:\ initial\ link\ matrix\ copy\ for\ tuning\ (will\ be\ copied\ internally).}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00281}00281\ \textcolor{stringliteral}{\ \ \ \ @param\ target\ float:\ desired\ acceptance\ fraction\ (e.g.,\ 0.5).}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00282}00282\ \textcolor{stringliteral}{\ \ \ \ @param\ initial\_eps\ float:\ starting\ amplitude.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00283}00283\ \textcolor{stringliteral}{\ \ \ \ @param\ tries\ int:\ maximum\ adjustment\ attempts.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00284}00284\ \textcolor{stringliteral}{\ \ \ \ @param\ test\_sweeps\ int:\ sweeps\ per\ tuning\ test.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00285}00285\ \textcolor{stringliteral}{\ \ \ \ @return\ float:\ tuned\ eps\ value.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00286}00286\ \textcolor{stringliteral}{\ \ \ \ @details\ We\ perform\ a\ small\ number\ of\ sweeps\ and\ adjust\ eps\ multiplicatively\ to\ move\ acceptance}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00287}00287\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ fraction\ towards\ target.\ This\ is\ a\ heuristic\ tuner\ used\ before\ a\ production\ run.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00288}00288\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00289}00289\ \ \ \ \ eps\ =\ initial\_eps}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00290}00290\ \ \ \ \ \textcolor{keywordflow}{for}\ attempt\ \textcolor{keywordflow}{in}\ range(tries):}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00291}00291\ \ \ \ \ \ \ \ \ matrix\_copy\ =\ matrix0.copy()}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00292}00292\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ quick\ thermalize\ copy}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00293}00293\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ i\ \textcolor{keywordflow}{in}\ range(50):}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00294}00294\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_ae51e7ab33070cfee14de6989b7c4a57b}{metropolis\_update}}(matrix\_copy,\ eps\_sub=eps)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00295}00295\ \ \ \ \ \ \ \ \ accepted\ =\ proposed\ =\ 0}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00296}00296\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ i\ \textcolor{keywordflow}{in}\ range(test\_sweeps):}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00297}00297\ \ \ \ \ \ \ \ \ \ \ \ \ a,\ p\ =\ \mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_ae51e7ab33070cfee14de6989b7c4a57b}{metropolis\_update}}(matrix\_copy,\ eps\_sub=eps)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00298}00298\ \ \ \ \ \ \ \ \ \ \ \ \ accepted\ +=\ a;\ proposed\ +=\ p}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00299}00299\ \ \ \ \ \ \ \ \ fraction\ =\ accepted\ /\ proposed\ \textcolor{keywordflow}{if}\ proposed\ >\ 0\ \textcolor{keywordflow}{else}\ 0.0}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00300}00300\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ abs(fraction\ -\/\ target)\ <\ 0.05:}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00301}00301\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00302}00302\ \ \ \ \ \ \ \ \ eps\ *=\ 1.2\ \textcolor{keywordflow}{if}\ fraction\ >\ target\ \textcolor{keywordflow}{else}\ 0.8}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00303}00303\ \ \ \ \ \textcolor{keywordflow}{return}\ eps}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00304}00304\ }
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00305}00305\ }
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00306}\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a929494493a33323e75210da746475f2f}{00306}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a929494493a33323e75210da746475f2f}{run\_su3\_simulation}}(link\_sites,\ eps\_sub=0.06,\ burn\_in\_sweeps=500,\ MC\_sweeps=2000,\ N\_correlator=5):}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00307}00307\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00308}00308\ \textcolor{stringliteral}{\ \ \ \ @brief\ Run\ SU(3)\ Metropolis\ simulation\ collecting\ plaquette\ samples.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00309}00309\ \textcolor{stringliteral}{\ \ \ \ @param\ link\_sites\ ndarray:\ initial\ link\ configuration\ (modified\ in-\/place).}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00310}00310\ \textcolor{stringliteral}{\ \ \ \ @param\ eps\_sub\ float:\ SU(2)\ subgroup\ proposal\ amplitude.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00311}00311\ \textcolor{stringliteral}{\ \ \ \ @param\ burn\_in\_sweeps\ int:\ thermalization\ sweeps.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00312}00312\ \textcolor{stringliteral}{\ \ \ \ @param\ MC\_sweeps\ int:\ measurement\ sweeps.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00313}00313\ \textcolor{stringliteral}{\ \ \ \ @param\ N\_correlator\ int:\ interval\ between\ stored\ measurements.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00314}00314\ \textcolor{stringliteral}{\ \ \ \ @return\ tuple:\ (plaquette\_samples\ ndarray,\ mean\_plaquette\ float,\ error\_plaquette\ float)}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00315}00315\ \textcolor{stringliteral}{\ \ \ \ @details\ After\ burn-\/in\ we\ perform\ MC\_sweeps\ sweeps\ and\ measure\ the\ average\ plaquette\ every}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00316}00316\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ N\_correlator\ sweeps.\ Bootstrap\ error\ estimation\ is\ applied\ to\ the\ set\ of\ plaquette\ samples.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00317}00317\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00318}00318\ \ \ \ \ accepted\ =\ proposed\ =\ 0}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00319}00319\ \ \ \ \ \textcolor{keywordflow}{for}\ i\ \textcolor{keywordflow}{in}\ range(burn\_in\_sweeps):}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00320}00320\ \ \ \ \ \ \ \ \ a,\ p\ =\ \mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_ae51e7ab33070cfee14de6989b7c4a57b}{metropolis\_update}}(link\_sites,\ eps\_sub=eps\_sub)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00321}00321\ \ \ \ \ \ \ \ \ accepted\ +=\ a;\ proposed\ +=\ p}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00322}00322\ \ \ \ \ plaquette\_samples\ =\ []}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00323}00323\ \ \ \ \ accepted\ =\ proposed\ =\ 0}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00324}00324\ \ \ \ \ \textcolor{keywordflow}{for}\ sweep\ \textcolor{keywordflow}{in}\ range(MC\_sweeps):}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00325}00325\ \ \ \ \ \ \ \ \ a,\ p\ =\ \mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_ae51e7ab33070cfee14de6989b7c4a57b}{metropolis\_update}}(link\_sites,\ eps\_sub=eps\_sub)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00326}00326\ \ \ \ \ \ \ \ \ accepted\ +=\ a;\ proposed\ +=\ p}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00327}00327\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ sweep\ \%\ N\_correlator\ ==\ 0:}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00328}00328\ \ \ \ \ \ \ \ \ \ \ \ \ plaquette\ =\ \mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a765077dbd81395bf149cab91574eb395}{average\_plaquette\_su3}}(link\_sites)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00329}00329\ \ \ \ \ \ \ \ \ \ \ \ \ plaquette\_samples.append(plaquette)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00330}00330\ \ \ \ \ mean\_plaquette,\ error\_plaquette\ =\ \mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_ab3d3370b04f8187b8e0d16e5302c3842}{bootstrap\_mean\_std}}(plaquette\_samples,\ nboot=n\_boot)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00331}00331\ \ \ \ \ \textcolor{keywordflow}{return}\ np.array(plaquette\_samples),\ mean\_plaquette,\ error\_plaquette}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00332}00332\ }
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00333}00333\ }
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00334}00334\ \textcolor{comment}{\#\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ Initialization\ helpers\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00335}\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_abe28e8d8f901376f5930e5dcb1906f27}{00335}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_abe28e8d8f901376f5930e5dcb1906f27}{init\_links\_identity}}(link\_sites):}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00336}00336\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00337}00337\ \textcolor{stringliteral}{\ \ \ \ @brief\ Initialize\ all\ links\ to\ the\ identity\ matrix.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00338}00338\ \textcolor{stringliteral}{\ \ \ \ @param\ link\_sites\ ndarray:\ link\ array\ to\ initialize\ (modified\ in-\/place).}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00339}00339\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00340}00340\ \ \ \ \ \textcolor{keywordflow}{for}\ mu\ \textcolor{keywordflow}{in}\ range(D):}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00341}00341\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ x\ \textcolor{keywordflow}{in}\ np.ndindex(*x\_shape):}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00342}00342\ \ \ \ \ \ \ \ \ \ \ \ \ link\_sites[(mu,)\ +\ x]\ =\ np.eye(3,\ dtype=complex)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00343}00343\ }
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00344}00344\ }
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00345}\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a714c321edfa15efabdf73654fb10e0d1}{00345}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a714c321edfa15efabdf73654fb10e0d1}{randomize\_links\_small}}(link\_sites,\ amplitude=0.02):}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00346}00346\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00347}00347\ \textcolor{stringliteral}{\ \ \ \ @brief\ Apply\ small\ random\ SU(3)\ rotations\ (via\ embedded\ SU(2))\ to\ each\ link\ for\ breaking\ symmetry.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00348}00348\ \textcolor{stringliteral}{\ \ \ \ @param\ link\_sites\ ndarray:\ link\ array\ (modified\ in-\/place).}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00349}00349\ \textcolor{stringliteral}{\ \ \ \ @param\ amplitude\ float:\ small\ rotation\ amplitude\ used\ for\ initial\ randomization.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00350}00350\ \textcolor{stringliteral}{\ \ \ \ @details\ Useful\ to\ seed\ the\ Markov\ chain\ with\ a\ slightly\ randomized\ starting\ configuration.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00351}00351\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00352}00352\ \ \ \ \ \textcolor{keywordflow}{for}\ mu\ \textcolor{keywordflow}{in}\ range(D):}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00353}00353\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ x\ \textcolor{keywordflow}{in}\ np.ndindex(*x\_shape):}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00354}00354\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i,\ j)\ \textcolor{keywordflow}{in}\ [(0,\ 1),\ (0,\ 2),\ (1,\ 2)]:}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00355}00355\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ R2\ =\ \mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a3ac4bd130c73714f342345ac26db64bc}{su2\_random\_unitary}}(amplitude)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00356}00356\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ R3\ =\ \mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_adeae0b97628f158be1526ce1f346b16c}{embed\_su2\_into\_su3}}(R2,\ i,\ j)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00357}00357\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ link\_sites[(mu,)\ +\ x]\ =\ \mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a6e256f196d2097b382e42b227c3e7b97}{su3\_matrices}}(R3\ @\ link\_sites[(mu,)\ +\ x])}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00358}00358\ }
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00359}00359\ }
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00360}00360\ \textcolor{comment}{\#\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ Wilson\ loop\ helper\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00361}\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a7abb53e1fbedfee3a871f5c23139deb2}{00361}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a7abb53e1fbedfee3a871f5c23139deb2}{measure\_wilson\_loop\_RT}}(link\_sites,\ R,\ T,\ spatial\_direction=0,\ time\_direction=None):}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00362}00362\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00363}00363\ \textcolor{stringliteral}{\ \ \ \ @brief\ Measure\ the\ average\ Wilson\ loop\ W(R,T)\ for\ rectangular\ loops\ of\ spatial\ size\ R\ and\ temporal\ extent\ T.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00364}00364\ \textcolor{stringliteral}{\ \ \ \ @param\ link\_sites\ ndarray:\ link\ configuration.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00365}00365\ \textcolor{stringliteral}{\ \ \ \ @param\ R\ int:\ spatial\ extent\ (number\ of\ spatial\ steps).}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00366}00366\ \textcolor{stringliteral}{\ \ \ \ @param\ T\ int:\ temporal\ extent\ (number\ of\ temporal\ steps).}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00367}00367\ \textcolor{stringliteral}{\ \ \ \ @param\ spatial\_direction\ int:\ spatial\ direction\ index\ used\ for\ the\ R\ side.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00368}00368\ \textcolor{stringliteral}{\ \ \ \ @param\ time\_direction\ int\ or\ None:\ time\ direction\ index;\ defaults\ to\ D-\/1\ (last\ axis).}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00369}00369\ \textcolor{stringliteral}{\ \ \ \ @return\ float:\ average\ Re\ Tr[W(R,T)]\ /\ 3\ over\ all\ possible\ loop\ origins.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00370}00370\ \textcolor{stringliteral}{\ \ \ \ @details}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00371}00371\ \textcolor{stringliteral}{\ \ \ \ The\ loop\ path\ starts\ at\ each\ lattice\ site\ x\ and\ multiplies\ the\ link\ matrices\ along\ the\ rectangular\ contour.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00372}00372\ \textcolor{stringliteral}{\ \ \ \ Backward\ traversals\ multiply\ by\ Hermitian\ conjugate\ of\ the\ traversed\ link.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00373}00373\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00374}00374\ \ \ \ \ \textcolor{keywordflow}{if}\ time\_direction\ \textcolor{keywordflow}{is}\ \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00375}00375\ \ \ \ \ \ \ \ \ time\_direction\ =\ D\ -\/\ 1}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00376}00376\ \ \ \ \ total\ =\ 0.0}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00377}00377\ \ \ \ \ count\ =\ 0}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00378}00378\ \ \ \ \ \textcolor{keywordflow}{for}\ x\ \textcolor{keywordflow}{in}\ np.ndindex(*x\_shape):}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00379}00379\ \ \ \ \ \ \ \ \ current\_x\ =\ x}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00380}00380\ \ \ \ \ \ \ \ \ W\ =\ np.eye(3,\ dtype=complex)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00381}00381\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ R\ steps\ +\ spatial\_direction}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00382}00382\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ i\ \textcolor{keywordflow}{in}\ range(R):}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00383}00383\ \ \ \ \ \ \ \ \ \ \ \ \ U\ =\ link\_sites[(spatial\_direction,)\ +\ current\_x]}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00384}00384\ \ \ \ \ \ \ \ \ \ \ \ \ W\ =\ W\ @\ U}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00385}00385\ \ \ \ \ \ \ \ \ \ \ \ \ current\_x\ =\ \mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a44a464a27584fc9def02704f8e1fd0ac}{x\_neighbor}}(current\_x,\ spatial\_direction,\ 1)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00386}00386\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ T\ steps\ +\ time\_direction}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00387}00387\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ i\ \textcolor{keywordflow}{in}\ range(T):}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00388}00388\ \ \ \ \ \ \ \ \ \ \ \ \ U\ =\ link\_sites[(time\_direction,)\ +\ current\_x]}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00389}00389\ \ \ \ \ \ \ \ \ \ \ \ \ W\ =\ W\ @\ U}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00390}00390\ \ \ \ \ \ \ \ \ \ \ \ \ current\_x\ =\ \mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a44a464a27584fc9def02704f8e1fd0ac}{x\_neighbor}}(current\_x,\ time\_direction,\ 1)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00391}00391\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ R\ steps\ -\/\ spatial\_direction\ (backwards)}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00392}00392\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ i\ \textcolor{keywordflow}{in}\ range(R):}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00393}00393\ \ \ \ \ \ \ \ \ \ \ \ \ current\_x\ =\ \mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a44a464a27584fc9def02704f8e1fd0ac}{x\_neighbor}}(current\_x,\ spatial\_direction,\ -\/1)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00394}00394\ \ \ \ \ \ \ \ \ \ \ \ \ U\ =\ link\_sites[(spatial\_direction,)\ +\ current\_x]}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00395}00395\ \ \ \ \ \ \ \ \ \ \ \ \ W\ =\ W\ @\ U.conj().T}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00396}00396\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ T\ steps\ -\/\ time\_direction\ (backwards)}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00397}00397\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ i\ \textcolor{keywordflow}{in}\ range(T):}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00398}00398\ \ \ \ \ \ \ \ \ \ \ \ \ current\_x\ =\ \mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a44a464a27584fc9def02704f8e1fd0ac}{x\_neighbor}}(current\_x,\ time\_direction,\ -\/1)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00399}00399\ \ \ \ \ \ \ \ \ \ \ \ \ U\ =\ link\_sites[(time\_direction,)\ +\ current\_x]}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00400}00400\ \ \ \ \ \ \ \ \ \ \ \ \ W\ =\ W\ @\ U.conj().T}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00401}00401\ \ \ \ \ \ \ \ \ total\ +=\ np.real(np.trace(W))\ /\ 3.0}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00402}00402\ \ \ \ \ \ \ \ \ count\ +=\ 1}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00403}00403\ \ \ \ \ \textcolor{keywordflow}{return}\ total\ /\ count}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00404}00404\ }
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00405}00405\ }
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00406}\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_ad76fd939779f34cd36ddd587c3d13402}{00406}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_ad76fd939779f34cd36ddd587c3d13402}{su3\_simulation\_with\_wilson\_loops}}(link\_sites,\ eps\_sub=0.06,\ burn\_in\_sweeps=500,\ MC\_sweeps=2000,\ N\_correlator=5,\ max\_R=None,\ max\_T=None):}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00407}00407\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00408}00408\ \textcolor{stringliteral}{\ \ \ \ @brief\ Run\ full\ SU(3)\ simulation\ storing\ Wilson\ loop\ matrices\ for\ each\ measurement.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00409}00409\ \textcolor{stringliteral}{\ \ \ \ @param\ link\_sites\ ndarray:\ initial\ link\ configuration\ (modified\ in-\/place).}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00410}00410\ \textcolor{stringliteral}{\ \ \ \ @param\ eps\_sub\ float:\ SU(2)\ subgroup\ proposal\ amplitude.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00411}00411\ \textcolor{stringliteral}{\ \ \ \ @param\ burn\_in\_sweeps\ int:\ thermalization\ sweeps.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00412}00412\ \textcolor{stringliteral}{\ \ \ \ @param\ MC\_sweeps\ int:\ measurement\ sweeps.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00413}00413\ \textcolor{stringliteral}{\ \ \ \ @param\ N\_correlator\ int:\ interval\ between\ stored\ measurements.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00414}00414\ \textcolor{stringliteral}{\ \ \ \ @param\ max\_R\ int\ or\ None:\ maximum\ spatial\ size\ to\ measure\ (defaults\ to\ L/2).}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00415}00415\ \textcolor{stringliteral}{\ \ \ \ @param\ max\_T\ int\ or\ None:\ maximum\ temporal\ size\ to\ measure\ (defaults\ to\ L/2).}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00416}00416\ \textcolor{stringliteral}{\ \ \ \ @return\ tuple:\ (wilson\_loops\_samples\ ndarray\ [n\_meas,\ n\_R,\ n\_T],\ R\_values\ ndarray,\ T\_values\ ndarray)}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00417}00417\ \textcolor{stringliteral}{\ \ \ \ @details}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00418}00418\ \textcolor{stringliteral}{\ \ \ \ Measures\ a\ grid\ of\ Wilson\ loops\ W(R,T)\ for\ R\ in\ [1..max\_R],\ T\ in\ [1..max\_T]\ at\ each\ stored\ configuration.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00419}00419\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00420}00420\ \ \ \ \ \textcolor{keywordflow}{if}\ max\_R\ \textcolor{keywordflow}{is}\ \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00421}00421\ \ \ \ \ \ \ \ \ max\_R\ =\ lattice\_size\_L\ //\ 2}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00422}00422\ \ \ \ \ \textcolor{keywordflow}{if}\ max\_T\ \textcolor{keywordflow}{is}\ \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00423}00423\ \ \ \ \ \ \ \ \ max\_T\ =\ lattice\_size\_L\ //\ 2}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00424}00424\ \ \ \ \ R\_values\ =\ np.arange(1,\ max\_R\ +\ 1)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00425}00425\ \ \ \ \ T\_values\ =\ np.arange(1,\ max\_T\ +\ 1)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00426}00426\ \ \ \ \ n\_R\ =\ len(R\_values)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00427}00427\ \ \ \ \ n\_T\ =\ len(T\_values)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00428}00428\ \ \ \ \ \textcolor{comment}{\#\ Thermalize}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00429}00429\ \ \ \ \ \textcolor{keywordflow}{for}\ i\ \textcolor{keywordflow}{in}\ range(burn\_in\_sweeps):}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00430}00430\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_ae51e7ab33070cfee14de6989b7c4a57b}{metropolis\_update}}(link\_sites,\ eps\_sub=eps\_sub)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00431}00431\ \ \ \ \ wilson\_loops\_samples\ =\ []}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00432}00432\ \ \ \ \ \textcolor{keywordflow}{for}\ sweep\ \textcolor{keywordflow}{in}\ range(MC\_sweeps):}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00433}00433\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_ae51e7ab33070cfee14de6989b7c4a57b}{metropolis\_update}}(link\_sites,\ eps\_sub=eps\_sub)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00434}00434\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ sweep\ \%\ N\_correlator\ ==\ 0:}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00435}00435\ \ \ \ \ \ \ \ \ \ \ \ \ W\_sample\ =\ np.zeros((n\_R,\ n\_T))}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00436}00436\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ i,\ R\ \textcolor{keywordflow}{in}\ enumerate(R\_values):}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00437}00437\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ j,\ T\ \textcolor{keywordflow}{in}\ enumerate(T\_values):}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00438}00438\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ W\_sample[i,\ j]\ =\ \mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a7abb53e1fbedfee3a871f5c23139deb2}{measure\_wilson\_loop\_RT}}(link\_sites,\ R,\ T)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00439}00439\ \ \ \ \ \ \ \ \ \ \ \ \ wilson\_loops\_samples.append(W\_sample)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00440}00440\ \ \ \ \ wilson\_loops\_samples\ =\ np.array(wilson\_loops\_samples)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00441}00441\ \ \ \ \ \textcolor{keywordflow}{return}\ wilson\_loops\_samples,\ R\_values,\ T\_values}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00442}00442\ }
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00443}00443\ }
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00444}00444\ \textcolor{comment}{\#\ ============================================================}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00445}00445\ \textcolor{comment}{\#\ ===============\ \ PLAQUETTE\ CALCULATION\ SECTION\ \ ==============}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00446}00446\ \textcolor{comment}{\#\ ============================================================}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00447}00447\ \mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_abe28e8d8f901376f5930e5dcb1906f27}{init\_links\_identity}}(link\_matrix)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00448}\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a6c39b85d0409c6762e9038f1373aa586}{00448}}\ \mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a714c321edfa15efabdf73654fb10e0d1}{randomize\_links\_small}}(link\_matrix,\ amplitude=0.02)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00449}00449\ }
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00450}\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a5227b83dd71dc3efcbaf57f6f839747f}{00450}}\ eps\_tuned\ =\ \mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_adeb248c505c926e2fe3efc854dd3d5fd}{tune\_eps\_su3}}(link\_matrix,\ initial\_eps=eps\_initial)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00451}\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_ae10dd8b2a3a4acf827ec4e80f7cd7cb6}{00451}}\ samples,\ plaq\_mean,\ plaq\_err\ =\ \mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a929494493a33323e75210da746475f2f}{run\_su3\_simulation}}(}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00452}\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a8c4347fa4c56d8155d324e1b3cce0226}{00452}}\ \ \ \ \ link\_matrix,\ eps\_sub=eps\_tuned,\ burn\_in\_sweeps=burn\_in\_sweeps,}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00453}\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_aa4fbcaaae095aeaa9bdfdb0b7d942fd3}{00453}}\ \ \ \ \ MC\_sweeps=MC\_sweeps,\ N\_correlator=MC\_measure\_interval)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00454}00454\ }
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00455}00455\ print(f\textcolor{stringliteral}{"{}Average\ plaquette\ =\ \{plaq\_mean:.6f\}\ ±\ \{plaq\_err:.6f\}"{}})}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00456}00456\ }
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00457}00457\ \textcolor{comment}{\#\ Plot\ plaquette\ history}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00458}\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_aa785b77e663a841aa0110e18cc4ef16e}{00458}}\ plt.figure(figsize=(8,\ 5))}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00459}\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a27cf82292e519d16191b18855bed5019}{00459}}\ plt.plot(np.arange(len(samples)),\ samples,\ marker=\textcolor{stringliteral}{'o'},\ linestyle=\textcolor{stringliteral}{'-\/'})}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00460}00460\ plt.xlabel(\textcolor{stringliteral}{'Measurement\ Index'})}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00461}00461\ plt.ylabel(\textcolor{stringliteral}{'Plaquette\ Value\ (Re\ Tr\ P\ /\ 3)'})}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00462}00462\ plt.title(\textcolor{stringliteral}{'Plaquette\ History'})}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00463}00463\ plt.tight\_layout()}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00464}00464\ plt.show()}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00465}00465\ }
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00466}00466\ \textcolor{comment}{\#\ Plot\ histogram\ of\ plaquette\ samples}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00467}00467\ plt.figure(figsize=(8,\ 5))}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00468}\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_aa243e5439de4ada0d1006f1809936c95}{00468}}\ plt.hist(samples,\ bins=30,\ alpha=0.75)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00469}00469\ plt.xlabel(\textcolor{stringliteral}{'Plaquette\ Value'})}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00470}00470\ plt.ylabel(\textcolor{stringliteral}{'Frequency'})}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00471}00471\ plt.title(\textcolor{stringliteral}{'Histogram\ of\ Plaquette\ Samples'})}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00472}00472\ plt.tight\_layout()}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00473}00473\ plt.show()}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00474}00474\ }
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00475}00475\ }
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00476}00476\ \textcolor{comment}{\#\ ============================================================}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00477}00477\ \textcolor{comment}{\#\ ===============\ \ WILSON\ LOOP\ CALCULATION\ SECTION\ \ ============}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00478}00478\ \textcolor{comment}{\#\ ============================================================}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00479}\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a637da1a918d408d4b51ee54f0c0bc2f6}{00479}}\ wilson\_loops\_samples,\ R\_values,\ T\_values\ =\ \mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_ad76fd939779f34cd36ddd587c3d13402}{su3\_simulation\_with\_wilson\_loops}}(}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00480}00480\ \ \ \ \ link\_matrix,\ eps\_sub=eps\_tuned,\ burn\_in\_sweeps=burn\_in\_sweeps,}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00481}00481\ \ \ \ \ MC\_sweeps=MC\_sweeps,\ N\_correlator=MC\_measure\_interval,}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00482}\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_ad62acbb88c7f3a50839ea84c06502199}{00482}}\ \ \ \ \ max\_R=lattice\_size\_L\ //\ 2,\ max\_T=lattice\_size\_L\ //\ 2)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00483}00483\ }
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00484}\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_aef423ffb377c63e3def76ec8638cf647}{00484}}\ avg\_wilson\_loops\ =\ np.mean(wilson\_loops\_samples,\ axis=0)\ \ \textcolor{comment}{\#\ shape\ (n\_R,\ n\_T)}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00485}00485\ }
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00486}00486\ \textcolor{comment}{\#\ Extract\ static\ potential\ V(R)\ via\ effective\ mass\ from\ Wilson\ loops}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00487}\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_ad9c48dfbc49e94f51751c3f793aed0f5}{00487}}\ V\_R\ =\ np.zeros(len(R\_values))}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00488}00488\ \textcolor{keywordflow}{for}\ i\ \textcolor{keywordflow}{in}\ range(len(R\_values)):}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00489}\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a467e2519d8aa8e4f356037d1c8a47622}{00489}}\ \ \ \ \ potentials\ =\ []}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00490}00490\ \ \ \ \ \textcolor{keywordflow}{for}\ j\ \textcolor{keywordflow}{in}\ range(len(T\_values)\ -\/\ 1):}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00491}\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_acb414b2b86d92f06f5d8b958c492669b}{00491}}\ \ \ \ \ \ \ \ \ W\_T\ =\ avg\_wilson\_loops[i,\ j]}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00492}\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_adbe26aa21cf3c355205c6eb94f05eeca}{00492}}\ \ \ \ \ \ \ \ \ W\_Tp1\ =\ avg\_wilson\_loops[i,\ j\ +\ 1]}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00493}00493\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ W\_T\ >\ 0\ \textcolor{keywordflow}{and}\ W\_Tp1\ >\ 0:}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00494}00494\ \ \ \ \ \ \ \ \ \ \ \ \ potentials.append(-\/np.log(W\_Tp1\ /\ W\_T))}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00495}00495\ \ \ \ \ V\_R[i]\ =\ np.mean(potentials)\ \textcolor{keywordflow}{if}\ potentials\ \textcolor{keywordflow}{else}\ np.nan}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00496}00496\ }
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00497}00497\ print(\textcolor{stringliteral}{"{}Wilson\ loop\ and\ static\ potential\ calculation\ complete."{}})}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00498}00498\ print(\textcolor{stringliteral}{"{}R\ values:"{}},\ R\_values)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00499}00499\ print(\textcolor{stringliteral}{"{}V(R):"{}},\ V\_R)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00500}00500\ }
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00501}00501\ plt.figure(figsize=(8,\ 5))}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00502}00502\ plt.plot(R\_values,\ V\_R,\ marker=\textcolor{stringliteral}{'o'},\ linestyle=\textcolor{stringliteral}{'-\/'})}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00503}00503\ plt.xlabel(\textcolor{stringliteral}{'Spatial\ Separation\ R'})}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00504}00504\ plt.ylabel(\textcolor{stringliteral}{'Static\ Quark-\/Antiquark\ Potential\ V(R)'})}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00505}00505\ plt.title(\textcolor{stringliteral}{'Static\ Potential\ from\ Averaged\ Wilson\ Loops'})}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00506}00506\ plt.grid(\textcolor{keyword}{True})}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00507}00507\ plt.tight\_layout()}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00508}00508\ plt.show()}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00509}00509\ }
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00510}00510\ }
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00511}00511\ \textcolor{comment}{\#\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ Classical\ gluon-\/field\ diagnostics\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00512}\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_ab266c642e895991561c9cd00dde084c4}{00512}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_ab266c642e895991561c9cd00dde084c4}{gell\_mann\_matrices}}():}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00513}00513\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00514}00514\ \textcolor{stringliteral}{\ \ \ \ @brief\ Return\ the\ eight\ Gell-\/Mann\ matrices\ λ\string^a\ (3x3).}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00515}00515\ \textcolor{stringliteral}{\ \ \ \ @return\ list:\ eight\ 3x3\ numpy\ arrays\ forming\ a\ basis\ for\ su(3).}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00516}00516\ \textcolor{stringliteral}{\ \ \ \ @details\ These\ are\ used\ to\ project\ Lie-\/algebra\ components\ from\ SU(3)\ link\ matrices.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00517}00517\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00518}00518\ \ \ \ \ lambda\_\ =\ []}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00519}00519\ \ \ \ \ lambda\_.append(np.array([[0,\ 1,\ 0],\ [1,\ 0,\ 0],\ [0,\ 0,\ 0]],\ dtype=complex))}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00520}00520\ \ \ \ \ lambda\_.append(np.array([[0,\ -\/1j,\ 0],\ [1j,\ 0,\ 0],\ [0,\ 0,\ 0]],\ dtype=complex))}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00521}00521\ \ \ \ \ lambda\_.append(np.array([[1,\ 0,\ 0],\ [0,\ -\/1,\ 0],\ [0,\ 0,\ 0]],\ dtype=complex))}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00522}00522\ \ \ \ \ lambda\_.append(np.array([[0,\ 0,\ 1],\ [0,\ 0,\ 0],\ [1,\ 0,\ 0]],\ dtype=complex))}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00523}00523\ \ \ \ \ lambda\_.append(np.array([[0,\ 0,\ -\/1j],\ [0,\ 0,\ 0],\ [1j,\ 0,\ 0]],\ dtype=complex))}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00524}00524\ \ \ \ \ lambda\_.append(np.array([[0,\ 0,\ 0],\ [0,\ 0,\ 1],\ [0,\ 1,\ 0]],\ dtype=complex))}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00525}00525\ \ \ \ \ lambda\_.append(np.array([[0,\ 0,\ 0],\ [0,\ 0,\ -\/1j],\ [0,\ 1j,\ 0]],\ dtype=complex))}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00526}00526\ \ \ \ \ lambda\_.append((1\ /\ np.sqrt(3))\ *\ np.array([[1,\ 0,\ 0],\ [0,\ 1,\ 0],\ [0,\ 0,\ -\/2]],\ dtype=complex))}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00527}00527\ \ \ \ \ \textcolor{keywordflow}{return}\ lambda\_}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00528}00528\ }
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00529}00529\ }
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00530}\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_ae02aa257dbc5e49f80253af9eb731f02}{00530}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_ae02aa257dbc5e49f80253af9eb731f02}{extract\_gluon\_field}}(U,\ g=1.0,\ a=1.0):}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00531}00531\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00532}00532\ \textcolor{stringliteral}{\ \ \ \ @brief\ Extract\ approximate\ local\ gauge\ field\ components\ A\string^a\ from\ a\ single\ SU(3)\ link.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00533}00533\ \textcolor{stringliteral}{\ \ \ \ @param\ U\ ndarray:\ SU(3)\ link\ matrix.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00534}00534\ \textcolor{stringliteral}{\ \ \ \ @param\ g\ float:\ gauge\ coupling\ (default\ 1.0).}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00535}00535\ \textcolor{stringliteral}{\ \ \ \ @param\ a\ float:\ lattice\ spacing\ (default\ 1.0).}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00536}00536\ \textcolor{stringliteral}{\ \ \ \ @return\ ndarray:\ array\ shape\ (8,)\ containing\ A\string^a\ components\ (real).}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00537}00537\ \textcolor{stringliteral}{\ \ \ \ @details\ For\ small\ lattice\ spacing\ we\ approximate\ U\ ≈\ exp(i\ g\ a\ A)\ =>\ A\ ≈\ (U\ -\/\ U†)/(2\ i\ g\ a).}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00538}00538\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ We\ then\ project\ the\ traceless\ anti-\/Hermitian\ part\ onto\ the\ Gell-\/Mann\ basis.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00539}00539\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00540}00540\ \ \ \ \ difference\ =\ (U\ -\/\ U.conj().T)\ /\ (2j\ *\ g\ *\ a)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00541}00541\ \ \ \ \ difference\ -\/=\ np.trace(difference).real\ /\ 3.0\ *\ np.eye(3)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00542}00542\ \ \ \ \ lambda\_\ =\ \mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_ab266c642e895991561c9cd00dde084c4}{gell\_mann\_matrices}}()}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00543}00543\ \ \ \ \ A\_components\ =\ np.array([np.real(np.trace(difference\ @\ lambda\_a))\ /\ 2.0\ \textcolor{keywordflow}{for}\ lambda\_a\ \textcolor{keywordflow}{in}\ lambda\_])}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00544}00544\ \ \ \ \ \textcolor{keywordflow}{return}\ A\_components}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00545}00545\ }
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00546}00546\ }
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00547}\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_abea7757b1fc83bfa6ace5a3fbc11028d}{00547}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_abea7757b1fc83bfa6ace5a3fbc11028d}{field\_strength\_tensor}}(link\_sites,\ x,\ mu,\ nu,\ g=1.0,\ a=1.0):}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00548}00548\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00549}00549\ \textcolor{stringliteral}{\ \ \ \ @brief\ Compute\ the\ lattice\ field-\/strength\ components\ F\_\{mu,nu\}\string^a\ at\ site\ x\ from\ the\ plaquette.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00550}00550\ \textcolor{stringliteral}{\ \ \ \ @param\ link\_sites\ ndarray:\ link\ variables.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00551}00551\ \textcolor{stringliteral}{\ \ \ \ @param\ x\ tuple:\ lattice\ coordinate.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00552}00552\ \textcolor{stringliteral}{\ \ \ \ @param\ mu\ int:\ direction\ mu.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00553}00553\ \textcolor{stringliteral}{\ \ \ \ @param\ nu\ int:\ direction\ nu.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00554}00554\ \textcolor{stringliteral}{\ \ \ \ @param\ g\ float:\ gauge\ coupling.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00555}00555\ \textcolor{stringliteral}{\ \ \ \ @param\ a\ float:\ lattice\ spacing.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00556}00556\ \textcolor{stringliteral}{\ \ \ \ @return\ ndarray:\ shape\ (8,)\ F\string^a\ components\ (real).}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00557}00557\ \textcolor{stringliteral}{\ \ \ \ @details\ Uses\ the\ anti-\/Hermitian\ traceless\ projection\ of\ the\ plaquette:}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00558}00558\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ F\ \string~\ (P\ -\/\ P†)/(2\ i\ g\ a\string^2)\ projected\ on\ Gell-\/Mann\ matrices.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00559}00559\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00560}00560\ \ \ \ \ P\ =\ \mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_aee4d750fbbf3dc3b58cfbf755074a68b}{plaquette\_matrix}}(x,\ mu,\ nu,\ link\_sites)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00561}00561\ \ \ \ \ difference\ =\ (P\ -\/\ P.conj().T)\ /\ (2j\ *\ g\ *\ a\ **\ 2)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00562}00562\ \ \ \ \ difference\ -\/=\ np.trace(difference).real\ /\ 3.0\ *\ np.eye(3)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00563}00563\ \ \ \ \ lambda\_\ =\ \mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_ab266c642e895991561c9cd00dde084c4}{gell\_mann\_matrices}}()}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00564}00564\ \ \ \ \ F\_components\ =\ np.array([np.real(np.trace(difference\ @\ lambda\_a))\ /\ 2.0\ \textcolor{keywordflow}{for}\ lambda\_a\ \textcolor{keywordflow}{in}\ lambda\_])}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00565}00565\ \ \ \ \ \textcolor{keywordflow}{return}\ F\_components}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00566}00566\ }
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00567}00567\ }
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00568}\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a73426a84b4c73e44a476cb0b9c1825ea}{00568}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a73426a84b4c73e44a476cb0b9c1825ea}{measure\_avg\_A2\_and\_F2}}(link\_sites,\ g=1.0,\ a=1.0):}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00569}00569\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00570}00570\ \textcolor{stringliteral}{\ \ \ \ @brief\ Compute\ averages\ ⟨A\string^2⟩\ and\ ⟨F\string^2⟩\ over\ the\ entire\ lattice\ as\ diagnostics.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00571}00571\ \textcolor{stringliteral}{\ \ \ \ @param\ link\_sites\ ndarray:\ link\ configuration.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00572}00572\ \textcolor{stringliteral}{\ \ \ \ @param\ g\ float:\ gauge\ coupling.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00573}00573\ \textcolor{stringliteral}{\ \ \ \ @param\ a\ float:\ lattice\ spacing.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00574}00574\ \textcolor{stringliteral}{\ \ \ \ @return\ tuple:\ (A2\_avg\ float,\ F2\_avg\ float)}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00575}00575\ \textcolor{stringliteral}{\ \ \ \ @details\ A\string^2\ and\ F\string^2\ are\ computed\ by\ summing\ squares\ of\ components\ and\ normalizing\ by\ counts.}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00576}00576\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00577}00577\ \ \ \ \ A2\_sum\ =\ 0.0}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00578}00578\ \ \ \ \ F2\_sum\ =\ 0.0}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00579}00579\ \ \ \ \ nA\ =\ 0}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00580}00580\ \ \ \ \ nF\ =\ 0}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00581}00581\ \ \ \ \ \textcolor{keywordflow}{for}\ x\ \textcolor{keywordflow}{in}\ np.ndindex(*x\_shape):}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00582}00582\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ mu\ \textcolor{keywordflow}{in}\ range(D):}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00583}00583\ \ \ \ \ \ \ \ \ \ \ \ \ U\ =\ link\_sites[(mu,)\ +\ x]}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00584}00584\ \ \ \ \ \ \ \ \ \ \ \ \ A\ =\ \mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_ae02aa257dbc5e49f80253af9eb731f02}{extract\_gluon\_field}}(U,\ g=g,\ a=a)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00585}00585\ \ \ \ \ \ \ \ \ \ \ \ \ A2\_sum\ +=\ np.dot(A,\ A)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00586}00586\ \ \ \ \ \ \ \ \ \ \ \ \ nA\ +=\ 1}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00587}00587\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ mu\ \textcolor{keywordflow}{in}\ range(D):}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00588}00588\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ nu\ \textcolor{keywordflow}{in}\ range(mu\ +\ 1,\ D):}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00589}00589\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ F\ =\ \mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_abea7757b1fc83bfa6ace5a3fbc11028d}{field\_strength\_tensor}}(link\_sites,\ x,\ mu,\ nu,\ g=g,\ a=a)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00590}00590\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ F2\_sum\ +=\ np.dot(F,\ F)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00591}00591\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nF\ +=\ 1}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00592}00592\ \ \ \ \ \textcolor{keywordflow}{return}\ A2\_sum\ /\ nA,\ F2\_sum\ /\ nF}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00593}00593\ }
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00594}00594\ }
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00595}\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a0b397d6ed2f3de7ffbc8c7cd030953b7}{00595}}\ A2\_avg,\ F2\_avg\ =\ \mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a73426a84b4c73e44a476cb0b9c1825ea}{measure\_avg\_A2\_and\_F2}}(link\_matrix)}
+\DoxyCodeLine{\Hypertarget{_q_c_d___lattice___s_u3_8py_source_l00596}00596\ print(f\textcolor{stringliteral}{"{}⟨A²⟩\ =\ \{A2\_avg:.6e\},\ ⟨F²⟩\ =\ \{F2\_avg:.6e\}"{}})}
+
+\end{DoxyCode}

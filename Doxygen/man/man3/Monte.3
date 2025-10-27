@@ -1,0 +1,42 @@
+.TH "Monte" 3 "QCD Lattice" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Monte \- Carlo integral\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.SH "Detailed Description"
+.PP 
+Carlo integral\&. 
+
+
+.PP
+.nf
+@mainpage Monte Carlo Simulation for the 1D Quantum Anharmonic Oscillator
+@file monte_carlo_anharmonic\&.py
+@brief Monte Carlo Euclidean path-integral estimator for the ground-state energy E₀\&.
+
+@details
+This script estimates the ground-state energy of a 1D quantum anharmonic oscillator
+with Euclidean action
+
+    S_E = Σ_j [ m/(2a) (x_{j+1}-x_j)² + a V(x_j) ],
+
+where
+    V(x) = 1/2 x² + λ x⁴\&.
+
+Configurations of x(τ) are sampled using local Metropolis updates with periodic
+boundary conditions\&. The two-point correlator
+
+    C(τ) = ⟨x(0)x(τ)⟩ ∼ e^(−E₀ τ),
+
+is accumulated and fitted to a single exponential in the plateau region to extract E₀\&.
+
+.fi
+.PP
+ 
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for QCD Lattice from the source code\&.

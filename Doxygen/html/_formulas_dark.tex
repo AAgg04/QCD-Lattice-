@@ -1,0 +1,145 @@
+\documentclass{article}
+\usepackage{iftex}
+\usepackage{ifthen}
+\usepackage{epsfig}
+\usepackage[utf8]{inputenc}
+\usepackage{xcolor}
+\color{white}
+\pagecolor{black}
+\ifPDFTeX
+\usepackage{newunicodechar}
+  \makeatletter
+    \def\doxynewunicodechar#1#2{%
+    \@tempswafalse
+    \edef\nuc@tempa{\detokenize{#1}}%
+    \if\relax\nuc@tempa\relax
+      \nuc@emptyargerr
+    \else
+      \edef\@tempb{\expandafter\@car\nuc@tempa\@nil}%
+      \nuc@check
+      \if@tempswa
+        \@namedef{u8:\nuc@tempa}{#2}%
+      \fi
+    \fi
+  }
+  \makeatother
+  \doxynewunicodechar{⁻}{${}^{-}$}% Superscript minus
+  \doxynewunicodechar{²}{${}^{2}$}% Superscript two
+  \doxynewunicodechar{³}{${}^{3}$}% Superscript three
+
+\fi
+\pagestyle{empty}
+\begin{document}
+$K(x, x; T)$
+\pagebreak
+
+$x$
+\pagebreak
+
+$T$
+\pagebreak
+
+\[    K(x, x'; T) = \int \mathcal{D}x(\tau)\,
+    \exp\!\left[-S_E[x(\tau)]\right],
+\]
+\pagebreak
+
+\[    S_E = \int_0^T d\tau\,
+    \left[\frac{m}{2} \dot{x}^2 + \frac{1}{2}\omega^2 x^2\right].
+\]
+\pagebreak
+
+$a$
+\pagebreak
+
+$N$
+\pagebreak
+
+\[    S^{\text{lat}} = \sum_{j=0}^{N-1} 
+    \left[
+       \frac{m}{2a}(x_{j+1} - x_j)^2
+       + a \, V(x_j)
+    \right].
+\]
+\pagebreak
+
+$T = N a$
+\pagebreak
+
+$\hbar = 1$
+\pagebreak
+
+\[    \mathcal{N} = \left( \frac{m}{2\pi a} \right)^{N/2}.
+\]
+\pagebreak
+
+$E_0$
+\pagebreak
+
+\[    V(x) = \frac{1}{2}x^2 + \lambda x^4
+\]
+\pagebreak
+
+\[    C(\tau) = \langle x(0)x(\tau) \rangle \sim e^{-E_0 \tau}
+\]
+\pagebreak
+
+$a = \Delta \tau$
+\pagebreak
+
+$\lambda$
+\pagebreak
+
+$V(x)=\frac{1}{2}x^2 + \lambda x^4$
+\pagebreak
+
+$V(x)$
+\pagebreak
+
+\[    S_E = \sum_j \left[
+      \frac{m}{2a}(x_{j+1}-x_j)^2 + aV(x_j)
+    \right]
+\]
+\pagebreak
+
+$j-1$
+\pagebreak
+
+$j$
+\pagebreak
+
+$j+1$
+\pagebreak
+
+$x_j$
+\pagebreak
+
+$\Delta S$
+\pagebreak
+
+$C(\tau)$
+\pagebreak
+
+$(C(\tau), A_{\text{acc}})$
+\pagebreak
+
+\[    K(x, x; T) = \int \mathcal{D}x(\tau)\, e^{-S_E[x]}
+\]
+\pagebreak
+
+$S_E$
+\pagebreak
+
+$V(x) = \frac{1}{2}x^2$
+\pagebreak
+
+\[    S = \sum_{j=0}^{N-1}\left[
+      \frac{m}{2a}(x_{j+1}-x_j)^2 + a\,V(x_j)
+    \right]
+\]
+\pagebreak
+
+$\exp[-S_E[x]]$
+\pagebreak
+
+\end{document}

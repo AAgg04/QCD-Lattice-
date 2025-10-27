@@ -1,0 +1,211 @@
+.TH "Path integral" 3 "QCD Lattice" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Path integral
+.SH SYNOPSIS
+.br
+.PP
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBpotential_V\fP (x)"
+.br
+.ti -1c
+.RI "\fBS_lat\fP (x_list, x_fixed, *args)"
+.br
+.ti -1c
+.RI "\fBintegrand\fP (*x_list)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBN\fP = 4"
+.br
+.ti -1c
+.RI "int \fBlattice_spacing_a\fP = 1 / 2"
+.br
+.ti -1c
+.RI "float \fBparticle_mass\fP = 1\&.0"
+.br
+.ti -1c
+.RI "int \fBbound_limit\fP = 5"
+.br
+.ti -1c
+.RI "list \fBbounds\fP = [(\-\fBbound_limit\fP, \fBbound_limit\fP)] * (\fBN\fP \- 1)"
+.br
+.ti -1c
+.RI "list \fBpropagator\fP = []"
+.br
+.ti -1c
+.RI "tuple \fBnormalization_A\fP = (\fBparticle_mass\fP / (2 * math\&.pi * \fBlattice_spacing_a\fP)) ** (\fBN\fP / 2)"
+.br
+.ti -1c
+.RI "list \fBx_values\fP = [i * 0\&.25 for i in range(\-10, 11)]"
+.br
+.ti -1c
+.RI "\fBresult\fP"
+.br
+.ti -1c
+.RI "\fBerror\fP"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "Path integral\&.integrand (* x_list)"
+
+.PP
+.nf
+@brief Integrand exp(−S_E[x]) for numerical quadrature\&.
+@param x_list variadic float: internal lattice points\&.
+@return float: value of exp(−S_E)\&.
+@details
+This closure captures `x_fixed` from the loop scope\&.
+
+.fi
+.PP
+ 
+.PP
+Definition at line \fB98\fP of file \fBPath integral\&.py\fP\&.
+.nf
+98     def integrand(*x_list):
+99         """
+100         @brief Integrand exp(−S_E[x]) for numerical quadrature\&.
+101         @param x_list variadic float: internal lattice points\&.
+102         @return float: value of exp(−S_E)\&.
+103         @details
+104         This closure captures `x_fixed` from the loop scope\&.
+105         """
+106         return math\&.exp(\-S_lat(x_list, x_fixed))
+107 
+.PP
+.fi
+
+.SS "Path integral\&.potential_V ( x)"
+
+.PP
+.nf
+@brief Harmonic oscillator potential\&.
+@param x float: position value\&.
+@return float: potential V(x) = 1/2 x²\&.
+
+.fi
+.PP
+ 
+.PP
+Definition at line \fB54\fP of file \fBPath integral\&.py\fP\&.
+.nf
+54 def potential_V(x):
+55     """
+56     @brief Harmonic oscillator potential\&.
+57     @param x float: position value\&.
+58     @return float: potential V(x) = 1/2 x²\&.
+59     """
+60     return 0\&.5 * x**2
+61 
+62 
+63 # ===============================================================
+64 #                        Euclidean Action
+65 # ===============================================================
+66 
+.PP
+.fi
+
+.SS "Path integral\&.S_lat ( x_list,  x_fixed, * args)"
+
+.PP
+.nf
+@brief Compute discretized Euclidean path action\&.
+@param x_list list(float): internal coordinates, length (N−1)\&.
+@param x_fixed float: fixed boundary value x₀ = x_N\&.
+@return float: Euclidean action S_E for given path\&.
+@details
+Constructs full path:
+    x = [x_fixed, x₁, x₂, \&.\&.\&., x_{N−1}, x_fixed]
+and applies:
+    S_E = Σ_j m/(2a)(x_{j+1} − x_j)² + a V(x_j)
+without periodic BCs since endpoints are fixed\&.
+
+.fi
+.PP
+ 
+.PP
+Definition at line \fB67\fP of file \fBPath integral\&.py\fP\&.
+.nf
+67 def S_lat(x_list, x_fixed, *args):
+68     """
+69     @brief Compute discretized Euclidean path action\&.
+70     @param x_list list(float): internal coordinates, length (N−1)\&.
+71     @param x_fixed float: fixed boundary value x₀ = x_N\&.
+72     @return float: Euclidean action S_E for given path\&.
+73     @details
+74     Constructs full path:
+75         x = [x_fixed, x₁, x₂, \&.\&.\&., x_{N−1}, x_fixed]
+76     and applies:
+77         S_E = Σ_j m/(2a)(x_{j+1} − x_j)² + a V(x_j)
+78     without periodic BCs since endpoints are fixed\&.
+79     """
+80     x = [x_fixed] + list(x_list) + [x_fixed]
+81     Action_S = 0
+82     for j in range(0, N \- 1):
+83         x_derivative = x[j + 1] \- x[j]
+84         Action_S += (particle_mass / (2 * lattice_spacing_a)) * x_derivative**2 \\
+85                     + lattice_spacing_a * potential_V(x[j])
+86     return Action_S
+87 
+88 
+89 # ===============================================================
+90 #               Propagator Evaluation Loop
+91 # ===============================================================
+92 
+.PP
+.fi
+
+.SH "Variable Documentation"
+.PP 
+.SS "int Path integral\&.bound_limit = 5"
+
+.PP
+Definition at line \fB37\fP of file \fBPath integral\&.py\fP\&.
+.SS "list Path integral\&.bounds = [(\-\fBbound_limit\fP, \fBbound_limit\fP)] * (\fBN\fP \- 1)"
+
+.PP
+Definition at line \fB40\fP of file \fBPath integral\&.py\fP\&.
+.SS "Path integral\&.error"
+
+.PP
+Definition at line \fB108\fP of file \fBPath integral\&.py\fP\&.
+.SS "int Path integral\&.lattice_spacing_a = 1 / 2"
+
+.PP
+Definition at line \fB31\fP of file \fBPath integral\&.py\fP\&.
+.SS "int Path integral\&.N = 4"
+
+.PP
+Definition at line \fB28\fP of file \fBPath integral\&.py\fP\&.
+.SS "tuple Path integral\&.normalization_A = (\fBparticle_mass\fP / (2 * math\&.pi * \fBlattice_spacing_a\fP)) ** (\fBN\fP / 2)"
+
+.PP
+Definition at line \fB46\fP of file \fBPath integral\&.py\fP\&.
+.SS "float Path integral\&.particle_mass = 1\&.0"
+
+.PP
+Definition at line \fB34\fP of file \fBPath integral\&.py\fP\&.
+.SS "list Path integral\&.propagator = []"
+
+.PP
+Definition at line \fB43\fP of file \fBPath integral\&.py\fP\&.
+.SS "Path integral\&.result"
+
+.PP
+Definition at line \fB108\fP of file \fBPath integral\&.py\fP\&.
+.SS "list Path integral\&.x_values = [i * 0\&.25 for i in range(\-10, 11)]"
+
+.PP
+Definition at line \fB93\fP of file \fBPath integral\&.py\fP\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for QCD Lattice from the source code\&.

@@ -1,0 +1,30 @@
+\doxysection{Path Namespace Reference}
+\hypertarget{namespace_path}{}\label{namespace_path}\index{Path@{Path}}
+
+
+integral  
+
+
+
+
+\doxysubsection{Detailed Description}
+integral 
+
+\begin{DoxyVerb}@mainpage Numerical Euclidean Path Integral for the Harmonic Oscillator
+@file path_integral.py
+@brief Brute-force multidimensional Euclidean path integral evaluation.
+
+@details
+This demonstration numerically evaluates the diagonal propagator
+K(x, x; T) = ⟨x| e^(−H T) |x⟩
+for a 1D harmonic oscillator using a discretized Euclidean action:
+
+    S_E = Σ_j [ m/(2a) (x_{j+1} − x_j)² + a V(x_j) ],
+
+with fixed endpoints x₀ = x_N = x_fixed and (N−1) internal lattice points
+integrated over a finite domain. The integral is computed using
+SciPy’s multi-dimensional quadrature (`nquad`), which scales
+exponentially with N and serves only as a pedagogical reference
+(not an efficient Monte Carlo method).
+\end{DoxyVerb}
+ 

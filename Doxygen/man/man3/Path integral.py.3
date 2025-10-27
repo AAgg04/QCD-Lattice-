@@ -1,0 +1,69 @@
+.TH "Path integral.py" 3 "QCD Lattice" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Path integral.py
+.SH SYNOPSIS
+.br
+.PP
+.SS "Namespaces"
+
+.in +1c
+.ti -1c
+.RI "namespace \fBPath integral\fP"
+.br
+.ti -1c
+.RI "namespace \fBPath\fP"
+.br
+.RI "integral "
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBPath integral\&.potential_V\fP (x)"
+.br
+.ti -1c
+.RI "\fBPath integral\&.S_lat\fP (x_list, x_fixed, *args)"
+.br
+.ti -1c
+.RI "\fBPath integral\&.integrand\fP (*x_list)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBPath integral\&.N\fP = 4"
+.br
+.ti -1c
+.RI "int \fBPath integral\&.lattice_spacing_a\fP = 1 / 2"
+.br
+.ti -1c
+.RI "float \fBPath integral\&.particle_mass\fP = 1\&.0"
+.br
+.ti -1c
+.RI "int \fBPath integral\&.bound_limit\fP = 5"
+.br
+.ti -1c
+.RI "list \fBPath integral\&.bounds\fP = [(\-\fBbound_limit\fP, \fBbound_limit\fP)] * (\fBN\fP \- 1)"
+.br
+.ti -1c
+.RI "list \fBPath integral\&.propagator\fP = []"
+.br
+.ti -1c
+.RI "tuple \fBPath integral\&.normalization_A\fP = (\fBparticle_mass\fP / (2 * math\&.pi * \fBlattice_spacing_a\fP)) ** (\fBN\fP / 2)"
+.br
+.ti -1c
+.RI "list \fBPath integral\&.x_values\fP = [i * 0\&.25 for i in range(\-10, 11)]"
+.br
+.ti -1c
+.RI "\fBPath integral\&.result\fP"
+.br
+.ti -1c
+.RI "\fBPath integral\&.error\fP"
+.br
+.in -1c
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for QCD Lattice from the source code\&.

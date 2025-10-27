@@ -1,0 +1,90 @@
+.TH "Monte Carlo integral.py" 3 "QCD Lattice" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Monte Carlo integral.py
+.SH SYNOPSIS
+.br
+.PP
+.SS "Namespaces"
+
+.in +1c
+.ti -1c
+.RI "namespace \fBMonte Carlo integral\fP"
+.br
+.ti -1c
+.RI "namespace \fBMonte\fP"
+.br
+.RI "Carlo integral\&. "
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBMonte Carlo integral\&.potential_energy_V\fP (position, lambda_parameter)"
+.br
+.ti -1c
+.RI "\fBMonte Carlo integral\&.local_action\fP (x_prev, x_current, x_next, lambda_parameter)"
+.br
+.ti -1c
+.RI "\fBMonte Carlo integral\&.delta_action_change\fP (x_path, j, x_new, lambda_parameter)"
+.br
+.ti -1c
+.RI "\fBMonte Carlo integral\&.run_monte_carlo\fP (lambda_parameter)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "float \fBMonte Carlo integral\&.particle_mass\fP = 1\&.0"
+.br
+.ti -1c
+.RI "float \fBMonte Carlo integral\&.lattice_spacing_a\fP = 0\&.1"
+.br
+.ti -1c
+.RI "int \fBMonte Carlo integral\&.number_of_sites\fP = 100"
+.br
+.ti -1c
+.RI "int \fBMonte Carlo integral\&.total_monte_carlo_steps\fP = 30000"
+.br
+.ti -1c
+.RI "int \fBMonte Carlo integral\&.thermalization_steps\fP = 5000"
+.br
+.ti -1c
+.RI "float \fBMonte Carlo integral\&.proposal_step_size\fP = 0\&.5"
+.br
+.ti -1c
+.RI "list \fBMonte Carlo integral\&.anharmonicity_values\fP = [0\&.0, 0\&.1, 0\&.3, 0\&.5, 1\&.0]"
+.br
+.ti -1c
+.RI "list \fBMonte Carlo integral\&.estimated_ground_energies\fP = []"
+.br
+.ti -1c
+.RI "\fBMonte Carlo integral\&.correlation_function\fP"
+.br
+.ti -1c
+.RI "\fBMonte Carlo integral\&.acceptance_rate\fP"
+.br
+.ti -1c
+.RI "float \fBMonte Carlo integral\&.euclidean_times\fP = np\&.arange(len(\fBcorrelation_function\fP)) * \fBlattice_spacing_a\fP"
+.br
+.ti -1c
+.RI "\fBMonte Carlo integral\&.fit_slice\fP = slice(1, 6)"
+.br
+.ti -1c
+.RI "\fBMonte Carlo integral\&.slope\fP"
+.br
+.ti -1c
+.RI "\fBMonte Carlo integral\&.intercept\fP"
+.br
+.ti -1c
+.RI "\fBMonte Carlo integral\&.estimated_E0\fP = \-\fBslope\fP"
+.br
+.ti -1c
+.RI "\fBMonte Carlo integral\&.lw\fP"
+.br
+.in -1c
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for QCD Lattice from the source code\&.

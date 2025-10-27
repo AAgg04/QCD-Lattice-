@@ -1,0 +1,135 @@
+.TH "Lattice Field Theory.py" 3 "QCD Lattice" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Lattice Field Theory.py
+.SH SYNOPSIS
+.br
+.PP
+.SS "Namespaces"
+
+.in +1c
+.ti -1c
+.RI "namespace \fBLattice Field Theory\fP"
+.br
+.ti -1c
+.RI "namespace \fBLattice\fP"
+.br
+.RI "Field Theory\&. "
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBLattice Field Theory\&.potential_at_site\fP (phi_val)"
+.br
+.ti -1c
+.RI "\fBLattice Field Theory\&.neighbor_index\fP (idx, mu, shift=1)"
+.br
+.ti -1c
+.RI "\fBLattice Field Theory\&.action_total\fP (field)"
+.br
+.ti -1c
+.RI "\fBLattice Field Theory\&.local_action_contribution\fP (idx, field)"
+.br
+.ti -1c
+.RI "\fBLattice Field Theory\&.metropolis_update_field\fP (field, \fBeps\fP=0\&.5)"
+.br
+.ti -1c
+.RI "\fBLattice Field Theory\&.measure_field_correlation_all_origins\fP (field)"
+.br
+.ti -1c
+.RI "\fBLattice Field Theory\&.compute_effective_mass\fP (G, \fBG_err\fP=None)"
+.br
+.ti -1c
+.RI "\fBLattice Field Theory\&.run_field_simulation\fP (field, \fBN_sweeps\fP=2000, \fBN_cor\fP=10, \fBeps\fP=0\&.5, \fBthermal_sweeps\fP=500)"
+.br
+.ti -1c
+.RI "\fBLattice Field Theory\&.run_multiple_simulations\fP (\fBnum_runs\fP, \fBN_sweeps\fP, \fBN_cor\fP, \fBeps\fP, \fBthermal_sweeps\fP)"
+.br
+.ti -1c
+.RI "\fBLattice Field Theory\&.cosh_model\fP (t, A, \fBm\fP)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBLattice Field Theory\&.d\fP = 1"
+.br
+.ti -1c
+.RI "float \fBLattice Field Theory\&.a\fP = 1\&.0"
+.br
+.ti -1c
+.RI "int \fBLattice Field Theory\&.L\fP = 32"
+.br
+.ti -1c
+.RI "float \fBLattice Field Theory\&.m\fP = 1\&.0"
+.br
+.ti -1c
+.RI "float \fBLattice Field Theory\&.lambda_\fP = 0\&.1"
+.br
+.ti -1c
+.RI "int \fBLattice Field Theory\&.D\fP = \fBd\fP + 1"
+.br
+.ti -1c
+.RI "\fBLattice Field Theory\&.phi\fP = np\&.zeros((\fBL\fP,) * \fBD\fP)"
+.br
+.ti -1c
+.RI "float \fBLattice Field Theory\&.eps_tuned\fP = 0\&.5"
+.br
+.ti -1c
+.RI "\fBLattice Field Theory\&.G_mean\fP = 0\&.5 * (G_mean + G_mean[::\-1])"
+.br
+.ti -1c
+.RI "\fBLattice Field Theory\&.G_err\fP"
+.br
+.ti -1c
+.RI "\fBLattice Field Theory\&.m_eff\fP"
+.br
+.ti -1c
+.RI "\fBLattice Field Theory\&.num_runs\fP"
+.br
+.ti -1c
+.RI "\fBLattice Field Theory\&.N_sweeps\fP"
+.br
+.ti -1c
+.RI "\fBLattice Field Theory\&.N_cor\fP"
+.br
+.ti -1c
+.RI "\fBLattice Field Theory\&.eps\fP"
+.br
+.ti -1c
+.RI "\fBLattice Field Theory\&.thermal_sweeps\fP"
+.br
+.ti -1c
+.RI "\fBLattice Field Theory\&.tdata\fP = np\&.arange(\fBL\fP)"
+.br
+.ti -1c
+.RI "int \fBLattice Field Theory\&.mask\fP = \fBG_mean\fP > 5 * \fBG_err\fP"
+.br
+.ti -1c
+.RI "\fBLattice Field Theory\&.A_fit\fP"
+.br
+.ti -1c
+.RI "\fBLattice Field Theory\&.m_fit\fP"
+.br
+.ti -1c
+.RI "\fBLattice Field Theory\&.p0\fP"
+.br
+.ti -1c
+.RI "\fBLattice Field Theory\&.G_plot\fP = np\&.abs(\fBG_mean\fP)"
+.br
+.ti -1c
+.RI "\fBLattice Field Theory\&.yerr\fP"
+.br
+.ti -1c
+.RI "\fBLattice Field Theory\&.fmt\fP"
+.br
+.ti -1c
+.RI "\fBLattice Field Theory\&.capsize\fP"
+.br
+.in -1c
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for QCD Lattice from the source code\&.

@@ -1,0 +1,347 @@
+.TH "Monte Carlo integral" 3 "QCD Lattice" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Monte Carlo integral
+.SH SYNOPSIS
+.br
+.PP
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBpotential_energy_V\fP (position, lambda_parameter)"
+.br
+.ti -1c
+.RI "\fBlocal_action\fP (x_prev, x_current, x_next, lambda_parameter)"
+.br
+.ti -1c
+.RI "\fBdelta_action_change\fP (x_path, j, x_new, lambda_parameter)"
+.br
+.ti -1c
+.RI "\fBrun_monte_carlo\fP (lambda_parameter)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "float \fBparticle_mass\fP = 1\&.0"
+.br
+.ti -1c
+.RI "float \fBlattice_spacing_a\fP = 0\&.1"
+.br
+.ti -1c
+.RI "int \fBnumber_of_sites\fP = 100"
+.br
+.ti -1c
+.RI "int \fBtotal_monte_carlo_steps\fP = 30000"
+.br
+.ti -1c
+.RI "int \fBthermalization_steps\fP = 5000"
+.br
+.ti -1c
+.RI "float \fBproposal_step_size\fP = 0\&.5"
+.br
+.ti -1c
+.RI "list \fBanharmonicity_values\fP = [0\&.0, 0\&.1, 0\&.3, 0\&.5, 1\&.0]"
+.br
+.ti -1c
+.RI "list \fBestimated_ground_energies\fP = []"
+.br
+.ti -1c
+.RI "\fBcorrelation_function\fP"
+.br
+.ti -1c
+.RI "\fBacceptance_rate\fP"
+.br
+.ti -1c
+.RI "float \fBeuclidean_times\fP = np\&.arange(len(\fBcorrelation_function\fP)) * \fBlattice_spacing_a\fP"
+.br
+.ti -1c
+.RI "\fBfit_slice\fP = slice(1, 6)"
+.br
+.ti -1c
+.RI "\fBslope\fP"
+.br
+.ti -1c
+.RI "\fBintercept\fP"
+.br
+.ti -1c
+.RI "\fBestimated_E0\fP = \-\fBslope\fP"
+.br
+.ti -1c
+.RI "\fBlw\fP"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "Monte Carlo integral\&.delta_action_change ( x_path,  j,  x_new,  lambda_parameter)"
+
+.PP
+.nf
+@brief Compute local change ΔS_E for a proposed update at site j\&.
+@param x_path ndarray(float): full current path configuration\&.
+@param j int: lattice site index for update\&.
+@param x_new float: proposed new value for x[j]\&.
+@param lambda_parameter float: anharmonicity λ\&.
+@return float: ΔS = S_new − S_old\&.
+@details
+Only the action terms involving sites {j−1, j, j+1} contribute to ΔS\&.
+Indices wrap via periodic boundary conditions\&.
+
+.fi
+.PP
+ 
+.PP
+Definition at line \fB96\fP of file \fBMonte Carlo integral\&.py\fP\&.
+.nf
+96 def delta_action_change(x_path, j, x_new, lambda_parameter):
+97     """
+98     @brief Compute local change ΔS_E for a proposed update at site j\&.
+99     @param x_path ndarray(float): full current path configuration\&.
+100     @param j int: lattice site index for update\&.
+101     @param x_new float: proposed new value for x[j]\&.
+102     @param lambda_parameter float: anharmonicity λ\&.
+103     @return float: ΔS = S_new − S_old\&.
+104     @details
+105     Only the action terms involving sites {j−1, j, j+1} contribute to ΔS\&.
+106     Indices wrap via periodic boundary conditions\&.
+107     """
+108     j_minus = (j \- 1) % number_of_sites
+109     j_plus = (j + 1) % number_of_sites
+110 
+111     S_old = local_action(x_path[j_minus], x_path[j], x_path[j_plus], lambda_parameter)
+112     S_new = local_action(x_path[j_minus], x_new, x_path[j_plus], lambda_parameter)
+113 
+114     return S_new \- S_old
+115 
+116 
+117 # ===============================================================
+118 #         Monte Carlo Simulation for Given λ
+119 # ===============================================================
+120 
+.PP
+.fi
+
+.SS "Monte Carlo integral\&.local_action ( x_prev,  x_current,  x_next,  lambda_parameter)"
+
+.PP
+.nf
+@brief Local contribution to discretized Euclidean action around site j\&.
+@param x_prev float: x at site j−1\&.
+@param x_current float: x at site j\&.
+@param x_next float: x at site j+1\&.
+@param lambda_parameter float: anharmonicity λ\&.
+@return float: local action S_E(j)\&.
+@details
+Uses symmetric discretized kinetic term:
+    S_kin(j) = m/(4a)[(x_{j+1}-x_j)² + (x_j - x_{j-1})²]
+plus potential:
+    S_pot(j) = a V(x_j)\&.
+Periodic boundary conditions handled externally\&.
+
+.fi
+.PP
+ 
+.PP
+Definition at line \fB75\fP of file \fBMonte Carlo integral\&.py\fP\&.
+.nf
+75 def local_action(x_prev, x_current, x_next, lambda_parameter):
+76     """
+77     @brief Local contribution to discretized Euclidean action around site j\&.
+78     @param x_prev float: x at site j−1\&.
+79     @param x_current float: x at site j\&.
+80     @param x_next float: x at site j+1\&.
+81     @param lambda_parameter float: anharmonicity λ\&.
+82     @return float: local action S_E(j)\&.
+83     @details
+84     Uses symmetric discretized kinetic term:
+85         S_kin(j) = m/(4a)[(x_{j+1}\-x_j)² + (x_j \- x_{j\-1})²]
+86     plus potential:
+87         S_pot(j) = a V(x_j)\&.
+88     Periodic boundary conditions handled externally\&.
+89     """
+90     S_kinetic_local = 0\&.5 * particle_mass / lattice_spacing_a * \\
+91                       ((x_next \- x_current)**2 + (x_current \- x_prev)**2) / 2
+92     S_potential_local = lattice_spacing_a * potential_energy_V(x_current, lambda_parameter)
+93     return S_kinetic_local + S_potential_local
+94 
+95 
+.PP
+.fi
+
+.SS "Monte Carlo integral\&.potential_energy_V ( position,  lambda_parameter)"
+
+.PP
+.nf
+@brief Anharmonic potential energy V(x)\&.
+@param position float or ndarray: spatial coordinate(s) x\&.
+@param lambda_parameter float: anharmonicity λ (λ → 0 gives harmonic limit)\&.
+@return float or ndarray: potential energy V(x)\&.
+@details
+Implements:
+    V(x) = 1/2 x² + λ x⁴\&.
+
+.fi
+.PP
+ 
+.PP
+Definition at line \fB58\fP of file \fBMonte Carlo integral\&.py\fP\&.
+.nf
+58 def potential_energy_V(position, lambda_parameter):
+59     """
+60     @brief Anharmonic potential energy V(x)\&.
+61     @param position float or ndarray: spatial coordinate(s) x\&.
+62     @param lambda_parameter float: anharmonicity λ (λ → 0 gives harmonic limit)\&.
+63     @return float or ndarray: potential energy V(x)\&.
+64     @details
+65     Implements:
+66         V(x) = 1/2 x² + λ x⁴\&.
+67     """
+68     return 0\&.5 * position**2 + lambda_parameter * position**4
+69 
+70 
+71 # ===============================================================
+72 #         Local Euclidean Action Contributions
+73 # ===============================================================
+74 
+.PP
+.fi
+
+.SS "Monte Carlo integral\&.run_monte_carlo ( lambda_parameter)"
+
+.PP
+.nf
+@brief Perform local Metropolis updates to sample Euclidean paths for fixed λ\&.
+@param lambda_parameter float: anharmonicity value for this simulation\&.
+@return tuple: (C_tau, acceptance_fraction)
+    - C_tau: ndarray(float) correlator C(τ) for τ up to T/2
+    - acceptance_fraction: overall acceptance rate of updates
+@details
+• Initializes x(τ)=0 path
+• Local updates at every site each sweep
+• Observables recorded every 10 steps post-thermalization
+• Correlator estimator:
+        C(τ) = ⟨ x_j x_{j+τ} ⟩ averaged over j and Monte Carlo samples
+
+.fi
+.PP
+ 
+.PP
+Definition at line \fB121\fP of file \fBMonte Carlo integral\&.py\fP\&.
+.nf
+121 def run_monte_carlo(lambda_parameter):
+122     """
+123     @brief Perform local Metropolis updates to sample Euclidean paths for fixed λ\&.
+124     @param lambda_parameter float: anharmonicity value for this simulation\&.
+125     @return tuple: (C_tau, acceptance_fraction)
+126         \- C_tau: ndarray(float) correlator C(τ) for τ up to T/2
+127         \- acceptance_fraction: overall acceptance rate of updates
+128     @details
+129     • Initializes x(τ)=0 path
+130     • Local updates at every site each sweep
+131     • Observables recorded every 10 steps post\-thermalization
+132     • Correlator estimator:
+133             C(τ) = ⟨ x_j x_{j+τ} ⟩ averaged over j and Monte Carlo samples
+134     """
+135     x_path = np\&.zeros(number_of_sites)
+136     G_correlator = np\&.zeros(number_of_sites // 2)
+137     N_measure = 0
+138     accepted_updates = 0
+139 
+140     for monte_carlo_step in range(total_monte_carlo_steps):
+141         for j in range(number_of_sites):
+142             x_new = x_path[j] + np\&.random\&.uniform(\-proposal_step_size, proposal_step_size)
+143             delta_S_local = delta_action_change(x_path, j, x_new, lambda_parameter)
+144 
+145             if delta_S_local < 0 or np\&.exp(\-delta_S_local) > np\&.random\&.rand():
+146                 x_path[j] = x_new
+147                 accepted_updates += 1
+148 
+149         if monte_carlo_step >= thermalization_steps and monte_carlo_step % 10 == 0:
+150             for t_index in range(number_of_sites // 2):
+151                 G_correlator[t_index] += np\&.mean(x_path * np\&.roll(x_path, \-t_index))
+152             N_measure += 1
+153 
+154     G_correlator /= N_measure
+155     acceptance_fraction = accepted_updates / (total_monte_carlo_steps * number_of_sites)
+156     return G_correlator, acceptance_fraction
+157 
+158 
+159 # ===============================================================
+160 #          Main Loop — Extract Ground\-State Energy
+161 # ===============================================================
+162 
+.PP
+.fi
+
+.SH "Variable Documentation"
+.PP 
+.SS "Monte Carlo integral\&.acceptance_rate"
+
+.PP
+Definition at line \fB167\fP of file \fBMonte Carlo integral\&.py\fP\&.
+.SS "list Monte Carlo integral\&.anharmonicity_values = [0\&.0, 0\&.1, 0\&.3, 0\&.5, 1\&.0]"
+
+.PP
+Definition at line \fB48\fP of file \fBMonte Carlo integral\&.py\fP\&.
+.SS "Monte Carlo integral\&.correlation_function"
+
+.PP
+Definition at line \fB167\fP of file \fBMonte Carlo integral\&.py\fP\&.
+.SS "Monte Carlo integral\&.estimated_E0 = \-\fBslope\fP"
+
+.PP
+Definition at line \fB175\fP of file \fBMonte Carlo integral\&.py\fP\&.
+.SS "list Monte Carlo integral\&.estimated_ground_energies = []"
+
+.PP
+Definition at line \fB163\fP of file \fBMonte Carlo integral\&.py\fP\&.
+.SS "float Monte Carlo integral\&.euclidean_times = np\&.arange(len(\fBcorrelation_function\fP)) * \fBlattice_spacing_a\fP"
+
+.PP
+Definition at line \fB170\fP of file \fBMonte Carlo integral\&.py\fP\&.
+.SS "Monte Carlo integral\&.fit_slice = slice(1, 6)"
+
+.PP
+Definition at line \fB172\fP of file \fBMonte Carlo integral\&.py\fP\&.
+.SS "Monte Carlo integral\&.intercept"
+
+.PP
+Definition at line \fB173\fP of file \fBMonte Carlo integral\&.py\fP\&.
+.SS "float Monte Carlo integral\&.lattice_spacing_a = 0\&.1"
+
+.PP
+Definition at line \fB33\fP of file \fBMonte Carlo integral\&.py\fP\&.
+.SS "Monte Carlo integral\&.lw"
+
+.PP
+Definition at line \fB186\fP of file \fBMonte Carlo integral\&.py\fP\&.
+.SS "int Monte Carlo integral\&.number_of_sites = 100"
+
+.PP
+Definition at line \fB36\fP of file \fBMonte Carlo integral\&.py\fP\&.
+.SS "float Monte Carlo integral\&.particle_mass = 1\&.0"
+
+.PP
+Definition at line \fB30\fP of file \fBMonte Carlo integral\&.py\fP\&.
+.SS "float Monte Carlo integral\&.proposal_step_size = 0\&.5"
+
+.PP
+Definition at line \fB45\fP of file \fBMonte Carlo integral\&.py\fP\&.
+.SS "Monte Carlo integral\&.slope"
+
+.PP
+Definition at line \fB173\fP of file \fBMonte Carlo integral\&.py\fP\&.
+.SS "int Monte Carlo integral\&.thermalization_steps = 5000"
+
+.PP
+Definition at line \fB42\fP of file \fBMonte Carlo integral\&.py\fP\&.
+.SS "int Monte Carlo integral\&.total_monte_carlo_steps = 30000"
+
+.PP
+Definition at line \fB39\fP of file \fBMonte Carlo integral\&.py\fP\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for QCD Lattice from the source code\&.

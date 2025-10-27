@@ -1,0 +1,55 @@
+\doxysection{Monte Carlo integral.\+py File Reference}
+\hypertarget{_monte_01_carlo_01integral_8py}{}\label{_monte_01_carlo_01integral_8py}\index{Monte Carlo integral.py@{Monte Carlo integral.py}}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_monte_01_carlo_01integral}{Monte Carlo integral}}
+\item 
+namespace \mbox{\hyperlink{namespace_monte}{Monte}}
+\begin{DoxyCompactList}\small\item\em Carlo integral. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespace_monte_01_carlo_01integral_ad7af17fed7ce4a859736d663b5b89414}{Monte Carlo integral.\+potential\+\_\+energy\+\_\+V}} (position, lambda\+\_\+parameter)
+\item 
+\mbox{\hyperlink{namespace_monte_01_carlo_01integral_aa3e96e57101efb05ac94168b70e9bc0d}{Monte Carlo integral.\+local\+\_\+action}} (x\+\_\+prev, x\+\_\+current, x\+\_\+next, lambda\+\_\+parameter)
+\item 
+\mbox{\hyperlink{namespace_monte_01_carlo_01integral_a7268ea8818fd19b8c3d019fd8b83edda}{Monte Carlo integral.\+delta\+\_\+action\+\_\+change}} (x\+\_\+path, j, x\+\_\+new, lambda\+\_\+parameter)
+\item 
+\mbox{\hyperlink{namespace_monte_01_carlo_01integral_a1ecd4625d86ac81c31ad13983becfcae}{Monte Carlo integral.\+run\+\_\+monte\+\_\+carlo}} (lambda\+\_\+parameter)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+float \mbox{\hyperlink{namespace_monte_01_carlo_01integral_ab0fd219247cd7ed774edc17a5642da3c}{Monte Carlo integral.\+particle\+\_\+mass}} = 1.\+0
+\item 
+float \mbox{\hyperlink{namespace_monte_01_carlo_01integral_a9e7bc09f7251ca180317231d3a7a846b}{Monte Carlo integral.\+lattice\+\_\+spacing\+\_\+a}} = 0.\+1
+\item 
+int \mbox{\hyperlink{namespace_monte_01_carlo_01integral_aea3a6fbe80a967f13b9d1dfbdd16ac59}{Monte Carlo integral.\+number\+\_\+of\+\_\+sites}} = 100
+\item 
+int \mbox{\hyperlink{namespace_monte_01_carlo_01integral_a993841cd2661d3e699127229426340c3}{Monte Carlo integral.\+total\+\_\+monte\+\_\+carlo\+\_\+steps}} = 30000
+\item 
+int \mbox{\hyperlink{namespace_monte_01_carlo_01integral_a13c9ae99df84d55b27939ac4f1cdcfb6}{Monte Carlo integral.\+thermalization\+\_\+steps}} = 5000
+\item 
+float \mbox{\hyperlink{namespace_monte_01_carlo_01integral_a1f69f0bd1cb0e12fd17b9a4cc89c54cd}{Monte Carlo integral.\+proposal\+\_\+step\+\_\+size}} = 0.\+5
+\item 
+list \mbox{\hyperlink{namespace_monte_01_carlo_01integral_af402df0bbfe1e6001d2820946138c6e8}{Monte Carlo integral.\+anharmonicity\+\_\+values}} = \mbox{[}0.\+0, 0.\+1, 0.\+3, 0.\+5, 1.\+0\mbox{]}
+\item 
+list \mbox{\hyperlink{namespace_monte_01_carlo_01integral_a53d890c14c8578a0f7d92a1ce524fc5f}{Monte Carlo integral.\+estimated\+\_\+ground\+\_\+energies}} = \mbox{[}$\,$\mbox{]}
+\item 
+\mbox{\hyperlink{namespace_monte_01_carlo_01integral_a75248d9fc2bf6385fcf050379c6ef426}{Monte Carlo integral.\+correlation\+\_\+function}}
+\item 
+\mbox{\hyperlink{namespace_monte_01_carlo_01integral_af0fc9aec82b94370019aeff9c967b8a1}{Monte Carlo integral.\+acceptance\+\_\+rate}}
+\item 
+float \mbox{\hyperlink{namespace_monte_01_carlo_01integral_abb3f4f3bff384c4414e2fe2801d61df9}{Monte Carlo integral.\+euclidean\+\_\+times}} = np.\+arange(len(\mbox{\hyperlink{namespace_monte_01_carlo_01integral_a75248d9fc2bf6385fcf050379c6ef426}{correlation\+\_\+function}})) \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_monte_01_carlo_01integral_a9e7bc09f7251ca180317231d3a7a846b}{lattice\+\_\+spacing\+\_\+a}}
+\item 
+\mbox{\hyperlink{namespace_monte_01_carlo_01integral_a16f0ce30fc4f76bee7b4e1deffa81d41}{Monte Carlo integral.\+fit\+\_\+slice}} = slice(1, 6)
+\item 
+\mbox{\hyperlink{namespace_monte_01_carlo_01integral_a5f9b87959665f7b948663ba28237e7b3}{Monte Carlo integral.\+slope}}
+\item 
+\mbox{\hyperlink{namespace_monte_01_carlo_01integral_a345b7b7a2be189d9c1fcf3001ea7e76e}{Monte Carlo integral.\+intercept}}
+\item 
+\mbox{\hyperlink{namespace_monte_01_carlo_01integral_a3c284efa84d6a0ad889388a8af9761af}{Monte Carlo integral.\+estimated\+\_\+\+E0}} = -\/\mbox{\hyperlink{namespace_monte_01_carlo_01integral_a5f9b87959665f7b948663ba28237e7b3}{slope}}
+\item 
+\mbox{\hyperlink{namespace_monte_01_carlo_01integral_aa5a1c7c854e3ea0f8ff5b2240e8b311a}{Monte Carlo integral.\+lw}}
+\end{DoxyCompactItemize}

@@ -1,0 +1,22 @@
+digraph "QCD_Lattice_SU3.real_trace_plaquette"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  rankdir="RL";
+  Node1 [id="Node000001",label="QCD_Lattice_SU3.real\l_trace_plaquette",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [id="edge1_Node000001_Node000002",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node2 [id="Node000002",label="QCD_Lattice_SU3.average\l_plaquette_su3",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$namespace_q_c_d___lattice___s_u3.html#a765077dbd81395bf149cab91574eb395",tooltip=" "];
+  Node2 -> Node3 [id="edge2_Node000002_Node000003",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node3 [id="Node000003",label="QCD_Lattice_SU3.run\l_su3_simulation",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$namespace_q_c_d___lattice___s_u3.html#a929494493a33323e75210da746475f2f",tooltip=" "];
+  Node1 -> Node4 [id="edge3_Node000001_Node000004",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node4 [id="Node000004",label="QCD_Lattice_SU3.plaquettes\l_touching_link",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$namespace_q_c_d___lattice___s_u3.html#a51f76f98325616f820bcc40f2d106a02",tooltip=" "];
+  Node4 -> Node5 [id="edge4_Node000004_Node000005",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node5 [id="Node000005",label="QCD_Lattice_SU3.metropolis\l_update",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$namespace_q_c_d___lattice___s_u3.html#ae51e7ab33070cfee14de6989b7c4a57b",tooltip=" "];
+  Node5 -> Node3 [id="edge5_Node000005_Node000003",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node5 -> Node6 [id="edge6_Node000005_Node000006",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node6 [id="Node000006",label="QCD_Lattice_SU3.su3\l_simulation_with_wilson_loops",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$namespace_q_c_d___lattice___s_u3.html#ad76fd939779f34cd36ddd587c3d13402",tooltip=" "];
+  Node5 -> Node7 [id="edge7_Node000005_Node000007",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node7 [id="Node000007",label="QCD_Lattice_SU3.tune\l_eps_su3",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$namespace_q_c_d___lattice___s_u3.html#adeb248c505c926e2fe3efc854dd3d5fd",tooltip=" "];
+}

@@ -1,0 +1,196 @@
+\doxysection{Monte Carlo integral.\+py}
+\hypertarget{_monte_01_carlo_01integral_8py_source}{}\label{_monte_01_carlo_01integral_8py_source}\mbox{\hyperlink{_monte_01_carlo_01integral_8py}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00001}\mbox{\hyperlink{namespace_monte}{00001}}\ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00002}00002\ \textcolor{stringliteral}{@mainpage\ Monte\ Carlo\ Simulation\ for\ the\ 1D\ Quantum\ Anharmonic\ Oscillator}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00003}00003\ \textcolor{stringliteral}{@file\ monte\_carlo\_anharmonic.py}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00004}00004\ \textcolor{stringliteral}{@brief\ Monte\ Carlo\ Euclidean\ path-\/integral\ estimator\ for\ the\ ground-\/state\ energy\ E₀.}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00005}00005\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00006}00006\ \textcolor{stringliteral}{@details}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00007}00007\ \textcolor{stringliteral}{This\ script\ estimates\ the\ ground-\/state\ energy\ of\ a\ 1D\ quantum\ anharmonic\ oscillator}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00008}00008\ \textcolor{stringliteral}{with\ Euclidean\ action}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00009}00009\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00010}00010\ \textcolor{stringliteral}{\ \ \ \ S\_E\ =\ Σ\_j\ [\ m/(2a)\ (x\_\{j+1\}-\/x\_j)²\ +\ a\ V(x\_j)\ ],}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00011}00011\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00012}00012\ \textcolor{stringliteral}{where}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00013}00013\ \textcolor{stringliteral}{\ \ \ \ V(x)\ =\ 1/2\ x²\ +\ λ\ x⁴.}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00014}00014\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00015}00015\ \textcolor{stringliteral}{Configurations\ of\ x(τ)\ are\ sampled\ using\ local\ Metropolis\ updates\ with\ periodic}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00016}00016\ \textcolor{stringliteral}{boundary\ conditions.\ The\ two-\/point\ correlator}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00017}00017\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00018}00018\ \textcolor{stringliteral}{\ \ \ \ C(τ)\ =\ ⟨x(0)x(τ)⟩\ ∼\ e\string^(−E₀\ τ),}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00019}00019\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00020}00020\ \textcolor{stringliteral}{is\ accumulated\ and\ fitted\ to\ a\ single\ exponential\ in\ the\ plateau\ region\ to\ extract\ E₀.}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00021}00021\ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00022}00022\ }
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00023}00023\ \textcolor{keyword}{import}\ numpy\ \textcolor{keyword}{as}\ np}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00024}00024\ \textcolor{keyword}{import}\ matplotlib.pyplot\ \textcolor{keyword}{as}\ plt}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00025}00025\ }
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00026}00026\ \textcolor{comment}{\#\ ===============================================================}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00027}00027\ \textcolor{comment}{\#\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Physical\ and\ Simulation\ Parameters}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00028}00028\ \textcolor{comment}{\#\ ===============================================================}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00029}00029\ }
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00030}\mbox{\hyperlink{namespace_monte_01_carlo_01integral_ab0fd219247cd7ed774edc17a5642da3c}{00030}}\ particle\_mass\ =\ 1.0}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00031}00031\ \textcolor{comment}{\#:\ float:\ mass\ of\ particle\ (in\ natural\ units\ ℏ\ =\ 1).}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00032}00032\ }
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00033}\mbox{\hyperlink{namespace_monte_01_carlo_01integral_a9e7bc09f7251ca180317231d3a7a846b}{00033}}\ lattice\_spacing\_a\ =\ 0.1}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00034}00034\ \textcolor{comment}{\#:\ float:\ Euclidean\ lattice\ spacing\ a\ =\ Δτ.}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00035}00035\ }
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00036}\mbox{\hyperlink{namespace_monte_01_carlo_01integral_aea3a6fbe80a967f13b9d1dfbdd16ac59}{00036}}\ number\_of\_sites\ =\ 100}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00037}00037\ \textcolor{comment}{\#:\ int:\ number\ of\ lattice\ sites\ (total\ imaginary\ time\ extent\ T\ =\ N·a).}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00038}00038\ }
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00039}\mbox{\hyperlink{namespace_monte_01_carlo_01integral_a993841cd2661d3e699127229426340c3}{00039}}\ total\_monte\_carlo\_steps\ =\ 30000}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00040}00040\ \textcolor{comment}{\#:\ int:\ total\ Metropolis\ sweeps\ (equilibration\ +\ measurement).}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00041}00041\ }
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00042}\mbox{\hyperlink{namespace_monte_01_carlo_01integral_a13c9ae99df84d55b27939ac4f1cdcfb6}{00042}}\ thermalization\_steps\ =\ 5000}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00043}00043\ \textcolor{comment}{\#:\ int:\ number\ of\ initial\ sweeps\ discarded\ before\ measurements.}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00044}00044\ }
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00045}\mbox{\hyperlink{namespace_monte_01_carlo_01integral_a1f69f0bd1cb0e12fd17b9a4cc89c54cd}{00045}}\ proposal\_step\_size\ =\ 0.5}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00046}00046\ \textcolor{comment}{\#:\ float:\ amplitude\ of\ uniform\ proposal\ displacement\ for\ local\ updates.}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00047}00047\ }
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00048}\mbox{\hyperlink{namespace_monte_01_carlo_01integral_af402df0bbfe1e6001d2820946138c6e8}{00048}}\ anharmonicity\_values\ =\ [0.0,\ 0.1,\ 0.3,\ 0.5,\ 1.0]}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00049}00049\ \textcolor{comment}{\#:\ list(float):\ list\ of\ anharmonicity\ parameters\ λ\ to\ simulate.}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00050}00050\ }
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00051}00051\ np.random.seed(42)\ \ \textcolor{comment}{\#\ reproducibility}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00052}00052\ }
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00053}00053\ }
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00054}00054\ \textcolor{comment}{\#\ ===============================================================}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00055}00055\ \textcolor{comment}{\#\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Potential\ Energy\ Function}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00056}00056\ \textcolor{comment}{\#\ ===============================================================}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00057}00057\ }
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00058}\mbox{\hyperlink{namespace_monte_01_carlo_01integral_ad7af17fed7ce4a859736d663b5b89414}{00058}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespace_monte_01_carlo_01integral_ad7af17fed7ce4a859736d663b5b89414}{potential\_energy\_V}}(position,\ lambda\_parameter):}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00059}00059\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00060}00060\ \textcolor{stringliteral}{\ \ \ \ @brief\ Anharmonic\ potential\ energy\ V(x).}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00061}00061\ \textcolor{stringliteral}{\ \ \ \ @param\ position\ float\ or\ ndarray:\ spatial\ coordinate(s)\ x.}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00062}00062\ \textcolor{stringliteral}{\ \ \ \ @param\ lambda\_parameter\ float:\ anharmonicity\ λ\ (λ\ →\ 0\ gives\ harmonic\ limit).}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00063}00063\ \textcolor{stringliteral}{\ \ \ \ @return\ float\ or\ ndarray:\ potential\ energy\ V(x).}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00064}00064\ \textcolor{stringliteral}{\ \ \ \ @details}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00065}00065\ \textcolor{stringliteral}{\ \ \ \ Implements:}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00066}00066\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ V(x)\ =\ 1/2\ x²\ +\ λ\ x⁴.}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00067}00067\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00068}00068\ \ \ \ \ \textcolor{keywordflow}{return}\ 0.5\ *\ position**2\ +\ lambda\_parameter\ *\ position**4}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00069}00069\ }
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00070}00070\ }
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00071}00071\ \textcolor{comment}{\#\ ===============================================================}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00072}00072\ \textcolor{comment}{\#\ \ \ \ \ \ \ \ \ Local\ Euclidean\ Action\ Contributions}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00073}00073\ \textcolor{comment}{\#\ ===============================================================}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00074}00074\ }
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00075}\mbox{\hyperlink{namespace_monte_01_carlo_01integral_aa3e96e57101efb05ac94168b70e9bc0d}{00075}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespace_monte_01_carlo_01integral_aa3e96e57101efb05ac94168b70e9bc0d}{local\_action}}(x\_prev,\ x\_current,\ x\_next,\ lambda\_parameter):}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00076}00076\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00077}00077\ \textcolor{stringliteral}{\ \ \ \ @brief\ Local\ contribution\ to\ discretized\ Euclidean\ action\ around\ site\ j.}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00078}00078\ \textcolor{stringliteral}{\ \ \ \ @param\ x\_prev\ float:\ x\ at\ site\ j−1.}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00079}00079\ \textcolor{stringliteral}{\ \ \ \ @param\ x\_current\ float:\ x\ at\ site\ j.}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00080}00080\ \textcolor{stringliteral}{\ \ \ \ @param\ x\_next\ float:\ x\ at\ site\ j+1.}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00081}00081\ \textcolor{stringliteral}{\ \ \ \ @param\ lambda\_parameter\ float:\ anharmonicity\ λ.}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00082}00082\ \textcolor{stringliteral}{\ \ \ \ @return\ float:\ local\ action\ S\_E(j).}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00083}00083\ \textcolor{stringliteral}{\ \ \ \ @details}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00084}00084\ \textcolor{stringliteral}{\ \ \ \ Uses\ symmetric\ discretized\ kinetic\ term:}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00085}00085\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ S\_kin(j)\ =\ m/(4a)[(x\_\{j+1\}-\/x\_j)²\ +\ (x\_j\ -\/\ x\_\{j-\/1\})²]}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00086}00086\ \textcolor{stringliteral}{\ \ \ \ plus\ potential:}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00087}00087\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ S\_pot(j)\ =\ a\ V(x\_j).}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00088}00088\ \textcolor{stringliteral}{\ \ \ \ Periodic\ boundary\ conditions\ handled\ externally.}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00089}00089\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00090}00090\ \ \ \ \ S\_kinetic\_local\ =\ 0.5\ *\ particle\_mass\ /\ lattice\_spacing\_a\ *\ \(\backslash\)}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ((x\_next\ -\/\ x\_current)**2\ +\ (x\_current\ -\/\ x\_prev)**2)\ /\ 2}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00092}00092\ \ \ \ \ S\_potential\_local\ =\ lattice\_spacing\_a\ *\ \mbox{\hyperlink{namespace_monte_01_carlo_01integral_ad7af17fed7ce4a859736d663b5b89414}{potential\_energy\_V}}(x\_current,\ lambda\_parameter)}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00093}00093\ \ \ \ \ \textcolor{keywordflow}{return}\ S\_kinetic\_local\ +\ S\_potential\_local}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00094}00094\ }
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00095}00095\ }
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00096}\mbox{\hyperlink{namespace_monte_01_carlo_01integral_a7268ea8818fd19b8c3d019fd8b83edda}{00096}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespace_monte_01_carlo_01integral_a7268ea8818fd19b8c3d019fd8b83edda}{delta\_action\_change}}(x\_path,\ j,\ x\_new,\ lambda\_parameter):}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00097}00097\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00098}00098\ \textcolor{stringliteral}{\ \ \ \ @brief\ Compute\ local\ change\ ΔS\_E\ for\ a\ proposed\ update\ at\ site\ j.}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00099}00099\ \textcolor{stringliteral}{\ \ \ \ @param\ x\_path\ ndarray(float):\ full\ current\ path\ configuration.}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00100}00100\ \textcolor{stringliteral}{\ \ \ \ @param\ j\ int:\ lattice\ site\ index\ for\ update.}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00101}00101\ \textcolor{stringliteral}{\ \ \ \ @param\ x\_new\ float:\ proposed\ new\ value\ for\ x[j].}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00102}00102\ \textcolor{stringliteral}{\ \ \ \ @param\ lambda\_parameter\ float:\ anharmonicity\ λ.}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00103}00103\ \textcolor{stringliteral}{\ \ \ \ @return\ float:\ ΔS\ =\ S\_new\ −\ S\_old.}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00104}00104\ \textcolor{stringliteral}{\ \ \ \ @details}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00105}00105\ \textcolor{stringliteral}{\ \ \ \ Only\ the\ action\ terms\ involving\ sites\ \{j−1,\ j,\ j+1\}\ contribute\ to\ ΔS.}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00106}00106\ \textcolor{stringliteral}{\ \ \ \ Indices\ wrap\ via\ periodic\ boundary\ conditions.}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00107}00107\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00108}00108\ \ \ \ \ j\_minus\ =\ (j\ -\/\ 1)\ \%\ number\_of\_sites}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00109}00109\ \ \ \ \ j\_plus\ =\ (j\ +\ 1)\ \%\ number\_of\_sites}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00110}00110\ }
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00111}00111\ \ \ \ \ S\_old\ =\ \mbox{\hyperlink{namespace_monte_01_carlo_01integral_aa3e96e57101efb05ac94168b70e9bc0d}{local\_action}}(x\_path[j\_minus],\ x\_path[j],\ x\_path[j\_plus],\ lambda\_parameter)}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00112}00112\ \ \ \ \ S\_new\ =\ \mbox{\hyperlink{namespace_monte_01_carlo_01integral_aa3e96e57101efb05ac94168b70e9bc0d}{local\_action}}(x\_path[j\_minus],\ x\_new,\ x\_path[j\_plus],\ lambda\_parameter)}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00113}00113\ }
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00114}00114\ \ \ \ \ \textcolor{keywordflow}{return}\ S\_new\ -\/\ S\_old}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00115}00115\ }
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00116}00116\ }
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00117}00117\ \textcolor{comment}{\#\ ===============================================================}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00118}00118\ \textcolor{comment}{\#\ \ \ \ \ \ \ \ \ Monte\ Carlo\ Simulation\ for\ Given\ λ}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00119}00119\ \textcolor{comment}{\#\ ===============================================================}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00120}00120\ }
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00121}\mbox{\hyperlink{namespace_monte_01_carlo_01integral_a1ecd4625d86ac81c31ad13983becfcae}{00121}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespace_monte_01_carlo_01integral_a1ecd4625d86ac81c31ad13983becfcae}{run\_monte\_carlo}}(lambda\_parameter):}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00122}00122\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00123}00123\ \textcolor{stringliteral}{\ \ \ \ @brief\ Perform\ local\ Metropolis\ updates\ to\ sample\ Euclidean\ paths\ for\ fixed\ λ.}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00124}00124\ \textcolor{stringliteral}{\ \ \ \ @param\ lambda\_parameter\ float:\ anharmonicity\ value\ for\ this\ simulation.}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00125}00125\ \textcolor{stringliteral}{\ \ \ \ @return\ tuple:\ (C\_tau,\ acceptance\_fraction)}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00126}00126\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ -\/\ C\_tau:\ ndarray(float)\ correlator\ C(τ)\ for\ τ\ up\ to\ T/2}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00127}00127\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ -\/\ acceptance\_fraction:\ overall\ acceptance\ rate\ of\ updates}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00128}00128\ \textcolor{stringliteral}{\ \ \ \ @details}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00129}00129\ \textcolor{stringliteral}{\ \ \ \ •\ Initializes\ x(τ)=0\ path}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00130}00130\ \textcolor{stringliteral}{\ \ \ \ •\ Local\ updates\ at\ every\ site\ each\ sweep}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00131}00131\ \textcolor{stringliteral}{\ \ \ \ •\ Observables\ recorded\ every\ 10\ steps\ post-\/thermalization}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00132}00132\ \textcolor{stringliteral}{\ \ \ \ •\ Correlator\ estimator:}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00133}00133\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ C(τ)\ =\ ⟨\ x\_j\ x\_\{j+τ\}\ ⟩\ averaged\ over\ j\ and\ Monte\ Carlo\ samples}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00134}00134\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00135}00135\ \ \ \ \ x\_path\ =\ np.zeros(number\_of\_sites)}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00136}00136\ \ \ \ \ G\_correlator\ =\ np.zeros(number\_of\_sites\ //\ 2)}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00137}00137\ \ \ \ \ N\_measure\ =\ 0}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00138}00138\ \ \ \ \ accepted\_updates\ =\ 0}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00139}00139\ }
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00140}00140\ \ \ \ \ \textcolor{keywordflow}{for}\ monte\_carlo\_step\ \textcolor{keywordflow}{in}\ range(total\_monte\_carlo\_steps):}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00141}00141\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ j\ \textcolor{keywordflow}{in}\ range(number\_of\_sites):}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ x\_new\ =\ x\_path[j]\ +\ np.random.uniform(-\/proposal\_step\_size,\ proposal\_step\_size)}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00143}00143\ \ \ \ \ \ \ \ \ \ \ \ \ delta\_S\_local\ =\ \mbox{\hyperlink{namespace_monte_01_carlo_01integral_a7268ea8818fd19b8c3d019fd8b83edda}{delta\_action\_change}}(x\_path,\ j,\ x\_new,\ lambda\_parameter)}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00144}00144\ }
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00145}00145\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ delta\_S\_local\ <\ 0\ \textcolor{keywordflow}{or}\ np.exp(-\/delta\_S\_local)\ >\ np.random.rand():}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00146}00146\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ x\_path[j]\ =\ x\_new}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00147}00147\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ accepted\_updates\ +=\ 1}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00148}00148\ }
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00149}00149\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ monte\_carlo\_step\ >=\ thermalization\_steps\ \textcolor{keywordflow}{and}\ monte\_carlo\_step\ \%\ 10\ ==\ 0:}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00150}00150\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ t\_index\ \textcolor{keywordflow}{in}\ range(number\_of\_sites\ //\ 2):}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00151}00151\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ G\_correlator[t\_index]\ +=\ np.mean(x\_path\ *\ np.roll(x\_path,\ -\/t\_index))}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00152}00152\ \ \ \ \ \ \ \ \ \ \ \ \ N\_measure\ +=\ 1}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00153}00153\ }
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00154}00154\ \ \ \ \ G\_correlator\ /=\ N\_measure}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00155}00155\ \ \ \ \ acceptance\_fraction\ =\ accepted\_updates\ /\ (total\_monte\_carlo\_steps\ *\ number\_of\_sites)}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00156}00156\ \ \ \ \ \textcolor{keywordflow}{return}\ G\_correlator,\ acceptance\_fraction}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00157}00157\ }
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00158}00158\ }
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00159}00159\ \textcolor{comment}{\#\ ===============================================================}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00160}00160\ \textcolor{comment}{\#\ \ \ \ \ \ \ \ \ \ Main\ Loop\ —\ Extract\ Ground-\/State\ Energy}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00161}00161\ \textcolor{comment}{\#\ ===============================================================}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00162}00162\ }
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00163}\mbox{\hyperlink{namespace_monte_01_carlo_01integral_a53d890c14c8578a0f7d92a1ce524fc5f}{00163}}\ estimated\_ground\_energies\ =\ []}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00164}00164\ \textcolor{comment}{\#:\ list(float):\ extracted\ ground-\/state\ energies\ E₀(λ)\ from\ exponential\ fits.}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00165}00165\ }
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00166}00166\ \textcolor{keywordflow}{for}\ lambda\_parameter\ \textcolor{keywordflow}{in}\ anharmonicity\_values:}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00167}\mbox{\hyperlink{namespace_monte_01_carlo_01integral_af0fc9aec82b94370019aeff9c967b8a1}{00167}}\ \ \ \ \ correlation\_function,\ acceptance\_rate\ =\ \mbox{\hyperlink{namespace_monte_01_carlo_01integral_a1ecd4625d86ac81c31ad13983becfcae}{run\_monte\_carlo}}(lambda\_parameter)}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00168}00168\ }
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00169}00169\ \ \ \ \ correlation\_function\ /=\ correlation\_function[0]}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00170}\mbox{\hyperlink{namespace_monte_01_carlo_01integral_abb3f4f3bff384c4414e2fe2801d61df9}{00170}}\ \ \ \ \ euclidean\_times\ =\ np.arange(len(correlation\_function))\ *\ lattice\_spacing\_a}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00171}00171\ }
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00172}\mbox{\hyperlink{namespace_monte_01_carlo_01integral_a16f0ce30fc4f76bee7b4e1deffa81d41}{00172}}\ \ \ \ \ fit\_slice\ =\ slice(1,\ 6)\ \ \textcolor{comment}{\#\ small\ τ\ region\ where\ log(C)\ approx\ linear}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00173}\mbox{\hyperlink{namespace_monte_01_carlo_01integral_a345b7b7a2be189d9c1fcf3001ea7e76e}{00173}}\ \ \ \ \ slope,\ intercept\ =\ np.polyfit(euclidean\_times[fit\_slice],}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00174}00174\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ np.log(correlation\_function[fit\_slice]),\ 1)}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00175}\mbox{\hyperlink{namespace_monte_01_carlo_01integral_a3c284efa84d6a0ad889388a8af9761af}{00175}}\ \ \ \ \ estimated\_E0\ =\ -\/slope}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00176}00176\ \ \ \ \ estimated\_ground\_energies.append(estimated\_E0)}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00177}00177\ }
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00178}00178\ \ \ \ \ print(f\textcolor{stringliteral}{"{}λ\ =\ \{lambda\_parameter:.2f\}\ |\ Estimated\ E0\ =\ \{estimated\_E0:.4f\}\ "{}}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00179}00179\ \ \ \ \ \ \ \ \ \ \ f\textcolor{stringliteral}{"{}|\ Acceptance\ =\ \{acceptance\_rate:.3f\}"{}})}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00180}00180\ }
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00181}00181\ }
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00182}00182\ \textcolor{comment}{\#\ ===============================================================}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00183}00183\ \textcolor{comment}{\#\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Visualization}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00184}00184\ \textcolor{comment}{\#\ ===============================================================}}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00185}00185\ }
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00186}\mbox{\hyperlink{namespace_monte_01_carlo_01integral_aa5a1c7c854e3ea0f8ff5b2240e8b311a}{00186}}\ plt.plot(anharmonicity\_values,\ estimated\_ground\_energies,\ \textcolor{stringliteral}{'o-\/'},\ lw=2)}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00187}00187\ plt.xlabel(\textcolor{stringliteral}{"{}Anharmonicity\ Parameter\ λ"{}})}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00188}00188\ plt.ylabel(\textcolor{stringliteral}{"{}Estimated\ Ground-\/State\ Energy\ \$E\_0\$"{}})}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00189}00189\ plt.title(\textcolor{stringliteral}{"{}Quantum\ Anharmonic\ Oscillator:\ Ground-\/State\ Energy\ vs\ λ"{}})}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00190}00190\ plt.grid(\textcolor{keyword}{True})}
+\DoxyCodeLine{\Hypertarget{_monte_01_carlo_01integral_8py_source_l00191}00191\ plt.show()}
+
+\end{DoxyCode}

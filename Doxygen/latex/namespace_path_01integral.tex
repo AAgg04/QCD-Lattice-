@@ -1,0 +1,260 @@
+\doxysection{Path integral Namespace Reference}
+\hypertarget{namespace_path_01integral}{}\label{namespace_path_01integral}\index{Path integral@{Path integral}}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespace_path_01integral_a645b6525be032861b9c0744e67d93d0b}{potential\+\_\+V}} (x)
+\item 
+\mbox{\hyperlink{namespace_path_01integral_a2b010786c45b7d73a903ad04913f9c67}{S\+\_\+lat}} (x\+\_\+list, x\+\_\+fixed, \texorpdfstring{$\ast$}{*}args)
+\item 
+\mbox{\hyperlink{namespace_path_01integral_a2d50734bacfb97c65e72dd5147b0665a}{integrand}} (\texorpdfstring{$\ast$}{*}x\+\_\+list)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{namespace_path_01integral_a72830acc936352e7807100a327811f41}{N}} = 4
+\item 
+int \mbox{\hyperlink{namespace_path_01integral_a4da5b216a15d8340d622d0de125724f5}{lattice\+\_\+spacing\+\_\+a}} = 1 / 2
+\item 
+float \mbox{\hyperlink{namespace_path_01integral_a0878b847a23c46db5e4beadf0bf7223f}{particle\+\_\+mass}} = 1.\+0
+\item 
+int \mbox{\hyperlink{namespace_path_01integral_a82466fa9408cf4898992e2c5a05e102c}{bound\+\_\+limit}} = 5
+\item 
+list \mbox{\hyperlink{namespace_path_01integral_a5789247a914b48094a622acd9b2df39b}{bounds}} = \mbox{[}(-\/\mbox{\hyperlink{namespace_path_01integral_a82466fa9408cf4898992e2c5a05e102c}{bound\+\_\+limit}}, \mbox{\hyperlink{namespace_path_01integral_a82466fa9408cf4898992e2c5a05e102c}{bound\+\_\+limit}})\mbox{]} \texorpdfstring{$\ast$}{*} (\mbox{\hyperlink{namespace_path_01integral_a72830acc936352e7807100a327811f41}{N}} -\/ 1)
+\item 
+list \mbox{\hyperlink{namespace_path_01integral_a6ba69d45f9f93cb898fe4dae09a35d06}{propagator}} = \mbox{[}$\,$\mbox{]}
+\item 
+tuple \mbox{\hyperlink{namespace_path_01integral_a5aa5689b229e26dad41ac28fbffb4009}{normalization\+\_\+A}} = (\mbox{\hyperlink{namespace_path_01integral_a0878b847a23c46db5e4beadf0bf7223f}{particle\+\_\+mass}} / (2 \texorpdfstring{$\ast$}{*} math.\+pi \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_path_01integral_a4da5b216a15d8340d622d0de125724f5}{lattice\+\_\+spacing\+\_\+a}})) \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} (\mbox{\hyperlink{namespace_path_01integral_a72830acc936352e7807100a327811f41}{N}} / 2)
+\item 
+list \mbox{\hyperlink{namespace_path_01integral_a63c11f26ea8de3171c82f1e23898a9ff}{x\+\_\+values}} = \mbox{[}i \texorpdfstring{$\ast$}{*} 0.\+25 for i in range(-\/10, 11)\mbox{]}
+\item 
+\mbox{\hyperlink{namespace_path_01integral_abcd390c0af8cae6c1fd95f672df9c5c8}{result}}
+\item 
+\mbox{\hyperlink{namespace_path_01integral_ada162ae5cb7a099985b1cd6c616cd5b4}{error}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{namespace_path_01integral_a2d50734bacfb97c65e72dd5147b0665a}\index{Path integral@{Path integral}!integrand@{integrand}}
+\index{integrand@{integrand}!Path integral@{Path integral}}
+\doxysubsubsection{\texorpdfstring{integrand()}{integrand()}}
+{\footnotesize\ttfamily \label{namespace_path_01integral_a2d50734bacfb97c65e72dd5147b0665a} 
+Path integral.\+integrand (\begin{DoxyParamCaption}\item[{\texorpdfstring{$\ast$}{*}}]{x\+\_\+list}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Integrand exp(−S_E[x]) for numerical quadrature.
+@param x_list variadic float: internal lattice points.
+@return float: value of exp(−S_E).
+@details
+This closure captures `x_fixed` from the loop scope.
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{_path_01integral_8py_source_l00098}{98}} of file \mbox{\hyperlink{_path_01integral_8py_source}{Path integral.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00098\ \ \ \ \ \textcolor{keyword}{def\ }integrand(*x\_list):}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{00100\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @brief\ Integrand\ exp(−S\_E[x])\ for\ numerical\ quadrature.}}
+\DoxyCodeLine{00101\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @param\ x\_list\ variadic\ float:\ internal\ lattice\ points.}}
+\DoxyCodeLine{00102\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @return\ float:\ value\ of\ exp(−S\_E).}}
+\DoxyCodeLine{00103\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @details}}
+\DoxyCodeLine{00104\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ This\ closure\ captures\ \`{}x\_fixed\`{}\ from\ the\ loop\ scope.}}
+\DoxyCodeLine{00105\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ math.exp(-\/S\_lat(x\_list,\ x\_fixed))}
+\DoxyCodeLine{00107\ }
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+% FIG 0
+\Hypertarget{namespace_path_01integral_a645b6525be032861b9c0744e67d93d0b}\index{Path integral@{Path integral}!potential\_V@{potential\_V}}
+\index{potential\_V@{potential\_V}!Path integral@{Path integral}}
+\doxysubsubsection{\texorpdfstring{potential\_V()}{potential\_V()}}
+{\footnotesize\ttfamily \label{namespace_path_01integral_a645b6525be032861b9c0744e67d93d0b} 
+Path integral.\+potential\+\_\+V (\begin{DoxyParamCaption}\item[{}]{x}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Harmonic oscillator potential.
+@param x float: position value.
+@return float: potential V(x) = 1/2 x².
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{_path_01integral_8py_source_l00054}{54}} of file \mbox{\hyperlink{_path_01integral_8py_source}{Path integral.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00054\ \textcolor{keyword}{def\ }potential\_V(x):}
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{00056\ \textcolor{stringliteral}{\ \ \ \ @brief\ Harmonic\ oscillator\ potential.}}
+\DoxyCodeLine{00057\ \textcolor{stringliteral}{\ \ \ \ @param\ x\ float:\ position\ value.}}
+\DoxyCodeLine{00058\ \textcolor{stringliteral}{\ \ \ \ @return\ float:\ potential\ V(x)\ =\ 1/2\ x².}}
+\DoxyCodeLine{00059\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keywordflow}{return}\ 0.5\ *\ x**2}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ \textcolor{comment}{\#\ ===============================================================}}
+\DoxyCodeLine{00064\ \textcolor{comment}{\#\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Euclidean\ Action}}
+\DoxyCodeLine{00065\ \textcolor{comment}{\#\ ===============================================================}}
+\DoxyCodeLine{00066\ }
+
+\end{DoxyCode}
+Here is the caller graph for this function\+:
+% FIG 1
+\Hypertarget{namespace_path_01integral_a2b010786c45b7d73a903ad04913f9c67}\index{Path integral@{Path integral}!S\_lat@{S\_lat}}
+\index{S\_lat@{S\_lat}!Path integral@{Path integral}}
+\doxysubsubsection{\texorpdfstring{S\_lat()}{S\_lat()}}
+{\footnotesize\ttfamily \label{namespace_path_01integral_a2b010786c45b7d73a903ad04913f9c67} 
+Path integral.\+S\+\_\+lat (\begin{DoxyParamCaption}\item[{}]{x\+\_\+list}{, }\item[{}]{x\+\_\+fixed}{, }\item[{\texorpdfstring{$\ast$}{*}}]{args}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Compute discretized Euclidean path action.
+@param x_list list(float): internal coordinates, length (N−1).
+@param x_fixed float: fixed boundary value x₀ = x_N.
+@return float: Euclidean action S_E for given path.
+@details
+Constructs full path:
+    x = [x_fixed, x₁, x₂, ..., x_{N−1}, x_fixed]
+and applies:
+    S_E = Σ_j m/(2a)(x_{j+1} − x_j)² + a V(x_j)
+without periodic BCs since endpoints are fixed.
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{_path_01integral_8py_source_l00067}{67}} of file \mbox{\hyperlink{_path_01integral_8py_source}{Path integral.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00067\ \textcolor{keyword}{def\ }S\_lat(x\_list,\ x\_fixed,\ *args):}
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{00069\ \textcolor{stringliteral}{\ \ \ \ @brief\ Compute\ discretized\ Euclidean\ path\ action.}}
+\DoxyCodeLine{00070\ \textcolor{stringliteral}{\ \ \ \ @param\ x\_list\ list(float):\ internal\ coordinates,\ length\ (N−1).}}
+\DoxyCodeLine{00071\ \textcolor{stringliteral}{\ \ \ \ @param\ x\_fixed\ float:\ fixed\ boundary\ value\ x₀\ =\ x\_N.}}
+\DoxyCodeLine{00072\ \textcolor{stringliteral}{\ \ \ \ @return\ float:\ Euclidean\ action\ S\_E\ for\ given\ path.}}
+\DoxyCodeLine{00073\ \textcolor{stringliteral}{\ \ \ \ @details}}
+\DoxyCodeLine{00074\ \textcolor{stringliteral}{\ \ \ \ Constructs\ full\ path:}}
+\DoxyCodeLine{00075\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ x\ =\ [x\_fixed,\ x₁,\ x₂,\ ...,\ x\_\{N−1\},\ x\_fixed]}}
+\DoxyCodeLine{00076\ \textcolor{stringliteral}{\ \ \ \ and\ applies:}}
+\DoxyCodeLine{00077\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ S\_E\ =\ Σ\_j\ m/(2a)(x\_\{j+1\}\ −\ x\_j)²\ +\ a\ V(x\_j)}}
+\DoxyCodeLine{00078\ \textcolor{stringliteral}{\ \ \ \ without\ periodic\ BCs\ since\ endpoints\ are\ fixed.}}
+\DoxyCodeLine{00079\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{00080\ \ \ \ \ x\ =\ [x\_fixed]\ +\ list(x\_list)\ +\ [x\_fixed]}
+\DoxyCodeLine{00081\ \ \ \ \ Action\_S\ =\ 0}
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keywordflow}{for}\ j\ \textcolor{keywordflow}{in}\ range(0,\ N\ -\/\ 1):}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ x\_derivative\ =\ x[j\ +\ 1]\ -\/\ x[j]}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ Action\_S\ +=\ (particle\_mass\ /\ (2\ *\ lattice\_spacing\_a))\ *\ x\_derivative**2\ \(\backslash\)}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ +\ lattice\_spacing\_a\ *\ potential\_V(x[j])}
+\DoxyCodeLine{00086\ \ \ \ \ \textcolor{keywordflow}{return}\ Action\_S}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00088\ }
+\DoxyCodeLine{00089\ \textcolor{comment}{\#\ ===============================================================}}
+\DoxyCodeLine{00090\ \textcolor{comment}{\#\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Propagator\ Evaluation\ Loop}}
+\DoxyCodeLine{00091\ \textcolor{comment}{\#\ ===============================================================}}
+\DoxyCodeLine{00092\ }
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+% FIG 2
+Here is the caller graph for this function\+:
+% FIG 3
+
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{namespace_path_01integral_a82466fa9408cf4898992e2c5a05e102c}\index{Path integral@{Path integral}!bound\_limit@{bound\_limit}}
+\index{bound\_limit@{bound\_limit}!Path integral@{Path integral}}
+\doxysubsubsection{\texorpdfstring{bound\_limit}{bound\_limit}}
+{\footnotesize\ttfamily \label{namespace_path_01integral_a82466fa9408cf4898992e2c5a05e102c} 
+int Path integral.\+bound\+\_\+limit = 5}
+
+
+
+Definition at line \mbox{\hyperlink{_path_01integral_8py_source_l00037}{37}} of file \mbox{\hyperlink{_path_01integral_8py_source}{Path integral.\+py}}.
+
+\Hypertarget{namespace_path_01integral_a5789247a914b48094a622acd9b2df39b}\index{Path integral@{Path integral}!bounds@{bounds}}
+\index{bounds@{bounds}!Path integral@{Path integral}}
+\doxysubsubsection{\texorpdfstring{bounds}{bounds}}
+{\footnotesize\ttfamily \label{namespace_path_01integral_a5789247a914b48094a622acd9b2df39b} 
+list Path integral.\+bounds = \mbox{[}(-\/\mbox{\hyperlink{namespace_path_01integral_a82466fa9408cf4898992e2c5a05e102c}{bound\+\_\+limit}}, \mbox{\hyperlink{namespace_path_01integral_a82466fa9408cf4898992e2c5a05e102c}{bound\+\_\+limit}})\mbox{]} \texorpdfstring{$\ast$}{*} (\mbox{\hyperlink{namespace_path_01integral_a72830acc936352e7807100a327811f41}{N}} -\/ 1)}
+
+
+
+Definition at line \mbox{\hyperlink{_path_01integral_8py_source_l00040}{40}} of file \mbox{\hyperlink{_path_01integral_8py_source}{Path integral.\+py}}.
+
+\Hypertarget{namespace_path_01integral_ada162ae5cb7a099985b1cd6c616cd5b4}\index{Path integral@{Path integral}!error@{error}}
+\index{error@{error}!Path integral@{Path integral}}
+\doxysubsubsection{\texorpdfstring{error}{error}}
+{\footnotesize\ttfamily \label{namespace_path_01integral_ada162ae5cb7a099985b1cd6c616cd5b4} 
+Path integral.\+error}
+
+
+
+Definition at line \mbox{\hyperlink{_path_01integral_8py_source_l00108}{108}} of file \mbox{\hyperlink{_path_01integral_8py_source}{Path integral.\+py}}.
+
+\Hypertarget{namespace_path_01integral_a4da5b216a15d8340d622d0de125724f5}\index{Path integral@{Path integral}!lattice\_spacing\_a@{lattice\_spacing\_a}}
+\index{lattice\_spacing\_a@{lattice\_spacing\_a}!Path integral@{Path integral}}
+\doxysubsubsection{\texorpdfstring{lattice\_spacing\_a}{lattice\_spacing\_a}}
+{\footnotesize\ttfamily \label{namespace_path_01integral_a4da5b216a15d8340d622d0de125724f5} 
+int Path integral.\+lattice\+\_\+spacing\+\_\+a = 1 / 2}
+
+
+
+Definition at line \mbox{\hyperlink{_path_01integral_8py_source_l00031}{31}} of file \mbox{\hyperlink{_path_01integral_8py_source}{Path integral.\+py}}.
+
+\Hypertarget{namespace_path_01integral_a72830acc936352e7807100a327811f41}\index{Path integral@{Path integral}!N@{N}}
+\index{N@{N}!Path integral@{Path integral}}
+\doxysubsubsection{\texorpdfstring{N}{N}}
+{\footnotesize\ttfamily \label{namespace_path_01integral_a72830acc936352e7807100a327811f41} 
+int Path integral.\+N = 4}
+
+
+
+Definition at line \mbox{\hyperlink{_path_01integral_8py_source_l00028}{28}} of file \mbox{\hyperlink{_path_01integral_8py_source}{Path integral.\+py}}.
+
+\Hypertarget{namespace_path_01integral_a5aa5689b229e26dad41ac28fbffb4009}\index{Path integral@{Path integral}!normalization\_A@{normalization\_A}}
+\index{normalization\_A@{normalization\_A}!Path integral@{Path integral}}
+\doxysubsubsection{\texorpdfstring{normalization\_A}{normalization\_A}}
+{\footnotesize\ttfamily \label{namespace_path_01integral_a5aa5689b229e26dad41ac28fbffb4009} 
+tuple Path integral.\+normalization\+\_\+A = (\mbox{\hyperlink{namespace_path_01integral_a0878b847a23c46db5e4beadf0bf7223f}{particle\+\_\+mass}} / (2 \texorpdfstring{$\ast$}{*} math.\+pi \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_path_01integral_a4da5b216a15d8340d622d0de125724f5}{lattice\+\_\+spacing\+\_\+a}})) \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} (\mbox{\hyperlink{namespace_path_01integral_a72830acc936352e7807100a327811f41}{N}} / 2)}
+
+
+
+Definition at line \mbox{\hyperlink{_path_01integral_8py_source_l00046}{46}} of file \mbox{\hyperlink{_path_01integral_8py_source}{Path integral.\+py}}.
+
+\Hypertarget{namespace_path_01integral_a0878b847a23c46db5e4beadf0bf7223f}\index{Path integral@{Path integral}!particle\_mass@{particle\_mass}}
+\index{particle\_mass@{particle\_mass}!Path integral@{Path integral}}
+\doxysubsubsection{\texorpdfstring{particle\_mass}{particle\_mass}}
+{\footnotesize\ttfamily \label{namespace_path_01integral_a0878b847a23c46db5e4beadf0bf7223f} 
+float Path integral.\+particle\+\_\+mass = 1.\+0}
+
+
+
+Definition at line \mbox{\hyperlink{_path_01integral_8py_source_l00034}{34}} of file \mbox{\hyperlink{_path_01integral_8py_source}{Path integral.\+py}}.
+
+\Hypertarget{namespace_path_01integral_a6ba69d45f9f93cb898fe4dae09a35d06}\index{Path integral@{Path integral}!propagator@{propagator}}
+\index{propagator@{propagator}!Path integral@{Path integral}}
+\doxysubsubsection{\texorpdfstring{propagator}{propagator}}
+{\footnotesize\ttfamily \label{namespace_path_01integral_a6ba69d45f9f93cb898fe4dae09a35d06} 
+list Path integral.\+propagator = \mbox{[}$\,$\mbox{]}}
+
+
+
+Definition at line \mbox{\hyperlink{_path_01integral_8py_source_l00043}{43}} of file \mbox{\hyperlink{_path_01integral_8py_source}{Path integral.\+py}}.
+
+\Hypertarget{namespace_path_01integral_abcd390c0af8cae6c1fd95f672df9c5c8}\index{Path integral@{Path integral}!result@{result}}
+\index{result@{result}!Path integral@{Path integral}}
+\doxysubsubsection{\texorpdfstring{result}{result}}
+{\footnotesize\ttfamily \label{namespace_path_01integral_abcd390c0af8cae6c1fd95f672df9c5c8} 
+Path integral.\+result}
+
+
+
+Definition at line \mbox{\hyperlink{_path_01integral_8py_source_l00108}{108}} of file \mbox{\hyperlink{_path_01integral_8py_source}{Path integral.\+py}}.
+
+\Hypertarget{namespace_path_01integral_a63c11f26ea8de3171c82f1e23898a9ff}\index{Path integral@{Path integral}!x\_values@{x\_values}}
+\index{x\_values@{x\_values}!Path integral@{Path integral}}
+\doxysubsubsection{\texorpdfstring{x\_values}{x\_values}}
+{\footnotesize\ttfamily \label{namespace_path_01integral_a63c11f26ea8de3171c82f1e23898a9ff} 
+list Path integral.\+x\+\_\+values = \mbox{[}i \texorpdfstring{$\ast$}{*} 0.\+25 for i in range(-\/10, 11)\mbox{]}}
+
+
+
+Definition at line \mbox{\hyperlink{_path_01integral_8py_source_l00093}{93}} of file \mbox{\hyperlink{_path_01integral_8py_source}{Path integral.\+py}}.
+

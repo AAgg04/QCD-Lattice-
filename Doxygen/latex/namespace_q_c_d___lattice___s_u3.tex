@@ -1,0 +1,1476 @@
+\doxysection{QCD\+\_\+\+Lattice\+\_\+\+SU3 Namespace Reference}
+\hypertarget{namespace_q_c_d___lattice___s_u3}{}\label{namespace_q_c_d___lattice___s_u3}\index{QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a44a464a27584fc9def02704f8e1fd0ac}{x\+\_\+neighbor}} (x, mu, shift=1)
+\item 
+\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a6e256f196d2097b382e42b227c3e7b97}{su3\+\_\+matrices}} (M)
+\item 
+\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a3ac4bd130c73714f342345ac26db64bc}{su2\+\_\+random\+\_\+unitary}} (eps)
+\item 
+\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_adeae0b97628f158be1526ce1f346b16c}{embed\+\_\+su2\+\_\+into\+\_\+su3}} (R2, i, j)
+\item 
+\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_aee4d750fbbf3dc3b58cfbf755074a68b}{plaquette\+\_\+matrix}} (x, mu, nu, link\+\_\+sites)
+\item 
+\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a000af2b4b1fc71ae6fa651b88b6eef3b}{real\+\_\+trace\+\_\+plaquette}} (x, mu, nu, link\+\_\+sites)
+\item 
+\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a51f76f98325616f820bcc40f2d106a02}{plaquettes\+\_\+touching\+\_\+link}} (x, mu, link\+\_\+sites)
+\item 
+\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_ae51e7ab33070cfee14de6989b7c4a57b}{metropolis\+\_\+update}} (link\+\_\+sites, \mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a8c4347fa4c56d8155d324e1b3cce0226}{eps\+\_\+sub}}=0.\+06)
+\item 
+\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a765077dbd81395bf149cab91574eb395}{average\+\_\+plaquette\+\_\+su3}} (link\+\_\+sites)
+\item 
+\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_ab3d3370b04f8187b8e0d16e5302c3842}{bootstrap\+\_\+mean\+\_\+std}} (values, nboot=300)
+\item 
+\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_adeb248c505c926e2fe3efc854dd3d5fd}{tune\+\_\+eps\+\_\+su3}} (matrix0, target=0.\+5, initial\+\_\+eps=0.\+06, tries=10, test\+\_\+sweeps=150)
+\item 
+\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a929494493a33323e75210da746475f2f}{run\+\_\+su3\+\_\+simulation}} (link\+\_\+sites, \mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a8c4347fa4c56d8155d324e1b3cce0226}{eps\+\_\+sub}}=0.\+06, \mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a682d097050ca82ecdc8445bf11a20844}{burn\+\_\+in\+\_\+sweeps}}=500, \mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a2ec881d04c3c76844046c63470ca721d}{MC\+\_\+sweeps}}=2000, \mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_aa4fbcaaae095aeaa9bdfdb0b7d942fd3}{N\+\_\+correlator}}=5)
+\item 
+\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_abe28e8d8f901376f5930e5dcb1906f27}{init\+\_\+links\+\_\+identity}} (link\+\_\+sites)
+\item 
+\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a714c321edfa15efabdf73654fb10e0d1}{randomize\+\_\+links\+\_\+small}} (link\+\_\+sites, \mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a6c39b85d0409c6762e9038f1373aa586}{amplitude}}=0.\+02)
+\item 
+\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a7abb53e1fbedfee3a871f5c23139deb2}{measure\+\_\+wilson\+\_\+loop\+\_\+\+RT}} (link\+\_\+sites, R, T, spatial\+\_\+direction=0, time\+\_\+direction=None)
+\item 
+\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_ad76fd939779f34cd36ddd587c3d13402}{su3\+\_\+simulation\+\_\+with\+\_\+wilson\+\_\+loops}} (link\+\_\+sites, \mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a8c4347fa4c56d8155d324e1b3cce0226}{eps\+\_\+sub}}=0.\+06, \mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a682d097050ca82ecdc8445bf11a20844}{burn\+\_\+in\+\_\+sweeps}}=500, \mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a2ec881d04c3c76844046c63470ca721d}{MC\+\_\+sweeps}}=2000, \mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_aa4fbcaaae095aeaa9bdfdb0b7d942fd3}{N\+\_\+correlator}}=5, \mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_ad62acbb88c7f3a50839ea84c06502199}{max\+\_\+R}}=None, \mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a51a6e1b759f8d75aaef0a501dd2e5111}{max\+\_\+T}}=None)
+\item 
+\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_ab266c642e895991561c9cd00dde084c4}{gell\+\_\+mann\+\_\+matrices}} ()
+\item 
+\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_ae02aa257dbc5e49f80253af9eb731f02}{extract\+\_\+gluon\+\_\+field}} (U, g=1.\+0, a=1.\+0)
+\item 
+\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_abea7757b1fc83bfa6ace5a3fbc11028d}{field\+\_\+strength\+\_\+tensor}} (link\+\_\+sites, x, mu, nu, g=1.\+0, a=1.\+0)
+\item 
+\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a73426a84b4c73e44a476cb0b9c1825ea}{measure\+\_\+avg\+\_\+\+A2\+\_\+and\+\_\+\+F2}} (link\+\_\+sites, g=1.\+0, a=1.\+0)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_aa6f2d1974f25956a32aa04ef50b3f1b2}{spatial\+\_\+dims}} = 1
+\item 
+int \mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a2f643156af520df0747ddf1cd4854f59}{lattice\+\_\+size\+\_\+L}} = 8
+\item 
+float \mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a534b44db7e14e3cc33dcb6e0faf9113c}{beta}} = 6.\+0
+\item 
+float \mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_ab5c95329b8df4f8e17b62aaf3e155727}{eps\+\_\+initial}} = 0.\+06
+\item 
+int \mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a682d097050ca82ecdc8445bf11a20844}{burn\+\_\+in\+\_\+sweeps}} = 500
+\item 
+int \mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a2ec881d04c3c76844046c63470ca721d}{MC\+\_\+sweeps}} = 2000
+\item 
+int \mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a56e170acd295bce714a3b0584f376417}{MC\+\_\+measure\+\_\+interval}} = 5
+\item 
+int \mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a1eb83c00e6a1902f9bc4dc440a3abe69}{n\+\_\+boot}} = 300
+\item 
+int \mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a8014f922b10181acdcfca439b30ccc43}{D}} = \mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_aa6f2d1974f25956a32aa04ef50b3f1b2}{spatial\+\_\+dims}} + 1
+\item 
+tuple \mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_aa68f8cd6158a81098b2c2ca22bc2e352}{x\+\_\+shape}} = (\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a2f643156af520df0747ddf1cd4854f59}{lattice\+\_\+size\+\_\+L}},) \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a8014f922b10181acdcfca439b30ccc43}{D}}
+\item 
+\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_ac7152d63eac85be58b05b89739ea831c}{link\+\_\+matrix}} = np.\+zeros((\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a8014f922b10181acdcfca439b30ccc43}{D}},) + \mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_aa68f8cd6158a81098b2c2ca22bc2e352}{x\+\_\+shape}} + (3, 3), dtype=np.\+complex128)
+\item 
+\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a6c39b85d0409c6762e9038f1373aa586}{amplitude}}
+\item 
+\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a5227b83dd71dc3efcbaf57f6f839747f}{eps\+\_\+tuned}} = \mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_adeb248c505c926e2fe3efc854dd3d5fd}{tune\+\_\+eps\+\_\+su3}}(\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_ac7152d63eac85be58b05b89739ea831c}{link\+\_\+matrix}}, initial\+\_\+eps=\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_ab5c95329b8df4f8e17b62aaf3e155727}{eps\+\_\+initial}})
+\item 
+\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a0698361e937a615305ea97d8f298a550}{samples}}
+\item 
+\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_ae6b60a663e70abd8b57a117cba93bbe1}{plaq\+\_\+mean}}
+\item 
+\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_ae10dd8b2a3a4acf827ec4e80f7cd7cb6}{plaq\+\_\+err}}
+\item 
+\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a8c4347fa4c56d8155d324e1b3cce0226}{eps\+\_\+sub}}
+\item 
+\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_aa4fbcaaae095aeaa9bdfdb0b7d942fd3}{N\+\_\+correlator}}
+\item 
+\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_aa785b77e663a841aa0110e18cc4ef16e}{figsize}}
+\item 
+\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_aefb5c5d13c1bf2a81fa7650c853b162b}{marker}}
+\item 
+\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a27cf82292e519d16191b18855bed5019}{linestyle}}
+\item 
+\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a25f57b11207ed74286f74ce6f2005a0d}{bins}}
+\item 
+\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_aa243e5439de4ada0d1006f1809936c95}{alpha}}
+\item 
+\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a9f092f4cc05baaa7ee53273a9c276474}{wilson\+\_\+loops\+\_\+samples}}
+\item 
+\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a637da1a918d408d4b51ee54f0c0bc2f6}{R\+\_\+values}}
+\item 
+\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a050a97b875f1f58a438823107c204363}{T\+\_\+values}}
+\item 
+\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_ad62acbb88c7f3a50839ea84c06502199}{max\+\_\+R}}
+\item 
+\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a51a6e1b759f8d75aaef0a501dd2e5111}{max\+\_\+T}}
+\item 
+\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_aef423ffb377c63e3def76ec8638cf647}{avg\+\_\+wilson\+\_\+loops}} = np.\+mean(\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a9f092f4cc05baaa7ee53273a9c276474}{wilson\+\_\+loops\+\_\+samples}}, axis=0)
+\item 
+\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_ad9c48dfbc49e94f51751c3f793aed0f5}{V\+\_\+R}} = np.\+zeros(len(\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a637da1a918d408d4b51ee54f0c0bc2f6}{R\+\_\+values}}))
+\item 
+list \mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a467e2519d8aa8e4f356037d1c8a47622}{potentials}} = \mbox{[}$\,$\mbox{]}
+\item 
+\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_acb414b2b86d92f06f5d8b958c492669b}{W\+\_\+T}} = \mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_aef423ffb377c63e3def76ec8638cf647}{avg\+\_\+wilson\+\_\+loops}}\mbox{[}i, j\mbox{]}
+\item 
+\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_adbe26aa21cf3c355205c6eb94f05eeca}{W\+\_\+\+Tp1}} = \mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_aef423ffb377c63e3def76ec8638cf647}{avg\+\_\+wilson\+\_\+loops}}\mbox{[}i, j + 1\mbox{]}
+\item 
+\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a0b397d6ed2f3de7ffbc8c7cd030953b7}{A2\+\_\+avg}}
+\item 
+\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a1b13b561ef93c1442b0c03fc84d67946}{F2\+\_\+avg}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}@mainpage SU(3) Lattice Gauge Theory (Wilson action) — Cabibbo–Marinari Implementation
+
+@file QCD_Lattice_SU3.py
+@brief SU(3) lattice gauge theory simulation using Cabibbo–Marinari SU(2) subgroup updates.
+@details
+This module implements a pragmatic SU(3) lattice gauge theory code based on the Wilson action,
+using Cabibbo–Marinari updates (embedded SU(2) rotations) together with local ΔS computations
+(only plaquettes touching a link are recomputed) and reprojection to SU(3) via SVD to maintain
+unitarity and $\det U = 1$.
+
+It contains:
+ - Local Metropolis updates applying a sequence of small SU(2) rotations embedded into SU(3).
+ - Efficient local plaquette recomputation for ΔS evaluations.
+ - Utilities for plaquette measurement, bootstrap error estimation, Wilson loops and static potential.
+ - Helpers to extract approximate gauge fields (A^a) and field-strength components F^{\mu\nu}_a
+   from link matrices for diagnostic/classical analysis.
+
+@section references Key references
+ - K. G. Wilson, "Confinement of quarks," Phys. Rev. D 10, 2445 (1974).
+ - N. Cabibbo and E. Marinari, "A new method for updating SU(N) matrices," Phys. Lett. B119 (1982).
+ - G. P. Lepage lecture notes for pragmatic algorithmic choices.
+\end{DoxyVerb}
+ 
+
+\doxysubsection{Function Documentation}
+\Hypertarget{namespace_q_c_d___lattice___s_u3_a765077dbd81395bf149cab91574eb395}\index{QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}!average\_plaquette\_su3@{average\_plaquette\_su3}}
+\index{average\_plaquette\_su3@{average\_plaquette\_su3}!QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}}
+\doxysubsubsection{\texorpdfstring{average\_plaquette\_su3()}{average\_plaquette\_su3()}}
+{\footnotesize\ttfamily \label{namespace_q_c_d___lattice___s_u3_a765077dbd81395bf149cab91574eb395} 
+QCD\+\_\+\+Lattice\+\_\+\+SU3.\+average\+\_\+plaquette\+\_\+su3 (\begin{DoxyParamCaption}\item[{}]{link\+\_\+sites}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Compute the normalized average plaquette ⟨Re Tr P⟩/3 over the lattice.
+@param link_sites ndarray: link array.
+@return float: average plaquette normalized by color factor (3).
+@details The Wilson action density per plaquette is proportional to (1 - Re Tr P / 3).
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source_l00239}{239}} of file \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source}{QCD\+\_\+\+Lattice\+\_\+\+SU3.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00239\ \textcolor{keyword}{def\ }average\_plaquette\_su3(link\_sites):}
+\DoxyCodeLine{00240\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{00241\ \textcolor{stringliteral}{\ \ \ \ @brief\ Compute\ the\ normalized\ average\ plaquette\ ⟨Re\ Tr\ P⟩/3\ over\ the\ lattice.}}
+\DoxyCodeLine{00242\ \textcolor{stringliteral}{\ \ \ \ @param\ link\_sites\ ndarray:\ link\ array.}}
+\DoxyCodeLine{00243\ \textcolor{stringliteral}{\ \ \ \ @return\ float:\ average\ plaquette\ normalized\ by\ color\ factor\ (3).}}
+\DoxyCodeLine{00244\ \textcolor{stringliteral}{\ \ \ \ @details\ The\ Wilson\ action\ density\ per\ plaquette\ is\ proportional\ to\ (1\ -\/\ Re\ Tr\ P\ /\ 3).}}
+\DoxyCodeLine{00245\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{00246\ \ \ \ \ total\ =\ 0.0}
+\DoxyCodeLine{00247\ \ \ \ \ count\ =\ 0}
+\DoxyCodeLine{00248\ \ \ \ \ \textcolor{keywordflow}{for}\ x\ \textcolor{keywordflow}{in}\ np.ndindex(*x\_shape):}
+\DoxyCodeLine{00249\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ mu\ \textcolor{keywordflow}{in}\ range(D):}
+\DoxyCodeLine{00250\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ nu\ \textcolor{keywordflow}{in}\ range(mu\ +\ 1,\ D):}
+\DoxyCodeLine{00251\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ trace\ =\ real\_trace\_plaquette(x,\ mu,\ nu,\ link\_sites)}
+\DoxyCodeLine{00252\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ total\ +=\ trace}
+\DoxyCodeLine{00253\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ count\ +=\ 1}
+\DoxyCodeLine{00254\ \ \ \ \ \textcolor{comment}{\#\ Normalize\ by\ color\ dimension\ (Tr\ 1\ =\ 3)}}
+\DoxyCodeLine{00255\ \ \ \ \ \textcolor{keywordflow}{return}\ (total\ /\ count)\ /\ 3.0}
+\DoxyCodeLine{00256\ }
+\DoxyCodeLine{00257\ }
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+% FIG 0
+Here is the caller graph for this function\+:
+% FIG 1
+\Hypertarget{namespace_q_c_d___lattice___s_u3_ab3d3370b04f8187b8e0d16e5302c3842}\index{QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}!bootstrap\_mean\_std@{bootstrap\_mean\_std}}
+\index{bootstrap\_mean\_std@{bootstrap\_mean\_std}!QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}}
+\doxysubsubsection{\texorpdfstring{bootstrap\_mean\_std()}{bootstrap\_mean\_std()}}
+{\footnotesize\ttfamily \label{namespace_q_c_d___lattice___s_u3_ab3d3370b04f8187b8e0d16e5302c3842} 
+QCD\+\_\+\+Lattice\+\_\+\+SU3.\+bootstrap\+\_\+mean\+\_\+std (\begin{DoxyParamCaption}\item[{}]{values}{, }\item[{}]{nboot}{ = {\ttfamily 300}}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Estimate mean and bootstrap standard error for a 1D array of samples.
+@param values array-like: measurement samples.
+@param nboot int: number of bootstrap resamples.
+@return tuple: (boot_mean, boot_std)
+@details We resample with replacement and compute sample means for each bootstrap
+         realization; the returned std is the bootstrap estimate of the error.
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source_l00258}{258}} of file \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source}{QCD\+\_\+\+Lattice\+\_\+\+SU3.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00258\ \textcolor{keyword}{def\ }bootstrap\_mean\_std(values,\ nboot=300):}
+\DoxyCodeLine{00259\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{00260\ \textcolor{stringliteral}{\ \ \ \ @brief\ Estimate\ mean\ and\ bootstrap\ standard\ error\ for\ a\ 1D\ array\ of\ samples.}}
+\DoxyCodeLine{00261\ \textcolor{stringliteral}{\ \ \ \ @param\ values\ array-\/like:\ measurement\ samples.}}
+\DoxyCodeLine{00262\ \textcolor{stringliteral}{\ \ \ \ @param\ nboot\ int:\ number\ of\ bootstrap\ resamples.}}
+\DoxyCodeLine{00263\ \textcolor{stringliteral}{\ \ \ \ @return\ tuple:\ (boot\_mean,\ boot\_std)}}
+\DoxyCodeLine{00264\ \textcolor{stringliteral}{\ \ \ \ @details\ We\ resample\ with\ replacement\ and\ compute\ sample\ means\ for\ each\ bootstrap}}
+\DoxyCodeLine{00265\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ realization;\ the\ returned\ std\ is\ the\ bootstrap\ estimate\ of\ the\ error.}}
+\DoxyCodeLine{00266\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{00267\ \ \ \ \ vals\ =\ np.asarray(values)}
+\DoxyCodeLine{00268\ \ \ \ \ N\ =\ len(vals)}
+\DoxyCodeLine{00269\ \ \ \ \ boots\ =\ np.zeros(nboot)}
+\DoxyCodeLine{00270\ \ \ \ \ \textcolor{keywordflow}{for}\ i\ \textcolor{keywordflow}{in}\ range(nboot):}
+\DoxyCodeLine{00271\ \ \ \ \ \ \ \ \ inds\ =\ np.random.randint(0,\ N,\ size=N)}
+\DoxyCodeLine{00272\ \ \ \ \ \ \ \ \ boots[i]\ =\ np.mean(vals[inds])}
+\DoxyCodeLine{00273\ \ \ \ \ \textcolor{keywordflow}{return}\ boots.mean(),\ boots.std(ddof=1)}
+\DoxyCodeLine{00274\ }
+\DoxyCodeLine{00275\ }
+\DoxyCodeLine{00276\ \textcolor{comment}{\#\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ Tuner\ \&\ Runner\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+
+\end{DoxyCode}
+Here is the caller graph for this function\+:
+% FIG 2
+\Hypertarget{namespace_q_c_d___lattice___s_u3_adeae0b97628f158be1526ce1f346b16c}\index{QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}!embed\_su2\_into\_su3@{embed\_su2\_into\_su3}}
+\index{embed\_su2\_into\_su3@{embed\_su2\_into\_su3}!QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}}
+\doxysubsubsection{\texorpdfstring{embed\_su2\_into\_su3()}{embed\_su2\_into\_su3()}}
+{\footnotesize\ttfamily \label{namespace_q_c_d___lattice___s_u3_adeae0b97628f158be1526ce1f346b16c} 
+QCD\+\_\+\+Lattice\+\_\+\+SU3.\+embed\+\_\+su2\+\_\+into\+\_\+su3 (\begin{DoxyParamCaption}\item[{}]{R2}{, }\item[{}]{i}{, }\item[{}]{j}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Embed a 2x2 SU(2) matrix into SU(3) acting on indices (i, j).
+@param R2 ndarray: 2x2 SU(2) matrix.
+@param i int: first SU(2) index (0..2).
+@param j int: second SU(2) index (0..2), must satisfy i < j.
+@return ndarray: 3x3 matrix equal to identity except the 2x2 block at (i,j) replaced by R2.
+@details This is the standard Cabibbo–Marinari embedding that extends SU(2) subgroup rotations
+         to SU(3) by acting non-trivially on a chosen 2D subspace.
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source_l00116}{116}} of file \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source}{QCD\+\_\+\+Lattice\+\_\+\+SU3.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00116\ \textcolor{keyword}{def\ }embed\_su2\_into\_su3(R2,\ i,\ j):}
+\DoxyCodeLine{00117\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{00118\ \textcolor{stringliteral}{\ \ \ \ @brief\ Embed\ a\ 2x2\ SU(2)\ matrix\ into\ SU(3)\ acting\ on\ indices\ (i,\ j).}}
+\DoxyCodeLine{00119\ \textcolor{stringliteral}{\ \ \ \ @param\ R2\ ndarray:\ 2x2\ SU(2)\ matrix.}}
+\DoxyCodeLine{00120\ \textcolor{stringliteral}{\ \ \ \ @param\ i\ int:\ first\ SU(2)\ index\ (0..2).}}
+\DoxyCodeLine{00121\ \textcolor{stringliteral}{\ \ \ \ @param\ j\ int:\ second\ SU(2)\ index\ (0..2),\ must\ satisfy\ i\ <\ j.}}
+\DoxyCodeLine{00122\ \textcolor{stringliteral}{\ \ \ \ @return\ ndarray:\ 3x3\ matrix\ equal\ to\ identity\ except\ the\ 2x2\ block\ at\ (i,j)\ replaced\ by\ R2.}}
+\DoxyCodeLine{00123\ \textcolor{stringliteral}{\ \ \ \ @details\ This\ is\ the\ standard\ Cabibbo–Marinari\ embedding\ that\ extends\ SU(2)\ subgroup\ rotations}}
+\DoxyCodeLine{00124\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ to\ SU(3)\ by\ acting\ non-\/trivially\ on\ a\ chosen\ 2D\ subspace.}}
+\DoxyCodeLine{00125\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{00126\ \ \ \ \ R\ =\ np.eye(3,\ dtype=complex)}
+\DoxyCodeLine{00127\ \ \ \ \ R[i,\ i]\ =\ R2[0,\ 0]}
+\DoxyCodeLine{00128\ \ \ \ \ R[i,\ j]\ =\ R2[0,\ 1]}
+\DoxyCodeLine{00129\ \ \ \ \ R[j,\ i]\ =\ R2[1,\ 0]}
+\DoxyCodeLine{00130\ \ \ \ \ R[j,\ j]\ =\ R2[1,\ 1]}
+\DoxyCodeLine{00131\ \ \ \ \ \textcolor{keywordflow}{return}\ R}
+\DoxyCodeLine{00132\ }
+\DoxyCodeLine{00133\ }
+\DoxyCodeLine{00134\ \textcolor{comment}{\#\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ Plaquette\ helpers\ \&\ local\ ΔS\ computation\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+
+\end{DoxyCode}
+Here is the caller graph for this function\+:
+% FIG 3
+\Hypertarget{namespace_q_c_d___lattice___s_u3_ae02aa257dbc5e49f80253af9eb731f02}\index{QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}!extract\_gluon\_field@{extract\_gluon\_field}}
+\index{extract\_gluon\_field@{extract\_gluon\_field}!QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}}
+\doxysubsubsection{\texorpdfstring{extract\_gluon\_field()}{extract\_gluon\_field()}}
+{\footnotesize\ttfamily \label{namespace_q_c_d___lattice___s_u3_ae02aa257dbc5e49f80253af9eb731f02} 
+QCD\+\_\+\+Lattice\+\_\+\+SU3.\+extract\+\_\+gluon\+\_\+field (\begin{DoxyParamCaption}\item[{}]{U}{, }\item[{}]{g}{ = {\ttfamily 1.0}, }\item[{}]{a}{ = {\ttfamily 1.0}}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Extract approximate local gauge field components A^a from a single SU(3) link.
+@param U ndarray: SU(3) link matrix.
+@param g float: gauge coupling (default 1.0).
+@param a float: lattice spacing (default 1.0).
+@return ndarray: array shape (8,) containing A^a components (real).
+@details For small lattice spacing we approximate U ≈ exp(i g a A) => A ≈ (U - U†)/(2 i g a).
+         We then project the traceless anti-Hermitian part onto the Gell-Mann basis.
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source_l00530}{530}} of file \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source}{QCD\+\_\+\+Lattice\+\_\+\+SU3.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00530\ \textcolor{keyword}{def\ }extract\_gluon\_field(U,\ g=1.0,\ a=1.0):}
+\DoxyCodeLine{00531\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{00532\ \textcolor{stringliteral}{\ \ \ \ @brief\ Extract\ approximate\ local\ gauge\ field\ components\ A\string^a\ from\ a\ single\ SU(3)\ link.}}
+\DoxyCodeLine{00533\ \textcolor{stringliteral}{\ \ \ \ @param\ U\ ndarray:\ SU(3)\ link\ matrix.}}
+\DoxyCodeLine{00534\ \textcolor{stringliteral}{\ \ \ \ @param\ g\ float:\ gauge\ coupling\ (default\ 1.0).}}
+\DoxyCodeLine{00535\ \textcolor{stringliteral}{\ \ \ \ @param\ a\ float:\ lattice\ spacing\ (default\ 1.0).}}
+\DoxyCodeLine{00536\ \textcolor{stringliteral}{\ \ \ \ @return\ ndarray:\ array\ shape\ (8,)\ containing\ A\string^a\ components\ (real).}}
+\DoxyCodeLine{00537\ \textcolor{stringliteral}{\ \ \ \ @details\ For\ small\ lattice\ spacing\ we\ approximate\ U\ ≈\ exp(i\ g\ a\ A)\ =>\ A\ ≈\ (U\ -\/\ U†)/(2\ i\ g\ a).}}
+\DoxyCodeLine{00538\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ We\ then\ project\ the\ traceless\ anti-\/Hermitian\ part\ onto\ the\ Gell-\/Mann\ basis.}}
+\DoxyCodeLine{00539\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{00540\ \ \ \ \ difference\ =\ (U\ -\/\ U.conj().T)\ /\ (2j\ *\ g\ *\ a)}
+\DoxyCodeLine{00541\ \ \ \ \ difference\ -\/=\ np.trace(difference).real\ /\ 3.0\ *\ np.eye(3)}
+\DoxyCodeLine{00542\ \ \ \ \ lambda\_\ =\ gell\_mann\_matrices()}
+\DoxyCodeLine{00543\ \ \ \ \ A\_components\ =\ np.array([np.real(np.trace(difference\ @\ lambda\_a))\ /\ 2.0\ \textcolor{keywordflow}{for}\ lambda\_a\ \textcolor{keywordflow}{in}\ lambda\_])}
+\DoxyCodeLine{00544\ \ \ \ \ \textcolor{keywordflow}{return}\ A\_components}
+\DoxyCodeLine{00545\ }
+\DoxyCodeLine{00546\ }
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+% FIG 4
+Here is the caller graph for this function\+:
+% FIG 5
+\Hypertarget{namespace_q_c_d___lattice___s_u3_abea7757b1fc83bfa6ace5a3fbc11028d}\index{QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}!field\_strength\_tensor@{field\_strength\_tensor}}
+\index{field\_strength\_tensor@{field\_strength\_tensor}!QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}}
+\doxysubsubsection{\texorpdfstring{field\_strength\_tensor()}{field\_strength\_tensor()}}
+{\footnotesize\ttfamily \label{namespace_q_c_d___lattice___s_u3_abea7757b1fc83bfa6ace5a3fbc11028d} 
+QCD\+\_\+\+Lattice\+\_\+\+SU3.\+field\+\_\+strength\+\_\+tensor (\begin{DoxyParamCaption}\item[{}]{link\+\_\+sites}{, }\item[{}]{x}{, }\item[{}]{mu}{, }\item[{}]{nu}{, }\item[{}]{g}{ = {\ttfamily 1.0}, }\item[{}]{a}{ = {\ttfamily 1.0}}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Compute the lattice field-strength components F_{mu,nu}^a at site x from the plaquette.
+@param link_sites ndarray: link variables.
+@param x tuple: lattice coordinate.
+@param mu int: direction mu.
+@param nu int: direction nu.
+@param g float: gauge coupling.
+@param a float: lattice spacing.
+@return ndarray: shape (8,) F^a components (real).
+@details Uses the anti-Hermitian traceless projection of the plaquette:
+         F ~ (P - P†)/(2 i g a^2) projected on Gell-Mann matrices.
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source_l00547}{547}} of file \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source}{QCD\+\_\+\+Lattice\+\_\+\+SU3.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00547\ \textcolor{keyword}{def\ }field\_strength\_tensor(link\_sites,\ x,\ mu,\ nu,\ g=1.0,\ a=1.0):}
+\DoxyCodeLine{00548\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{00549\ \textcolor{stringliteral}{\ \ \ \ @brief\ Compute\ the\ lattice\ field-\/strength\ components\ F\_\{mu,nu\}\string^a\ at\ site\ x\ from\ the\ plaquette.}}
+\DoxyCodeLine{00550\ \textcolor{stringliteral}{\ \ \ \ @param\ link\_sites\ ndarray:\ link\ variables.}}
+\DoxyCodeLine{00551\ \textcolor{stringliteral}{\ \ \ \ @param\ x\ tuple:\ lattice\ coordinate.}}
+\DoxyCodeLine{00552\ \textcolor{stringliteral}{\ \ \ \ @param\ mu\ int:\ direction\ mu.}}
+\DoxyCodeLine{00553\ \textcolor{stringliteral}{\ \ \ \ @param\ nu\ int:\ direction\ nu.}}
+\DoxyCodeLine{00554\ \textcolor{stringliteral}{\ \ \ \ @param\ g\ float:\ gauge\ coupling.}}
+\DoxyCodeLine{00555\ \textcolor{stringliteral}{\ \ \ \ @param\ a\ float:\ lattice\ spacing.}}
+\DoxyCodeLine{00556\ \textcolor{stringliteral}{\ \ \ \ @return\ ndarray:\ shape\ (8,)\ F\string^a\ components\ (real).}}
+\DoxyCodeLine{00557\ \textcolor{stringliteral}{\ \ \ \ @details\ Uses\ the\ anti-\/Hermitian\ traceless\ projection\ of\ the\ plaquette:}}
+\DoxyCodeLine{00558\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ F\ \string~\ (P\ -\/\ P†)/(2\ i\ g\ a\string^2)\ projected\ on\ Gell-\/Mann\ matrices.}}
+\DoxyCodeLine{00559\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{00560\ \ \ \ \ P\ =\ plaquette\_matrix(x,\ mu,\ nu,\ link\_sites)}
+\DoxyCodeLine{00561\ \ \ \ \ difference\ =\ (P\ -\/\ P.conj().T)\ /\ (2j\ *\ g\ *\ a\ **\ 2)}
+\DoxyCodeLine{00562\ \ \ \ \ difference\ -\/=\ np.trace(difference).real\ /\ 3.0\ *\ np.eye(3)}
+\DoxyCodeLine{00563\ \ \ \ \ lambda\_\ =\ gell\_mann\_matrices()}
+\DoxyCodeLine{00564\ \ \ \ \ F\_components\ =\ np.array([np.real(np.trace(difference\ @\ lambda\_a))\ /\ 2.0\ \textcolor{keywordflow}{for}\ lambda\_a\ \textcolor{keywordflow}{in}\ lambda\_])}
+\DoxyCodeLine{00565\ \ \ \ \ \textcolor{keywordflow}{return}\ F\_components}
+\DoxyCodeLine{00566\ }
+\DoxyCodeLine{00567\ }
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+% FIG 6
+Here is the caller graph for this function\+:
+% FIG 7
+\Hypertarget{namespace_q_c_d___lattice___s_u3_ab266c642e895991561c9cd00dde084c4}\index{QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}!gell\_mann\_matrices@{gell\_mann\_matrices}}
+\index{gell\_mann\_matrices@{gell\_mann\_matrices}!QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}}
+\doxysubsubsection{\texorpdfstring{gell\_mann\_matrices()}{gell\_mann\_matrices()}}
+{\footnotesize\ttfamily \label{namespace_q_c_d___lattice___s_u3_ab266c642e895991561c9cd00dde084c4} 
+QCD\+\_\+\+Lattice\+\_\+\+SU3.\+gell\+\_\+mann\+\_\+matrices (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Return the eight Gell-Mann matrices λ^a (3x3).
+@return list: eight 3x3 numpy arrays forming a basis for su(3).
+@details These are used to project Lie-algebra components from SU(3) link matrices.
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source_l00512}{512}} of file \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source}{QCD\+\_\+\+Lattice\+\_\+\+SU3.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00512\ \textcolor{keyword}{def\ }gell\_mann\_matrices():}
+\DoxyCodeLine{00513\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{00514\ \textcolor{stringliteral}{\ \ \ \ @brief\ Return\ the\ eight\ Gell-\/Mann\ matrices\ λ\string^a\ (3x3).}}
+\DoxyCodeLine{00515\ \textcolor{stringliteral}{\ \ \ \ @return\ list:\ eight\ 3x3\ numpy\ arrays\ forming\ a\ basis\ for\ su(3).}}
+\DoxyCodeLine{00516\ \textcolor{stringliteral}{\ \ \ \ @details\ These\ are\ used\ to\ project\ Lie-\/algebra\ components\ from\ SU(3)\ link\ matrices.}}
+\DoxyCodeLine{00517\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{00518\ \ \ \ \ lambda\_\ =\ []}
+\DoxyCodeLine{00519\ \ \ \ \ lambda\_.append(np.array([[0,\ 1,\ 0],\ [1,\ 0,\ 0],\ [0,\ 0,\ 0]],\ dtype=complex))}
+\DoxyCodeLine{00520\ \ \ \ \ lambda\_.append(np.array([[0,\ -\/1j,\ 0],\ [1j,\ 0,\ 0],\ [0,\ 0,\ 0]],\ dtype=complex))}
+\DoxyCodeLine{00521\ \ \ \ \ lambda\_.append(np.array([[1,\ 0,\ 0],\ [0,\ -\/1,\ 0],\ [0,\ 0,\ 0]],\ dtype=complex))}
+\DoxyCodeLine{00522\ \ \ \ \ lambda\_.append(np.array([[0,\ 0,\ 1],\ [0,\ 0,\ 0],\ [1,\ 0,\ 0]],\ dtype=complex))}
+\DoxyCodeLine{00523\ \ \ \ \ lambda\_.append(np.array([[0,\ 0,\ -\/1j],\ [0,\ 0,\ 0],\ [1j,\ 0,\ 0]],\ dtype=complex))}
+\DoxyCodeLine{00524\ \ \ \ \ lambda\_.append(np.array([[0,\ 0,\ 0],\ [0,\ 0,\ 1],\ [0,\ 1,\ 0]],\ dtype=complex))}
+\DoxyCodeLine{00525\ \ \ \ \ lambda\_.append(np.array([[0,\ 0,\ 0],\ [0,\ 0,\ -\/1j],\ [0,\ 1j,\ 0]],\ dtype=complex))}
+\DoxyCodeLine{00526\ \ \ \ \ lambda\_.append((1\ /\ np.sqrt(3))\ *\ np.array([[1,\ 0,\ 0],\ [0,\ 1,\ 0],\ [0,\ 0,\ -\/2]],\ dtype=complex))}
+\DoxyCodeLine{00527\ \ \ \ \ \textcolor{keywordflow}{return}\ lambda\_}
+\DoxyCodeLine{00528\ }
+\DoxyCodeLine{00529\ }
+
+\end{DoxyCode}
+Here is the caller graph for this function\+:
+% FIG 8
+\Hypertarget{namespace_q_c_d___lattice___s_u3_abe28e8d8f901376f5930e5dcb1906f27}\index{QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}!init\_links\_identity@{init\_links\_identity}}
+\index{init\_links\_identity@{init\_links\_identity}!QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}}
+\doxysubsubsection{\texorpdfstring{init\_links\_identity()}{init\_links\_identity()}}
+{\footnotesize\ttfamily \label{namespace_q_c_d___lattice___s_u3_abe28e8d8f901376f5930e5dcb1906f27} 
+QCD\+\_\+\+Lattice\+\_\+\+SU3.\+init\+\_\+links\+\_\+identity (\begin{DoxyParamCaption}\item[{}]{link\+\_\+sites}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Initialize all links to the identity matrix.
+@param link_sites ndarray: link array to initialize (modified in-place).
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source_l00335}{335}} of file \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source}{QCD\+\_\+\+Lattice\+\_\+\+SU3.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00335\ \textcolor{keyword}{def\ }init\_links\_identity(link\_sites):}
+\DoxyCodeLine{00336\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{00337\ \textcolor{stringliteral}{\ \ \ \ @brief\ Initialize\ all\ links\ to\ the\ identity\ matrix.}}
+\DoxyCodeLine{00338\ \textcolor{stringliteral}{\ \ \ \ @param\ link\_sites\ ndarray:\ link\ array\ to\ initialize\ (modified\ in-\/place).}}
+\DoxyCodeLine{00339\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{00340\ \ \ \ \ \textcolor{keywordflow}{for}\ mu\ \textcolor{keywordflow}{in}\ range(D):}
+\DoxyCodeLine{00341\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ x\ \textcolor{keywordflow}{in}\ np.ndindex(*x\_shape):}
+\DoxyCodeLine{00342\ \ \ \ \ \ \ \ \ \ \ \ \ link\_sites[(mu,)\ +\ x]\ =\ np.eye(3,\ dtype=complex)}
+\DoxyCodeLine{00343\ }
+\DoxyCodeLine{00344\ }
+
+\end{DoxyCode}
+Here is the caller graph for this function\+:
+% FIG 9
+\Hypertarget{namespace_q_c_d___lattice___s_u3_a73426a84b4c73e44a476cb0b9c1825ea}\index{QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}!measure\_avg\_A2\_and\_F2@{measure\_avg\_A2\_and\_F2}}
+\index{measure\_avg\_A2\_and\_F2@{measure\_avg\_A2\_and\_F2}!QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}}
+\doxysubsubsection{\texorpdfstring{measure\_avg\_A2\_and\_F2()}{measure\_avg\_A2\_and\_F2()}}
+{\footnotesize\ttfamily \label{namespace_q_c_d___lattice___s_u3_a73426a84b4c73e44a476cb0b9c1825ea} 
+QCD\+\_\+\+Lattice\+\_\+\+SU3.\+measure\+\_\+avg\+\_\+\+A2\+\_\+and\+\_\+\+F2 (\begin{DoxyParamCaption}\item[{}]{link\+\_\+sites}{, }\item[{}]{g}{ = {\ttfamily 1.0}, }\item[{}]{a}{ = {\ttfamily 1.0}}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Compute averages ⟨A^2⟩ and ⟨F^2⟩ over the entire lattice as diagnostics.
+@param link_sites ndarray: link configuration.
+@param g float: gauge coupling.
+@param a float: lattice spacing.
+@return tuple: (A2_avg float, F2_avg float)
+@details A^2 and F^2 are computed by summing squares of components and normalizing by counts.
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source_l00568}{568}} of file \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source}{QCD\+\_\+\+Lattice\+\_\+\+SU3.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00568\ \textcolor{keyword}{def\ }measure\_avg\_A2\_and\_F2(link\_sites,\ g=1.0,\ a=1.0):}
+\DoxyCodeLine{00569\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{00570\ \textcolor{stringliteral}{\ \ \ \ @brief\ Compute\ averages\ ⟨A\string^2⟩\ and\ ⟨F\string^2⟩\ over\ the\ entire\ lattice\ as\ diagnostics.}}
+\DoxyCodeLine{00571\ \textcolor{stringliteral}{\ \ \ \ @param\ link\_sites\ ndarray:\ link\ configuration.}}
+\DoxyCodeLine{00572\ \textcolor{stringliteral}{\ \ \ \ @param\ g\ float:\ gauge\ coupling.}}
+\DoxyCodeLine{00573\ \textcolor{stringliteral}{\ \ \ \ @param\ a\ float:\ lattice\ spacing.}}
+\DoxyCodeLine{00574\ \textcolor{stringliteral}{\ \ \ \ @return\ tuple:\ (A2\_avg\ float,\ F2\_avg\ float)}}
+\DoxyCodeLine{00575\ \textcolor{stringliteral}{\ \ \ \ @details\ A\string^2\ and\ F\string^2\ are\ computed\ by\ summing\ squares\ of\ components\ and\ normalizing\ by\ counts.}}
+\DoxyCodeLine{00576\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{00577\ \ \ \ \ A2\_sum\ =\ 0.0}
+\DoxyCodeLine{00578\ \ \ \ \ F2\_sum\ =\ 0.0}
+\DoxyCodeLine{00579\ \ \ \ \ nA\ =\ 0}
+\DoxyCodeLine{00580\ \ \ \ \ nF\ =\ 0}
+\DoxyCodeLine{00581\ \ \ \ \ \textcolor{keywordflow}{for}\ x\ \textcolor{keywordflow}{in}\ np.ndindex(*x\_shape):}
+\DoxyCodeLine{00582\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ mu\ \textcolor{keywordflow}{in}\ range(D):}
+\DoxyCodeLine{00583\ \ \ \ \ \ \ \ \ \ \ \ \ U\ =\ link\_sites[(mu,)\ +\ x]}
+\DoxyCodeLine{00584\ \ \ \ \ \ \ \ \ \ \ \ \ A\ =\ extract\_gluon\_field(U,\ g=g,\ a=a)}
+\DoxyCodeLine{00585\ \ \ \ \ \ \ \ \ \ \ \ \ A2\_sum\ +=\ np.dot(A,\ A)}
+\DoxyCodeLine{00586\ \ \ \ \ \ \ \ \ \ \ \ \ nA\ +=\ 1}
+\DoxyCodeLine{00587\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ mu\ \textcolor{keywordflow}{in}\ range(D):}
+\DoxyCodeLine{00588\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ nu\ \textcolor{keywordflow}{in}\ range(mu\ +\ 1,\ D):}
+\DoxyCodeLine{00589\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ F\ =\ field\_strength\_tensor(link\_sites,\ x,\ mu,\ nu,\ g=g,\ a=a)}
+\DoxyCodeLine{00590\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ F2\_sum\ +=\ np.dot(F,\ F)}
+\DoxyCodeLine{00591\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nF\ +=\ 1}
+\DoxyCodeLine{00592\ \ \ \ \ \textcolor{keywordflow}{return}\ A2\_sum\ /\ nA,\ F2\_sum\ /\ nF}
+\DoxyCodeLine{00593\ }
+\DoxyCodeLine{00594\ }
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+% FIG 10
+\Hypertarget{namespace_q_c_d___lattice___s_u3_a7abb53e1fbedfee3a871f5c23139deb2}\index{QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}!measure\_wilson\_loop\_RT@{measure\_wilson\_loop\_RT}}
+\index{measure\_wilson\_loop\_RT@{measure\_wilson\_loop\_RT}!QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}}
+\doxysubsubsection{\texorpdfstring{measure\_wilson\_loop\_RT()}{measure\_wilson\_loop\_RT()}}
+{\footnotesize\ttfamily \label{namespace_q_c_d___lattice___s_u3_a7abb53e1fbedfee3a871f5c23139deb2} 
+QCD\+\_\+\+Lattice\+\_\+\+SU3.\+measure\+\_\+wilson\+\_\+loop\+\_\+\+RT (\begin{DoxyParamCaption}\item[{}]{link\+\_\+sites}{, }\item[{}]{R}{, }\item[{}]{T}{, }\item[{}]{spatial\+\_\+direction}{ = {\ttfamily 0}, }\item[{}]{time\+\_\+direction}{ = {\ttfamily None}}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Measure the average Wilson loop W(R,T) for rectangular loops of spatial size R and temporal extent T.
+@param link_sites ndarray: link configuration.
+@param R int: spatial extent (number of spatial steps).
+@param T int: temporal extent (number of temporal steps).
+@param spatial_direction int: spatial direction index used for the R side.
+@param time_direction int or None: time direction index; defaults to D-1 (last axis).
+@return float: average Re Tr[W(R,T)] / 3 over all possible loop origins.
+@details
+The loop path starts at each lattice site x and multiplies the link matrices along the rectangular contour.
+Backward traversals multiply by Hermitian conjugate of the traversed link.
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source_l00361}{361}} of file \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source}{QCD\+\_\+\+Lattice\+\_\+\+SU3.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00361\ \textcolor{keyword}{def\ }measure\_wilson\_loop\_RT(link\_sites,\ R,\ T,\ spatial\_direction=0,\ time\_direction=None):}
+\DoxyCodeLine{00362\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{00363\ \textcolor{stringliteral}{\ \ \ \ @brief\ Measure\ the\ average\ Wilson\ loop\ W(R,T)\ for\ rectangular\ loops\ of\ spatial\ size\ R\ and\ temporal\ extent\ T.}}
+\DoxyCodeLine{00364\ \textcolor{stringliteral}{\ \ \ \ @param\ link\_sites\ ndarray:\ link\ configuration.}}
+\DoxyCodeLine{00365\ \textcolor{stringliteral}{\ \ \ \ @param\ R\ int:\ spatial\ extent\ (number\ of\ spatial\ steps).}}
+\DoxyCodeLine{00366\ \textcolor{stringliteral}{\ \ \ \ @param\ T\ int:\ temporal\ extent\ (number\ of\ temporal\ steps).}}
+\DoxyCodeLine{00367\ \textcolor{stringliteral}{\ \ \ \ @param\ spatial\_direction\ int:\ spatial\ direction\ index\ used\ for\ the\ R\ side.}}
+\DoxyCodeLine{00368\ \textcolor{stringliteral}{\ \ \ \ @param\ time\_direction\ int\ or\ None:\ time\ direction\ index;\ defaults\ to\ D-\/1\ (last\ axis).}}
+\DoxyCodeLine{00369\ \textcolor{stringliteral}{\ \ \ \ @return\ float:\ average\ Re\ Tr[W(R,T)]\ /\ 3\ over\ all\ possible\ loop\ origins.}}
+\DoxyCodeLine{00370\ \textcolor{stringliteral}{\ \ \ \ @details}}
+\DoxyCodeLine{00371\ \textcolor{stringliteral}{\ \ \ \ The\ loop\ path\ starts\ at\ each\ lattice\ site\ x\ and\ multiplies\ the\ link\ matrices\ along\ the\ rectangular\ contour.}}
+\DoxyCodeLine{00372\ \textcolor{stringliteral}{\ \ \ \ Backward\ traversals\ multiply\ by\ Hermitian\ conjugate\ of\ the\ traversed\ link.}}
+\DoxyCodeLine{00373\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{00374\ \ \ \ \ \textcolor{keywordflow}{if}\ time\_direction\ \textcolor{keywordflow}{is}\ \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00375\ \ \ \ \ \ \ \ \ time\_direction\ =\ D\ -\/\ 1}
+\DoxyCodeLine{00376\ \ \ \ \ total\ =\ 0.0}
+\DoxyCodeLine{00377\ \ \ \ \ count\ =\ 0}
+\DoxyCodeLine{00378\ \ \ \ \ \textcolor{keywordflow}{for}\ x\ \textcolor{keywordflow}{in}\ np.ndindex(*x\_shape):}
+\DoxyCodeLine{00379\ \ \ \ \ \ \ \ \ current\_x\ =\ x}
+\DoxyCodeLine{00380\ \ \ \ \ \ \ \ \ W\ =\ np.eye(3,\ dtype=complex)}
+\DoxyCodeLine{00381\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ R\ steps\ +\ spatial\_direction}}
+\DoxyCodeLine{00382\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ i\ \textcolor{keywordflow}{in}\ range(R):}
+\DoxyCodeLine{00383\ \ \ \ \ \ \ \ \ \ \ \ \ U\ =\ link\_sites[(spatial\_direction,)\ +\ current\_x]}
+\DoxyCodeLine{00384\ \ \ \ \ \ \ \ \ \ \ \ \ W\ =\ W\ @\ U}
+\DoxyCodeLine{00385\ \ \ \ \ \ \ \ \ \ \ \ \ current\_x\ =\ x\_neighbor(current\_x,\ spatial\_direction,\ 1)}
+\DoxyCodeLine{00386\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ T\ steps\ +\ time\_direction}}
+\DoxyCodeLine{00387\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ i\ \textcolor{keywordflow}{in}\ range(T):}
+\DoxyCodeLine{00388\ \ \ \ \ \ \ \ \ \ \ \ \ U\ =\ link\_sites[(time\_direction,)\ +\ current\_x]}
+\DoxyCodeLine{00389\ \ \ \ \ \ \ \ \ \ \ \ \ W\ =\ W\ @\ U}
+\DoxyCodeLine{00390\ \ \ \ \ \ \ \ \ \ \ \ \ current\_x\ =\ x\_neighbor(current\_x,\ time\_direction,\ 1)}
+\DoxyCodeLine{00391\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ R\ steps\ -\/\ spatial\_direction\ (backwards)}}
+\DoxyCodeLine{00392\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ i\ \textcolor{keywordflow}{in}\ range(R):}
+\DoxyCodeLine{00393\ \ \ \ \ \ \ \ \ \ \ \ \ current\_x\ =\ x\_neighbor(current\_x,\ spatial\_direction,\ -\/1)}
+\DoxyCodeLine{00394\ \ \ \ \ \ \ \ \ \ \ \ \ U\ =\ link\_sites[(spatial\_direction,)\ +\ current\_x]}
+\DoxyCodeLine{00395\ \ \ \ \ \ \ \ \ \ \ \ \ W\ =\ W\ @\ U.conj().T}
+\DoxyCodeLine{00396\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ T\ steps\ -\/\ time\_direction\ (backwards)}}
+\DoxyCodeLine{00397\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ i\ \textcolor{keywordflow}{in}\ range(T):}
+\DoxyCodeLine{00398\ \ \ \ \ \ \ \ \ \ \ \ \ current\_x\ =\ x\_neighbor(current\_x,\ time\_direction,\ -\/1)}
+\DoxyCodeLine{00399\ \ \ \ \ \ \ \ \ \ \ \ \ U\ =\ link\_sites[(time\_direction,)\ +\ current\_x]}
+\DoxyCodeLine{00400\ \ \ \ \ \ \ \ \ \ \ \ \ W\ =\ W\ @\ U.conj().T}
+\DoxyCodeLine{00401\ \ \ \ \ \ \ \ \ total\ +=\ np.real(np.trace(W))\ /\ 3.0}
+\DoxyCodeLine{00402\ \ \ \ \ \ \ \ \ count\ +=\ 1}
+\DoxyCodeLine{00403\ \ \ \ \ \textcolor{keywordflow}{return}\ total\ /\ count}
+\DoxyCodeLine{00404\ }
+\DoxyCodeLine{00405\ }
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+% FIG 11
+Here is the caller graph for this function\+:
+% FIG 12
+\Hypertarget{namespace_q_c_d___lattice___s_u3_ae51e7ab33070cfee14de6989b7c4a57b}\index{QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}!metropolis\_update@{metropolis\_update}}
+\index{metropolis\_update@{metropolis\_update}!QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}}
+\doxysubsubsection{\texorpdfstring{metropolis\_update()}{metropolis\_update()}}
+{\footnotesize\ttfamily \label{namespace_q_c_d___lattice___s_u3_ae51e7ab33070cfee14de6989b7c4a57b} 
+QCD\+\_\+\+Lattice\+\_\+\+SU3.\+metropolis\+\_\+update (\begin{DoxyParamCaption}\item[{}]{link\+\_\+sites}{, }\item[{}]{eps\+\_\+sub}{ = {\ttfamily 0.06}}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Perform a single Metropolis sweep over all links applying embedded SU(2) updates.
+@param link_sites ndarray: link variable array (modified in-place).
+@param eps_sub float: SU(2) proposal amplitude for each embedded sub-update.
+@return tuple: (accepted int, proposals int)
+@details
+For each link U_mu(x) we cycle through the three SU(2) subgroups (0,1), (0,2), (1,2).
+For each subgroup:
+  1. compute sum_old = Σ Re Tr(P) over plaquettes touching the link,
+  2. propose an SU(2) rotation R2, embed into SU(3) → R3,
+  3. set U_candidate = R3 @ U_old and reproject to SU(3),
+  4. compute sum_new and ΔS = - (β/3) (sum_new - sum_old),
+  5. accept/reject with Metropolis probability.
+Using only touching plaquettes makes ΔS computation local and efficient.
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source_l00190}{190}} of file \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source}{QCD\+\_\+\+Lattice\+\_\+\+SU3.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00190\ \textcolor{keyword}{def\ }metropolis\_update(link\_sites,\ eps\_sub=0.06):}
+\DoxyCodeLine{00191\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{00192\ \textcolor{stringliteral}{\ \ \ \ @brief\ Perform\ a\ single\ Metropolis\ sweep\ over\ all\ links\ applying\ embedded\ SU(2)\ updates.}}
+\DoxyCodeLine{00193\ \textcolor{stringliteral}{\ \ \ \ @param\ link\_sites\ ndarray:\ link\ variable\ array\ (modified\ in-\/place).}}
+\DoxyCodeLine{00194\ \textcolor{stringliteral}{\ \ \ \ @param\ eps\_sub\ float:\ SU(2)\ proposal\ amplitude\ for\ each\ embedded\ sub-\/update.}}
+\DoxyCodeLine{00195\ \textcolor{stringliteral}{\ \ \ \ @return\ tuple:\ (accepted\ int,\ proposals\ int)}}
+\DoxyCodeLine{00196\ \textcolor{stringliteral}{\ \ \ \ @details}}
+\DoxyCodeLine{00197\ \textcolor{stringliteral}{\ \ \ \ For\ each\ link\ U\_mu(x)\ we\ cycle\ through\ the\ three\ SU(2)\ subgroups\ (0,1),\ (0,2),\ (1,2).}}
+\DoxyCodeLine{00198\ \textcolor{stringliteral}{\ \ \ \ For\ each\ subgroup:}}
+\DoxyCodeLine{00199\ \textcolor{stringliteral}{\ \ \ \ \ \ 1.\ compute\ sum\_old\ =\ Σ\ Re\ Tr(P)\ over\ plaquettes\ touching\ the\ link,}}
+\DoxyCodeLine{00200\ \textcolor{stringliteral}{\ \ \ \ \ \ 2.\ propose\ an\ SU(2)\ rotation\ R2,\ embed\ into\ SU(3)\ →\ R3,}}
+\DoxyCodeLine{00201\ \textcolor{stringliteral}{\ \ \ \ \ \ 3.\ set\ U\_candidate\ =\ R3\ @\ U\_old\ and\ reproject\ to\ SU(3),}}
+\DoxyCodeLine{00202\ \textcolor{stringliteral}{\ \ \ \ \ \ 4.\ compute\ sum\_new\ and\ ΔS\ =\ -\/\ (β/3)\ (sum\_new\ -\/\ sum\_old),}}
+\DoxyCodeLine{00203\ \textcolor{stringliteral}{\ \ \ \ \ \ 5.\ accept/reject\ with\ Metropolis\ probability.}}
+\DoxyCodeLine{00204\ \textcolor{stringliteral}{\ \ \ \ Using\ only\ touching\ plaquettes\ makes\ ΔS\ computation\ local\ and\ efficient.}}
+\DoxyCodeLine{00205\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{00206\ \ \ \ \ accepted\ =\ 0}
+\DoxyCodeLine{00207\ \ \ \ \ proposals\ =\ 0}
+\DoxyCodeLine{00208\ \ \ \ \ su2\_pairs\ =\ [(0,\ 1),\ (0,\ 2),\ (1,\ 2)]}
+\DoxyCodeLine{00209\ \ \ \ \ \textcolor{keywordflow}{for}\ mu\ \textcolor{keywordflow}{in}\ range(D):}
+\DoxyCodeLine{00210\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ x\ \textcolor{keywordflow}{in}\ np.ndindex(*x\_shape):}
+\DoxyCodeLine{00211\ \ \ \ \ \ \ \ \ \ \ \ \ U\_old\ =\ link\_sites[(mu,)\ +\ x].copy()}
+\DoxyCodeLine{00212\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i,\ j)\ \textcolor{keywordflow}{in}\ su2\_pairs:}
+\DoxyCodeLine{00213\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ plist\ =\ plaquettes\_touching\_link(x,\ mu,\ link\_sites)}
+\DoxyCodeLine{00214\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sum\_old\ =\ sum(trace\ \textcolor{keywordflow}{for}\ (\_meta,\ trace)\ \textcolor{keywordflow}{in}\ plist)}
+\DoxyCodeLine{00215\ }
+\DoxyCodeLine{00216\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ R2\ =\ su2\_random\_unitary(eps\_sub)}
+\DoxyCodeLine{00217\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ R3\ =\ embed\_su2\_into\_su3(R2,\ i,\ j)}
+\DoxyCodeLine{00218\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ link\_sites[(mu,)\ +\ x]\ =\ R3\ @\ U\_old}
+\DoxyCodeLine{00219\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Reproject\ to\ SU(3)\ to\ correct\ numerical\ drift}}
+\DoxyCodeLine{00220\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ link\_sites[(mu,)\ +\ x]\ =\ su3\_matrices(link\_sites[(mu,)\ +\ x])}
+\DoxyCodeLine{00221\ }
+\DoxyCodeLine{00222\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ new\_p\_list\ =\ plaquettes\_touching\_link(x,\ mu,\ link\_sites)}
+\DoxyCodeLine{00223\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sum\_new\ =\ sum(trace\ \textcolor{keywordflow}{for}\ (\_meta,\ trace)\ \textcolor{keywordflow}{in}\ new\_p\_list)}
+\DoxyCodeLine{00224\ }
+\DoxyCodeLine{00225\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dS\ =\ -\/\ (beta\ /\ 3.0)\ *\ (sum\_new\ -\/\ sum\_old)}
+\DoxyCodeLine{00226\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ proposals\ +=\ 1}
+\DoxyCodeLine{00227\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Metropolis\ acceptance:\ accept\ if\ dS\ <=\ 0\ or\ with\ probability\ exp(-\/dS)}}
+\DoxyCodeLine{00228\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ dS\ >\ 0\ \textcolor{keywordflow}{and}\ np.exp(-\/dS)\ <\ np.random.rand():}
+\DoxyCodeLine{00229\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ reject:\ revert\ this\ subgroup\ update\ (resume\ next\ subgroup\ from\ U\_old)}}
+\DoxyCodeLine{00230\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ link\_sites[(mu,)\ +\ x]\ =\ U\_old.copy()}
+\DoxyCodeLine{00231\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00232\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ accept:\ update\ U\_old\ so\ subsequent\ subgroup\ multiplications\ act\ on\ accepted\ matrix}}
+\DoxyCodeLine{00233\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ U\_old\ =\ link\_sites[(mu,)\ +\ x].copy()}
+\DoxyCodeLine{00234\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ accepted\ +=\ 1}
+\DoxyCodeLine{00235\ \ \ \ \ \textcolor{keywordflow}{return}\ accepted,\ proposals}
+\DoxyCodeLine{00236\ }
+\DoxyCodeLine{00237\ }
+\DoxyCodeLine{00238\ \textcolor{comment}{\#\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ Observables\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+% FIG 13
+Here is the caller graph for this function\+:
+% FIG 14
+\Hypertarget{namespace_q_c_d___lattice___s_u3_aee4d750fbbf3dc3b58cfbf755074a68b}\index{QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}!plaquette\_matrix@{plaquette\_matrix}}
+\index{plaquette\_matrix@{plaquette\_matrix}!QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}}
+\doxysubsubsection{\texorpdfstring{plaquette\_matrix()}{plaquette\_matrix()}}
+{\footnotesize\ttfamily \label{namespace_q_c_d___lattice___s_u3_aee4d750fbbf3dc3b58cfbf755074a68b} 
+QCD\+\_\+\+Lattice\+\_\+\+SU3.\+plaquette\+\_\+matrix (\begin{DoxyParamCaption}\item[{}]{x}{, }\item[{}]{mu}{, }\item[{}]{nu}{, }\item[{}]{link\+\_\+sites}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Construct the plaquette matrix U_mu(x) U_nu(x+mu) U_mu^\dagger(x+nu) U_nu^\dagger(x).
+@param x tuple: lattice coordinate.
+@param mu int: direction index mu.
+@param nu int: direction index nu.
+@param link_sites ndarray: link variable array.
+@return ndarray: 3x3 plaquette matrix P_{mu,nu}(x).
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source_l00135}{135}} of file \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source}{QCD\+\_\+\+Lattice\+\_\+\+SU3.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00135\ \textcolor{keyword}{def\ }plaquette\_matrix(x,\ mu,\ nu,\ link\_sites):}
+\DoxyCodeLine{00136\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{00137\ \textcolor{stringliteral}{\ \ \ \ @brief\ Construct\ the\ plaquette\ matrix\ U\_mu(x)\ U\_nu(x+mu)\ U\_mu\string^\(\backslash\)dagger(x+nu)\ U\_nu\string^\(\backslash\)dagger(x).}}
+\DoxyCodeLine{00138\ \textcolor{stringliteral}{\ \ \ \ @param\ x\ tuple:\ lattice\ coordinate.}}
+\DoxyCodeLine{00139\ \textcolor{stringliteral}{\ \ \ \ @param\ mu\ int:\ direction\ index\ mu.}}
+\DoxyCodeLine{00140\ \textcolor{stringliteral}{\ \ \ \ @param\ nu\ int:\ direction\ index\ nu.}}
+\DoxyCodeLine{00141\ \textcolor{stringliteral}{\ \ \ \ @param\ link\_sites\ ndarray:\ link\ variable\ array.}}
+\DoxyCodeLine{00142\ \textcolor{stringliteral}{\ \ \ \ @return\ ndarray:\ 3x3\ plaquette\ matrix\ P\_\{mu,nu\}(x).}}
+\DoxyCodeLine{00143\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{00144\ \ \ \ \ x\_plus\_mu\ =\ x\_neighbor(x,\ mu,\ 1)}
+\DoxyCodeLine{00145\ \ \ \ \ x\_plus\_nu\ =\ x\_neighbor(x,\ nu,\ 1)}
+\DoxyCodeLine{00146\ \ \ \ \ U\_mu\ =\ link\_sites[(mu,)\ +\ x]}
+\DoxyCodeLine{00147\ \ \ \ \ U\_nu\_xmu\ =\ link\_sites[(nu,)\ +\ x\_plus\_mu]}
+\DoxyCodeLine{00148\ \ \ \ \ U\_mu\_xnu\ =\ link\_sites[(mu,)\ +\ x\_plus\_nu]}
+\DoxyCodeLine{00149\ \ \ \ \ U\_nu\ =\ link\_sites[(nu,)\ +\ x]}
+\DoxyCodeLine{00150\ \ \ \ \ P\ =\ U\_mu\ @\ U\_nu\_xmu\ @\ U\_mu\_xnu.conj().T\ @\ U\_nu.conj().T}
+\DoxyCodeLine{00151\ \ \ \ \ \textcolor{keywordflow}{return}\ P}
+\DoxyCodeLine{00152\ }
+\DoxyCodeLine{00153\ }
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+% FIG 15
+Here is the caller graph for this function\+:
+% FIG 16
+\Hypertarget{namespace_q_c_d___lattice___s_u3_a51f76f98325616f820bcc40f2d106a02}\index{QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}!plaquettes\_touching\_link@{plaquettes\_touching\_link}}
+\index{plaquettes\_touching\_link@{plaquettes\_touching\_link}!QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}}
+\doxysubsubsection{\texorpdfstring{plaquettes\_touching\_link()}{plaquettes\_touching\_link()}}
+{\footnotesize\ttfamily \label{namespace_q_c_d___lattice___s_u3_a51f76f98325616f820bcc40f2d106a02} 
+QCD\+\_\+\+Lattice\+\_\+\+SU3.\+plaquettes\+\_\+touching\+\_\+link (\begin{DoxyParamCaption}\item[{}]{x}{, }\item[{}]{mu}{, }\item[{}]{link\+\_\+sites}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief List plaquettes that include the link at (mu, x).
+@param x tuple: lattice coordinate of the starting site of the link.
+@param mu int: link direction.
+@param link_sites ndarray: array of link matrices.
+@return list: entries [((x_plaq, mu, nu), real_trace), ...] for all plaquettes touching the link.
+@details
+For each nu != mu, the link (mu,x) sits in two elementary plaquettes:
+  - the plaquette at x in the (mu,nu) plane,
+  - the plaquette at x - e_nu in the (mu,nu) plane.
+Only these plaquettes are required to compute the local change in action when U_mu(x) is updated.
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source_l00164}{164}} of file \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source}{QCD\+\_\+\+Lattice\+\_\+\+SU3.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00164\ \textcolor{keyword}{def\ }plaquettes\_touching\_link(x,\ mu,\ link\_sites):}
+\DoxyCodeLine{00165\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{00166\ \textcolor{stringliteral}{\ \ \ \ @brief\ List\ plaquettes\ that\ include\ the\ link\ at\ (mu,\ x).}}
+\DoxyCodeLine{00167\ \textcolor{stringliteral}{\ \ \ \ @param\ x\ tuple:\ lattice\ coordinate\ of\ the\ starting\ site\ of\ the\ link.}}
+\DoxyCodeLine{00168\ \textcolor{stringliteral}{\ \ \ \ @param\ mu\ int:\ link\ direction.}}
+\DoxyCodeLine{00169\ \textcolor{stringliteral}{\ \ \ \ @param\ link\_sites\ ndarray:\ array\ of\ link\ matrices.}}
+\DoxyCodeLine{00170\ \textcolor{stringliteral}{\ \ \ \ @return\ list:\ entries\ [((x\_plaq,\ mu,\ nu),\ real\_trace),\ ...]\ for\ all\ plaquettes\ touching\ the\ link.}}
+\DoxyCodeLine{00171\ \textcolor{stringliteral}{\ \ \ \ @details}}
+\DoxyCodeLine{00172\ \textcolor{stringliteral}{\ \ \ \ For\ each\ nu\ !=\ mu,\ the\ link\ (mu,x)\ sits\ in\ two\ elementary\ plaquettes:}}
+\DoxyCodeLine{00173\ \textcolor{stringliteral}{\ \ \ \ \ \ -\/\ the\ plaquette\ at\ x\ in\ the\ (mu,nu)\ plane,}}
+\DoxyCodeLine{00174\ \textcolor{stringliteral}{\ \ \ \ \ \ -\/\ the\ plaquette\ at\ x\ -\/\ e\_nu\ in\ the\ (mu,nu)\ plane.}}
+\DoxyCodeLine{00175\ \textcolor{stringliteral}{\ \ \ \ Only\ these\ plaquettes\ are\ required\ to\ compute\ the\ local\ change\ in\ action\ when\ U\_mu(x)\ is\ updated.}}
+\DoxyCodeLine{00176\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{00177\ \ \ \ \ p\_list\ =\ []}
+\DoxyCodeLine{00178\ \ \ \ \ \textcolor{keywordflow}{for}\ nu\ \textcolor{keywordflow}{in}\ range(D):}
+\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ nu\ ==\ mu:}
+\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue}}
+\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ trace\_1\ =\ real\_trace\_plaquette(x,\ mu,\ nu,\ link\_sites)}
+\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ p\_list.append(((x,\ mu,\ nu),\ trace\_1))}
+\DoxyCodeLine{00183\ \ \ \ \ \ \ \ \ x\_minus\_nu\ =\ x\_neighbor(x,\ nu,\ -\/1)}
+\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ trace\_2\ =\ real\_trace\_plaquette(x\_minus\_nu,\ mu,\ nu,\ link\_sites)}
+\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ p\_list.append(((x\_minus\_nu,\ mu,\ nu),\ trace\_2))}
+\DoxyCodeLine{00186\ \ \ \ \ \textcolor{keywordflow}{return}\ p\_list}
+\DoxyCodeLine{00187\ }
+\DoxyCodeLine{00188\ }
+\DoxyCodeLine{00189\ \textcolor{comment}{\#\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ Local\ update:\ Metropolis\ with\ embedded\ SU(2)\ updates\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+% FIG 17
+Here is the caller graph for this function\+:
+% FIG 18
+\Hypertarget{namespace_q_c_d___lattice___s_u3_a714c321edfa15efabdf73654fb10e0d1}\index{QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}!randomize\_links\_small@{randomize\_links\_small}}
+\index{randomize\_links\_small@{randomize\_links\_small}!QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}}
+\doxysubsubsection{\texorpdfstring{randomize\_links\_small()}{randomize\_links\_small()}}
+{\footnotesize\ttfamily \label{namespace_q_c_d___lattice___s_u3_a714c321edfa15efabdf73654fb10e0d1} 
+QCD\+\_\+\+Lattice\+\_\+\+SU3.\+randomize\+\_\+links\+\_\+small (\begin{DoxyParamCaption}\item[{}]{link\+\_\+sites}{, }\item[{}]{amplitude}{ = {\ttfamily 0.02}}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Apply small random SU(3) rotations (via embedded SU(2)) to each link for breaking symmetry.
+@param link_sites ndarray: link array (modified in-place).
+@param amplitude float: small rotation amplitude used for initial randomization.
+@details Useful to seed the Markov chain with a slightly randomized starting configuration.
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source_l00345}{345}} of file \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source}{QCD\+\_\+\+Lattice\+\_\+\+SU3.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00345\ \textcolor{keyword}{def\ }randomize\_links\_small(link\_sites,\ amplitude=0.02):}
+\DoxyCodeLine{00346\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{00347\ \textcolor{stringliteral}{\ \ \ \ @brief\ Apply\ small\ random\ SU(3)\ rotations\ (via\ embedded\ SU(2))\ to\ each\ link\ for\ breaking\ symmetry.}}
+\DoxyCodeLine{00348\ \textcolor{stringliteral}{\ \ \ \ @param\ link\_sites\ ndarray:\ link\ array\ (modified\ in-\/place).}}
+\DoxyCodeLine{00349\ \textcolor{stringliteral}{\ \ \ \ @param\ amplitude\ float:\ small\ rotation\ amplitude\ used\ for\ initial\ randomization.}}
+\DoxyCodeLine{00350\ \textcolor{stringliteral}{\ \ \ \ @details\ Useful\ to\ seed\ the\ Markov\ chain\ with\ a\ slightly\ randomized\ starting\ configuration.}}
+\DoxyCodeLine{00351\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{00352\ \ \ \ \ \textcolor{keywordflow}{for}\ mu\ \textcolor{keywordflow}{in}\ range(D):}
+\DoxyCodeLine{00353\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ x\ \textcolor{keywordflow}{in}\ np.ndindex(*x\_shape):}
+\DoxyCodeLine{00354\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i,\ j)\ \textcolor{keywordflow}{in}\ [(0,\ 1),\ (0,\ 2),\ (1,\ 2)]:}
+\DoxyCodeLine{00355\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ R2\ =\ su2\_random\_unitary(amplitude)}
+\DoxyCodeLine{00356\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ R3\ =\ embed\_su2\_into\_su3(R2,\ i,\ j)}
+\DoxyCodeLine{00357\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ link\_sites[(mu,)\ +\ x]\ =\ su3\_matrices(R3\ @\ link\_sites[(mu,)\ +\ x])}
+\DoxyCodeLine{00358\ }
+\DoxyCodeLine{00359\ }
+\DoxyCodeLine{00360\ \textcolor{comment}{\#\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ Wilson\ loop\ helper\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+% FIG 19
+\Hypertarget{namespace_q_c_d___lattice___s_u3_a000af2b4b1fc71ae6fa651b88b6eef3b}\index{QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}!real\_trace\_plaquette@{real\_trace\_plaquette}}
+\index{real\_trace\_plaquette@{real\_trace\_plaquette}!QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}}
+\doxysubsubsection{\texorpdfstring{real\_trace\_plaquette()}{real\_trace\_plaquette()}}
+{\footnotesize\ttfamily \label{namespace_q_c_d___lattice___s_u3_a000af2b4b1fc71ae6fa651b88b6eef3b} 
+QCD\+\_\+\+Lattice\+\_\+\+SU3.\+real\+\_\+trace\+\_\+plaquette (\begin{DoxyParamCaption}\item[{}]{x}{, }\item[{}]{mu}{, }\item[{}]{nu}{, }\item[{}]{link\+\_\+sites}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Compute the real part of the trace of the plaquette matrix.
+@return float: Re Tr[P_{mu,nu}(x)].
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source_l00154}{154}} of file \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source}{QCD\+\_\+\+Lattice\+\_\+\+SU3.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00154\ \textcolor{keyword}{def\ }real\_trace\_plaquette(x,\ mu,\ nu,\ link\_sites):}
+\DoxyCodeLine{00155\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{00156\ \textcolor{stringliteral}{\ \ \ \ @brief\ Compute\ the\ real\ part\ of\ the\ trace\ of\ the\ plaquette\ matrix.}}
+\DoxyCodeLine{00157\ \textcolor{stringliteral}{\ \ \ \ @return\ float:\ Re\ Tr[P\_\{mu,nu\}(x)].}}
+\DoxyCodeLine{00158\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{00159\ \ \ \ \ P\ =\ plaquette\_matrix(x,\ mu,\ nu,\ link\_sites)}
+\DoxyCodeLine{00160\ \ \ \ \ trace\ =\ np.trace(P)}
+\DoxyCodeLine{00161\ \ \ \ \ \textcolor{keywordflow}{return}\ float(np.real(trace))}
+\DoxyCodeLine{00162\ }
+\DoxyCodeLine{00163\ }
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+% FIG 20
+Here is the caller graph for this function\+:
+% FIG 21
+\Hypertarget{namespace_q_c_d___lattice___s_u3_a929494493a33323e75210da746475f2f}\index{QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}!run\_su3\_simulation@{run\_su3\_simulation}}
+\index{run\_su3\_simulation@{run\_su3\_simulation}!QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}}
+\doxysubsubsection{\texorpdfstring{run\_su3\_simulation()}{run\_su3\_simulation()}}
+{\footnotesize\ttfamily \label{namespace_q_c_d___lattice___s_u3_a929494493a33323e75210da746475f2f} 
+QCD\+\_\+\+Lattice\+\_\+\+SU3.\+run\+\_\+su3\+\_\+simulation (\begin{DoxyParamCaption}\item[{}]{link\+\_\+sites}{, }\item[{}]{eps\+\_\+sub}{ = {\ttfamily 0.06}, }\item[{}]{burn\+\_\+in\+\_\+sweeps}{ = {\ttfamily 500}, }\item[{}]{MC\+\_\+sweeps}{ = {\ttfamily 2000}, }\item[{}]{N\+\_\+correlator}{ = {\ttfamily 5}}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Run SU(3) Metropolis simulation collecting plaquette samples.
+@param link_sites ndarray: initial link configuration (modified in-place).
+@param eps_sub float: SU(2) subgroup proposal amplitude.
+@param burn_in_sweeps int: thermalization sweeps.
+@param MC_sweeps int: measurement sweeps.
+@param N_correlator int: interval between stored measurements.
+@return tuple: (plaquette_samples ndarray, mean_plaquette float, error_plaquette float)
+@details After burn-in we perform MC_sweeps sweeps and measure the average plaquette every
+         N_correlator sweeps. Bootstrap error estimation is applied to the set of plaquette samples.
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source_l00306}{306}} of file \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source}{QCD\+\_\+\+Lattice\+\_\+\+SU3.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00306\ \textcolor{keyword}{def\ }run\_su3\_simulation(link\_sites,\ eps\_sub=0.06,\ burn\_in\_sweeps=500,\ MC\_sweeps=2000,\ N\_correlator=5):}
+\DoxyCodeLine{00307\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{00308\ \textcolor{stringliteral}{\ \ \ \ @brief\ Run\ SU(3)\ Metropolis\ simulation\ collecting\ plaquette\ samples.}}
+\DoxyCodeLine{00309\ \textcolor{stringliteral}{\ \ \ \ @param\ link\_sites\ ndarray:\ initial\ link\ configuration\ (modified\ in-\/place).}}
+\DoxyCodeLine{00310\ \textcolor{stringliteral}{\ \ \ \ @param\ eps\_sub\ float:\ SU(2)\ subgroup\ proposal\ amplitude.}}
+\DoxyCodeLine{00311\ \textcolor{stringliteral}{\ \ \ \ @param\ burn\_in\_sweeps\ int:\ thermalization\ sweeps.}}
+\DoxyCodeLine{00312\ \textcolor{stringliteral}{\ \ \ \ @param\ MC\_sweeps\ int:\ measurement\ sweeps.}}
+\DoxyCodeLine{00313\ \textcolor{stringliteral}{\ \ \ \ @param\ N\_correlator\ int:\ interval\ between\ stored\ measurements.}}
+\DoxyCodeLine{00314\ \textcolor{stringliteral}{\ \ \ \ @return\ tuple:\ (plaquette\_samples\ ndarray,\ mean\_plaquette\ float,\ error\_plaquette\ float)}}
+\DoxyCodeLine{00315\ \textcolor{stringliteral}{\ \ \ \ @details\ After\ burn-\/in\ we\ perform\ MC\_sweeps\ sweeps\ and\ measure\ the\ average\ plaquette\ every}}
+\DoxyCodeLine{00316\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ N\_correlator\ sweeps.\ Bootstrap\ error\ estimation\ is\ applied\ to\ the\ set\ of\ plaquette\ samples.}}
+\DoxyCodeLine{00317\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{00318\ \ \ \ \ accepted\ =\ proposed\ =\ 0}
+\DoxyCodeLine{00319\ \ \ \ \ \textcolor{keywordflow}{for}\ i\ \textcolor{keywordflow}{in}\ range(burn\_in\_sweeps):}
+\DoxyCodeLine{00320\ \ \ \ \ \ \ \ \ a,\ p\ =\ metropolis\_update(link\_sites,\ eps\_sub=eps\_sub)}
+\DoxyCodeLine{00321\ \ \ \ \ \ \ \ \ accepted\ +=\ a;\ proposed\ +=\ p}
+\DoxyCodeLine{00322\ \ \ \ \ plaquette\_samples\ =\ []}
+\DoxyCodeLine{00323\ \ \ \ \ accepted\ =\ proposed\ =\ 0}
+\DoxyCodeLine{00324\ \ \ \ \ \textcolor{keywordflow}{for}\ sweep\ \textcolor{keywordflow}{in}\ range(MC\_sweeps):}
+\DoxyCodeLine{00325\ \ \ \ \ \ \ \ \ a,\ p\ =\ metropolis\_update(link\_sites,\ eps\_sub=eps\_sub)}
+\DoxyCodeLine{00326\ \ \ \ \ \ \ \ \ accepted\ +=\ a;\ proposed\ +=\ p}
+\DoxyCodeLine{00327\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ sweep\ \%\ N\_correlator\ ==\ 0:}
+\DoxyCodeLine{00328\ \ \ \ \ \ \ \ \ \ \ \ \ plaquette\ =\ average\_plaquette\_su3(link\_sites)}
+\DoxyCodeLine{00329\ \ \ \ \ \ \ \ \ \ \ \ \ plaquette\_samples.append(plaquette)}
+\DoxyCodeLine{00330\ \ \ \ \ mean\_plaquette,\ error\_plaquette\ =\ bootstrap\_mean\_std(plaquette\_samples,\ nboot=n\_boot)}
+\DoxyCodeLine{00331\ \ \ \ \ \textcolor{keywordflow}{return}\ np.array(plaquette\_samples),\ mean\_plaquette,\ error\_plaquette}
+\DoxyCodeLine{00332\ }
+\DoxyCodeLine{00333\ }
+\DoxyCodeLine{00334\ \textcolor{comment}{\#\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ Initialization\ helpers\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+% FIG 22
+\Hypertarget{namespace_q_c_d___lattice___s_u3_a3ac4bd130c73714f342345ac26db64bc}\index{QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}!su2\_random\_unitary@{su2\_random\_unitary}}
+\index{su2\_random\_unitary@{su2\_random\_unitary}!QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}}
+\doxysubsubsection{\texorpdfstring{su2\_random\_unitary()}{su2\_random\_unitary()}}
+{\footnotesize\ttfamily \label{namespace_q_c_d___lattice___s_u3_a3ac4bd130c73714f342345ac26db64bc} 
+QCD\+\_\+\+Lattice\+\_\+\+SU3.\+su2\+\_\+random\+\_\+unitary (\begin{DoxyParamCaption}\item[{}]{eps}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Generate a small random SU(2) rotation matrix using Gaussian parameters.
+@param eps float: amplitude controlling rotation angle scale (a = eps * |r|).
+@return ndarray: 2x2 complex SU(2) matrix.
+@details
+The parametrization uses R = cos(a) I + i sin(a) n·σ where n is a unit 3-vector
+and σ_i are the Pauli matrices. We project via SVD to correct numerical drift and
+ensure exact unitarity, then enforce det=1.
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source_l00086}{86}} of file \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source}{QCD\+\_\+\+Lattice\+\_\+\+SU3.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00086\ \textcolor{keyword}{def\ }su2\_random\_unitary(eps):}
+\DoxyCodeLine{00087\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{00088\ \textcolor{stringliteral}{\ \ \ \ @brief\ Generate\ a\ small\ random\ SU(2)\ rotation\ matrix\ using\ Gaussian\ parameters.}}
+\DoxyCodeLine{00089\ \textcolor{stringliteral}{\ \ \ \ @param\ eps\ float:\ amplitude\ controlling\ rotation\ angle\ scale\ (a\ =\ eps\ *\ |r|).}}
+\DoxyCodeLine{00090\ \textcolor{stringliteral}{\ \ \ \ @return\ ndarray:\ 2x2\ complex\ SU(2)\ matrix.}}
+\DoxyCodeLine{00091\ \textcolor{stringliteral}{\ \ \ \ @details}}
+\DoxyCodeLine{00092\ \textcolor{stringliteral}{\ \ \ \ The\ parametrization\ uses\ R\ =\ cos(a)\ I\ +\ i\ sin(a)\ n·σ\ where\ n\ is\ a\ unit\ 3-\/vector}}
+\DoxyCodeLine{00093\ \textcolor{stringliteral}{\ \ \ \ and\ σ\_i\ are\ the\ Pauli\ matrices.\ We\ project\ via\ SVD\ to\ correct\ numerical\ drift\ and}}
+\DoxyCodeLine{00094\ \textcolor{stringliteral}{\ \ \ \ ensure\ exact\ unitarity,\ then\ enforce\ det=1.}}
+\DoxyCodeLine{00095\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{00096\ \ \ \ \ r\ =\ np.random.normal(size=3)}
+\DoxyCodeLine{00097\ \ \ \ \ r\_norm\ =\ np.linalg.norm(r)}
+\DoxyCodeLine{00098\ \ \ \ \ \textcolor{keywordflow}{if}\ r\_norm\ ==\ 0:}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ np.eye(2,\ dtype=complex)}
+\DoxyCodeLine{00100\ \ \ \ \ a\ =\ eps\ *\ r\_norm}
+\DoxyCodeLine{00101\ \ \ \ \ n\ =\ r\ /\ r\_norm}
+\DoxyCodeLine{00102\ \ \ \ \ \textcolor{comment}{\#\ Pauli\ matrices}}
+\DoxyCodeLine{00103\ \ \ \ \ sigma1\ =\ np.array([[0.0,\ 1.0],\ [1.0,\ 0.0]],\ dtype=complex)}
+\DoxyCodeLine{00104\ \ \ \ \ sigma2\ =\ np.array([[0.0,\ -\/1j],\ [1j,\ 0.0]],\ dtype=complex)}
+\DoxyCodeLine{00105\ \ \ \ \ sigma3\ =\ np.array([[1.0,\ 0.0],\ [0.0,\ -\/1.0]],\ dtype=complex)}
+\DoxyCodeLine{00106\ \ \ \ \ ndotsigma\ =\ n[0]\ *\ sigma1\ +\ n[1]\ *\ sigma2\ +\ n[2]\ *\ sigma3}
+\DoxyCodeLine{00107\ \ \ \ \ R\ =\ np.cos(a)\ *\ np.eye(2,\ dtype=complex)\ +\ 1j\ *\ np.sin(a)\ *\ ndotsigma}
+\DoxyCodeLine{00108\ \ \ \ \ \textcolor{comment}{\#\ Project\ R\ to\ exact\ SU(2)\ via\ SVD/polar\ projection\ and\ fix\ determinant}}
+\DoxyCodeLine{00109\ \ \ \ \ U,\ s,\ Vh\ =\ LA.svd(R)}
+\DoxyCodeLine{00110\ \ \ \ \ R\_projection\ =\ U\ @\ Vh}
+\DoxyCodeLine{00111\ \ \ \ \ det\ =\ LA.det(R\_projection)}
+\DoxyCodeLine{00112\ \ \ \ \ R\_projection\ /=\ (det\ **\ 0.5)}
+\DoxyCodeLine{00113\ \ \ \ \ \textcolor{keywordflow}{return}\ R\_projection}
+\DoxyCodeLine{00114\ }
+\DoxyCodeLine{00115\ }
+
+\end{DoxyCode}
+Here is the caller graph for this function\+:
+% FIG 23
+\Hypertarget{namespace_q_c_d___lattice___s_u3_a6e256f196d2097b382e42b227c3e7b97}\index{QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}!su3\_matrices@{su3\_matrices}}
+\index{su3\_matrices@{su3\_matrices}!QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}}
+\doxysubsubsection{\texorpdfstring{su3\_matrices()}{su3\_matrices()}}
+{\footnotesize\ttfamily \label{namespace_q_c_d___lattice___s_u3_a6e256f196d2097b382e42b227c3e7b97} 
+QCD\+\_\+\+Lattice\+\_\+\+SU3.\+su3\+\_\+matrices (\begin{DoxyParamCaption}\item[{}]{M}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Project a general complex 3x3 matrix to SU(3) via unitary polar/SVD projection.
+@param M (ndarray): 3x3 complex matrix (candidate link).
+@return ndarray: Unitary 3x3 matrix with det = 1 (projection of M into SU(3)).
+@details
+We perform an SVD: M = U S V^H and set U_proj = U V^H (closest unitary in Frobenius norm).
+A global phase is then removed to enforce det(U_proj) = 1. If the projection yields
+a near-singular matrix we add a tiny perturbation as fallback.
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source_l00062}{62}} of file \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source}{QCD\+\_\+\+Lattice\+\_\+\+SU3.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00062\ \textcolor{keyword}{def\ }su3\_matrices(M):}
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{00064\ \textcolor{stringliteral}{\ \ \ \ @brief\ Project\ a\ general\ complex\ 3x3\ matrix\ to\ SU(3)\ via\ unitary\ polar/SVD\ projection.}}
+\DoxyCodeLine{00065\ \textcolor{stringliteral}{\ \ \ \ @param\ M\ (ndarray):\ 3x3\ complex\ matrix\ (candidate\ link).}}
+\DoxyCodeLine{00066\ \textcolor{stringliteral}{\ \ \ \ @return\ ndarray:\ Unitary\ 3x3\ matrix\ with\ det\ =\ 1\ (projection\ of\ M\ into\ SU(3)).}}
+\DoxyCodeLine{00067\ \textcolor{stringliteral}{\ \ \ \ @details}}
+\DoxyCodeLine{00068\ \textcolor{stringliteral}{\ \ \ \ We\ perform\ an\ SVD:\ M\ =\ U\ S\ V\string^H\ and\ set\ U\_proj\ =\ U\ V\string^H\ (closest\ unitary\ in\ Frobenius\ norm).}}
+\DoxyCodeLine{00069\ \textcolor{stringliteral}{\ \ \ \ A\ global\ phase\ is\ then\ removed\ to\ enforce\ det(U\_proj)\ =\ 1.\ If\ the\ projection\ yields}}
+\DoxyCodeLine{00070\ \textcolor{stringliteral}{\ \ \ \ a\ near-\/singular\ matrix\ we\ add\ a\ tiny\ perturbation\ as\ fallback.}}
+\DoxyCodeLine{00071\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{00072\ \ \ \ \ U,\ s,\ Vh\ =\ LA.svd(M)}
+\DoxyCodeLine{00073\ \ \ \ \ U\_projection\ =\ U\ @\ Vh}
+\DoxyCodeLine{00074\ \ \ \ \ determinant\ =\ LA.det(U\_projection)}
+\DoxyCodeLine{00075\ \ \ \ \ \textcolor{keywordflow}{if}\ determinant\ ==\ 0\ \textcolor{keywordflow}{or}\ np.isnan(determinant):}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Numerical\ fallback:\ small\ perturbation\ then\ reproject}}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ U\_projection\ =\ U\_projection\ +\ 1e-\/12\ *\ np.eye(3,\ dtype=complex)}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ determinant\ =\ LA.det(U\_projection)}
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{comment}{\#\ Remove\ global\ phase\ to\ ensure\ unit\ determinant}}
+\DoxyCodeLine{00080\ \ \ \ \ phase\ =\ determinant\ **\ (1.0\ /\ 3.0)}
+\DoxyCodeLine{00081\ \ \ \ \ U\_projection\ /=\ phase}
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keywordflow}{return}\ U\_projection}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00084\ }
+\DoxyCodeLine{00085\ \textcolor{comment}{\#\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ SU(2)\ small\ updater\ (embedded\ in\ SU(3))\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+
+\end{DoxyCode}
+Here is the caller graph for this function\+:
+% FIG 24
+\Hypertarget{namespace_q_c_d___lattice___s_u3_ad76fd939779f34cd36ddd587c3d13402}\index{QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}!su3\_simulation\_with\_wilson\_loops@{su3\_simulation\_with\_wilson\_loops}}
+\index{su3\_simulation\_with\_wilson\_loops@{su3\_simulation\_with\_wilson\_loops}!QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}}
+\doxysubsubsection{\texorpdfstring{su3\_simulation\_with\_wilson\_loops()}{su3\_simulation\_with\_wilson\_loops()}}
+{\footnotesize\ttfamily \label{namespace_q_c_d___lattice___s_u3_ad76fd939779f34cd36ddd587c3d13402} 
+QCD\+\_\+\+Lattice\+\_\+\+SU3.\+su3\+\_\+simulation\+\_\+with\+\_\+wilson\+\_\+loops (\begin{DoxyParamCaption}\item[{}]{link\+\_\+sites}{, }\item[{}]{eps\+\_\+sub}{ = {\ttfamily 0.06}, }\item[{}]{burn\+\_\+in\+\_\+sweeps}{ = {\ttfamily 500}, }\item[{}]{MC\+\_\+sweeps}{ = {\ttfamily 2000}, }\item[{}]{N\+\_\+correlator}{ = {\ttfamily 5}, }\item[{}]{max\+\_\+R}{ = {\ttfamily None}, }\item[{}]{max\+\_\+T}{ = {\ttfamily None}}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Run full SU(3) simulation storing Wilson loop matrices for each measurement.
+@param link_sites ndarray: initial link configuration (modified in-place).
+@param eps_sub float: SU(2) subgroup proposal amplitude.
+@param burn_in_sweeps int: thermalization sweeps.
+@param MC_sweeps int: measurement sweeps.
+@param N_correlator int: interval between stored measurements.
+@param max_R int or None: maximum spatial size to measure (defaults to L/2).
+@param max_T int or None: maximum temporal size to measure (defaults to L/2).
+@return tuple: (wilson_loops_samples ndarray [n_meas, n_R, n_T], R_values ndarray, T_values ndarray)
+@details
+Measures a grid of Wilson loops W(R,T) for R in [1..max_R], T in [1..max_T] at each stored configuration.
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source_l00406}{406}} of file \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source}{QCD\+\_\+\+Lattice\+\_\+\+SU3.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00406\ \textcolor{keyword}{def\ }su3\_simulation\_with\_wilson\_loops(link\_sites,\ eps\_sub=0.06,\ burn\_in\_sweeps=500,\ MC\_sweeps=2000,\ N\_correlator=5,\ max\_R=None,\ max\_T=None):}
+\DoxyCodeLine{00407\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{00408\ \textcolor{stringliteral}{\ \ \ \ @brief\ Run\ full\ SU(3)\ simulation\ storing\ Wilson\ loop\ matrices\ for\ each\ measurement.}}
+\DoxyCodeLine{00409\ \textcolor{stringliteral}{\ \ \ \ @param\ link\_sites\ ndarray:\ initial\ link\ configuration\ (modified\ in-\/place).}}
+\DoxyCodeLine{00410\ \textcolor{stringliteral}{\ \ \ \ @param\ eps\_sub\ float:\ SU(2)\ subgroup\ proposal\ amplitude.}}
+\DoxyCodeLine{00411\ \textcolor{stringliteral}{\ \ \ \ @param\ burn\_in\_sweeps\ int:\ thermalization\ sweeps.}}
+\DoxyCodeLine{00412\ \textcolor{stringliteral}{\ \ \ \ @param\ MC\_sweeps\ int:\ measurement\ sweeps.}}
+\DoxyCodeLine{00413\ \textcolor{stringliteral}{\ \ \ \ @param\ N\_correlator\ int:\ interval\ between\ stored\ measurements.}}
+\DoxyCodeLine{00414\ \textcolor{stringliteral}{\ \ \ \ @param\ max\_R\ int\ or\ None:\ maximum\ spatial\ size\ to\ measure\ (defaults\ to\ L/2).}}
+\DoxyCodeLine{00415\ \textcolor{stringliteral}{\ \ \ \ @param\ max\_T\ int\ or\ None:\ maximum\ temporal\ size\ to\ measure\ (defaults\ to\ L/2).}}
+\DoxyCodeLine{00416\ \textcolor{stringliteral}{\ \ \ \ @return\ tuple:\ (wilson\_loops\_samples\ ndarray\ [n\_meas,\ n\_R,\ n\_T],\ R\_values\ ndarray,\ T\_values\ ndarray)}}
+\DoxyCodeLine{00417\ \textcolor{stringliteral}{\ \ \ \ @details}}
+\DoxyCodeLine{00418\ \textcolor{stringliteral}{\ \ \ \ Measures\ a\ grid\ of\ Wilson\ loops\ W(R,T)\ for\ R\ in\ [1..max\_R],\ T\ in\ [1..max\_T]\ at\ each\ stored\ configuration.}}
+\DoxyCodeLine{00419\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{00420\ \ \ \ \ \textcolor{keywordflow}{if}\ max\_R\ \textcolor{keywordflow}{is}\ \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00421\ \ \ \ \ \ \ \ \ max\_R\ =\ lattice\_size\_L\ //\ 2}
+\DoxyCodeLine{00422\ \ \ \ \ \textcolor{keywordflow}{if}\ max\_T\ \textcolor{keywordflow}{is}\ \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00423\ \ \ \ \ \ \ \ \ max\_T\ =\ lattice\_size\_L\ //\ 2}
+\DoxyCodeLine{00424\ \ \ \ \ R\_values\ =\ np.arange(1,\ max\_R\ +\ 1)}
+\DoxyCodeLine{00425\ \ \ \ \ T\_values\ =\ np.arange(1,\ max\_T\ +\ 1)}
+\DoxyCodeLine{00426\ \ \ \ \ n\_R\ =\ len(R\_values)}
+\DoxyCodeLine{00427\ \ \ \ \ n\_T\ =\ len(T\_values)}
+\DoxyCodeLine{00428\ \ \ \ \ \textcolor{comment}{\#\ Thermalize}}
+\DoxyCodeLine{00429\ \ \ \ \ \textcolor{keywordflow}{for}\ i\ \textcolor{keywordflow}{in}\ range(burn\_in\_sweeps):}
+\DoxyCodeLine{00430\ \ \ \ \ \ \ \ \ metropolis\_update(link\_sites,\ eps\_sub=eps\_sub)}
+\DoxyCodeLine{00431\ \ \ \ \ wilson\_loops\_samples\ =\ []}
+\DoxyCodeLine{00432\ \ \ \ \ \textcolor{keywordflow}{for}\ sweep\ \textcolor{keywordflow}{in}\ range(MC\_sweeps):}
+\DoxyCodeLine{00433\ \ \ \ \ \ \ \ \ metropolis\_update(link\_sites,\ eps\_sub=eps\_sub)}
+\DoxyCodeLine{00434\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ sweep\ \%\ N\_correlator\ ==\ 0:}
+\DoxyCodeLine{00435\ \ \ \ \ \ \ \ \ \ \ \ \ W\_sample\ =\ np.zeros((n\_R,\ n\_T))}
+\DoxyCodeLine{00436\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ i,\ R\ \textcolor{keywordflow}{in}\ enumerate(R\_values):}
+\DoxyCodeLine{00437\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ j,\ T\ \textcolor{keywordflow}{in}\ enumerate(T\_values):}
+\DoxyCodeLine{00438\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ W\_sample[i,\ j]\ =\ measure\_wilson\_loop\_RT(link\_sites,\ R,\ T)}
+\DoxyCodeLine{00439\ \ \ \ \ \ \ \ \ \ \ \ \ wilson\_loops\_samples.append(W\_sample)}
+\DoxyCodeLine{00440\ \ \ \ \ wilson\_loops\_samples\ =\ np.array(wilson\_loops\_samples)}
+\DoxyCodeLine{00441\ \ \ \ \ \textcolor{keywordflow}{return}\ wilson\_loops\_samples,\ R\_values,\ T\_values}
+\DoxyCodeLine{00442\ }
+\DoxyCodeLine{00443\ }
+\DoxyCodeLine{00444\ \textcolor{comment}{\#\ ============================================================}}
+\DoxyCodeLine{00445\ \textcolor{comment}{\#\ ===============\ \ PLAQUETTE\ CALCULATION\ SECTION\ \ ==============}}
+\DoxyCodeLine{00446\ \textcolor{comment}{\#\ ============================================================}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+% FIG 25
+\Hypertarget{namespace_q_c_d___lattice___s_u3_adeb248c505c926e2fe3efc854dd3d5fd}\index{QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}!tune\_eps\_su3@{tune\_eps\_su3}}
+\index{tune\_eps\_su3@{tune\_eps\_su3}!QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}}
+\doxysubsubsection{\texorpdfstring{tune\_eps\_su3()}{tune\_eps\_su3()}}
+{\footnotesize\ttfamily \label{namespace_q_c_d___lattice___s_u3_adeb248c505c926e2fe3efc854dd3d5fd} 
+QCD\+\_\+\+Lattice\+\_\+\+SU3.\+tune\+\_\+eps\+\_\+su3 (\begin{DoxyParamCaption}\item[{}]{matrix0}{, }\item[{}]{target}{ = {\ttfamily 0.5}, }\item[{}]{initial\+\_\+eps}{ = {\ttfamily 0.06}, }\item[{}]{tries}{ = {\ttfamily 10}, }\item[{}]{test\+\_\+sweeps}{ = {\ttfamily 150}}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Tune the SU(2) proposal amplitude eps so that acceptance fraction ~ target.
+@param matrix0 ndarray: initial link matrix copy for tuning (will be copied internally).
+@param target float: desired acceptance fraction (e.g., 0.5).
+@param initial_eps float: starting amplitude.
+@param tries int: maximum adjustment attempts.
+@param test_sweeps int: sweeps per tuning test.
+@return float: tuned eps value.
+@details We perform a small number of sweeps and adjust eps multiplicatively to move acceptance
+         fraction towards target. This is a heuristic tuner used before a production run.
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source_l00277}{277}} of file \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source}{QCD\+\_\+\+Lattice\+\_\+\+SU3.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00277\ \textcolor{keyword}{def\ }tune\_eps\_su3(matrix0,\ target=0.5,\ initial\_eps=0.06,\ tries=10,\ test\_sweeps=150):}
+\DoxyCodeLine{00278\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{00279\ \textcolor{stringliteral}{\ \ \ \ @brief\ Tune\ the\ SU(2)\ proposal\ amplitude\ eps\ so\ that\ acceptance\ fraction\ \string~\ target.}}
+\DoxyCodeLine{00280\ \textcolor{stringliteral}{\ \ \ \ @param\ matrix0\ ndarray:\ initial\ link\ matrix\ copy\ for\ tuning\ (will\ be\ copied\ internally).}}
+\DoxyCodeLine{00281\ \textcolor{stringliteral}{\ \ \ \ @param\ target\ float:\ desired\ acceptance\ fraction\ (e.g.,\ 0.5).}}
+\DoxyCodeLine{00282\ \textcolor{stringliteral}{\ \ \ \ @param\ initial\_eps\ float:\ starting\ amplitude.}}
+\DoxyCodeLine{00283\ \textcolor{stringliteral}{\ \ \ \ @param\ tries\ int:\ maximum\ adjustment\ attempts.}}
+\DoxyCodeLine{00284\ \textcolor{stringliteral}{\ \ \ \ @param\ test\_sweeps\ int:\ sweeps\ per\ tuning\ test.}}
+\DoxyCodeLine{00285\ \textcolor{stringliteral}{\ \ \ \ @return\ float:\ tuned\ eps\ value.}}
+\DoxyCodeLine{00286\ \textcolor{stringliteral}{\ \ \ \ @details\ We\ perform\ a\ small\ number\ of\ sweeps\ and\ adjust\ eps\ multiplicatively\ to\ move\ acceptance}}
+\DoxyCodeLine{00287\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ fraction\ towards\ target.\ This\ is\ a\ heuristic\ tuner\ used\ before\ a\ production\ run.}}
+\DoxyCodeLine{00288\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{00289\ \ \ \ \ eps\ =\ initial\_eps}
+\DoxyCodeLine{00290\ \ \ \ \ \textcolor{keywordflow}{for}\ attempt\ \textcolor{keywordflow}{in}\ range(tries):}
+\DoxyCodeLine{00291\ \ \ \ \ \ \ \ \ matrix\_copy\ =\ matrix0.copy()}
+\DoxyCodeLine{00292\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ quick\ thermalize\ copy}}
+\DoxyCodeLine{00293\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ i\ \textcolor{keywordflow}{in}\ range(50):}
+\DoxyCodeLine{00294\ \ \ \ \ \ \ \ \ \ \ \ \ metropolis\_update(matrix\_copy,\ eps\_sub=eps)}
+\DoxyCodeLine{00295\ \ \ \ \ \ \ \ \ accepted\ =\ proposed\ =\ 0}
+\DoxyCodeLine{00296\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ i\ \textcolor{keywordflow}{in}\ range(test\_sweeps):}
+\DoxyCodeLine{00297\ \ \ \ \ \ \ \ \ \ \ \ \ a,\ p\ =\ metropolis\_update(matrix\_copy,\ eps\_sub=eps)}
+\DoxyCodeLine{00298\ \ \ \ \ \ \ \ \ \ \ \ \ accepted\ +=\ a;\ proposed\ +=\ p}
+\DoxyCodeLine{00299\ \ \ \ \ \ \ \ \ fraction\ =\ accepted\ /\ proposed\ \textcolor{keywordflow}{if}\ proposed\ >\ 0\ \textcolor{keywordflow}{else}\ 0.0}
+\DoxyCodeLine{00300\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ abs(fraction\ -\/\ target)\ <\ 0.05:}
+\DoxyCodeLine{00301\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break}}
+\DoxyCodeLine{00302\ \ \ \ \ \ \ \ \ eps\ *=\ 1.2\ \textcolor{keywordflow}{if}\ fraction\ >\ target\ \textcolor{keywordflow}{else}\ 0.8}
+\DoxyCodeLine{00303\ \ \ \ \ \textcolor{keywordflow}{return}\ eps}
+\DoxyCodeLine{00304\ }
+\DoxyCodeLine{00305\ }
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+% FIG 26
+\Hypertarget{namespace_q_c_d___lattice___s_u3_a44a464a27584fc9def02704f8e1fd0ac}\index{QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}!x\_neighbor@{x\_neighbor}}
+\index{x\_neighbor@{x\_neighbor}!QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}}
+\doxysubsubsection{\texorpdfstring{x\_neighbor()}{x\_neighbor()}}
+{\footnotesize\ttfamily \label{namespace_q_c_d___lattice___s_u3_a44a464a27584fc9def02704f8e1fd0ac} 
+QCD\+\_\+\+Lattice\+\_\+\+SU3.\+x\+\_\+neighbor (\begin{DoxyParamCaption}\item[{}]{x}{, }\item[{}]{mu}{, }\item[{}]{shift}{ = {\ttfamily 1}}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Periodic lattice neighbor coordinate.
+@param x tuple: Lattice coordinate (length D).
+@param mu int: Direction index (0..D-1).
+@param shift int: Integer shift (positive forward, negative backward).
+@return tuple: New lattice coordinate (with periodic wrap).
+@details Implements periodic boundary conditions: (x_mu + shift) mod L.
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source_l00048}{48}} of file \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source}{QCD\+\_\+\+Lattice\+\_\+\+SU3.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00048\ \textcolor{keyword}{def\ }x\_neighbor(x,\ mu,\ shift=1):}
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{00050\ \textcolor{stringliteral}{\ \ \ \ @brief\ Periodic\ lattice\ neighbor\ coordinate.}}
+\DoxyCodeLine{00051\ \textcolor{stringliteral}{\ \ \ \ @param\ x\ tuple:\ Lattice\ coordinate\ (length\ D).}}
+\DoxyCodeLine{00052\ \textcolor{stringliteral}{\ \ \ \ @param\ mu\ int:\ Direction\ index\ (0..D-\/1).}}
+\DoxyCodeLine{00053\ \textcolor{stringliteral}{\ \ \ \ @param\ shift\ int:\ Integer\ shift\ (positive\ forward,\ negative\ backward).}}
+\DoxyCodeLine{00054\ \textcolor{stringliteral}{\ \ \ \ @return\ tuple:\ New\ lattice\ coordinate\ (with\ periodic\ wrap).}}
+\DoxyCodeLine{00055\ \textcolor{stringliteral}{\ \ \ \ @details\ Implements\ periodic\ boundary\ conditions:\ (x\_mu\ +\ shift)\ mod\ L.}}
+\DoxyCodeLine{00056\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{00057\ \ \ \ \ x\_new\ =\ list(x)}
+\DoxyCodeLine{00058\ \ \ \ \ x\_new[mu]\ =\ (x\_new[mu]\ +\ shift)\ \%\ lattice\_size\_L}
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keywordflow}{return}\ tuple(x\_new)}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ }
+
+\end{DoxyCode}
+Here is the caller graph for this function\+:
+% FIG 27
+
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{namespace_q_c_d___lattice___s_u3_a0b397d6ed2f3de7ffbc8c7cd030953b7}\index{QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}!A2\_avg@{A2\_avg}}
+\index{A2\_avg@{A2\_avg}!QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}}
+\doxysubsubsection{\texorpdfstring{A2\_avg}{A2\_avg}}
+{\footnotesize\ttfamily \label{namespace_q_c_d___lattice___s_u3_a0b397d6ed2f3de7ffbc8c7cd030953b7} 
+QCD\+\_\+\+Lattice\+\_\+\+SU3.\+A2\+\_\+avg}
+
+
+
+Definition at line \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source_l00595}{595}} of file \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source}{QCD\+\_\+\+Lattice\+\_\+\+SU3.\+py}}.
+
+\Hypertarget{namespace_q_c_d___lattice___s_u3_aa243e5439de4ada0d1006f1809936c95}\index{QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}!alpha@{alpha}}
+\index{alpha@{alpha}!QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}}
+\doxysubsubsection{\texorpdfstring{alpha}{alpha}}
+{\footnotesize\ttfamily \label{namespace_q_c_d___lattice___s_u3_aa243e5439de4ada0d1006f1809936c95} 
+QCD\+\_\+\+Lattice\+\_\+\+SU3.\+alpha}
+
+
+
+Definition at line \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source_l00468}{468}} of file \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source}{QCD\+\_\+\+Lattice\+\_\+\+SU3.\+py}}.
+
+\Hypertarget{namespace_q_c_d___lattice___s_u3_a6c39b85d0409c6762e9038f1373aa586}\index{QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}!amplitude@{amplitude}}
+\index{amplitude@{amplitude}!QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}}
+\doxysubsubsection{\texorpdfstring{amplitude}{amplitude}}
+{\footnotesize\ttfamily \label{namespace_q_c_d___lattice___s_u3_a6c39b85d0409c6762e9038f1373aa586} 
+QCD\+\_\+\+Lattice\+\_\+\+SU3.\+amplitude}
+
+
+
+Definition at line \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source_l00448}{448}} of file \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source}{QCD\+\_\+\+Lattice\+\_\+\+SU3.\+py}}.
+
+\Hypertarget{namespace_q_c_d___lattice___s_u3_aef423ffb377c63e3def76ec8638cf647}\index{QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}!avg\_wilson\_loops@{avg\_wilson\_loops}}
+\index{avg\_wilson\_loops@{avg\_wilson\_loops}!QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}}
+\doxysubsubsection{\texorpdfstring{avg\_wilson\_loops}{avg\_wilson\_loops}}
+{\footnotesize\ttfamily \label{namespace_q_c_d___lattice___s_u3_aef423ffb377c63e3def76ec8638cf647} 
+QCD\+\_\+\+Lattice\+\_\+\+SU3.\+avg\+\_\+wilson\+\_\+loops = np.\+mean(\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a9f092f4cc05baaa7ee53273a9c276474}{wilson\+\_\+loops\+\_\+samples}}, axis=0)}
+
+
+
+Definition at line \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source_l00484}{484}} of file \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source}{QCD\+\_\+\+Lattice\+\_\+\+SU3.\+py}}.
+
+\Hypertarget{namespace_q_c_d___lattice___s_u3_a534b44db7e14e3cc33dcb6e0faf9113c}\index{QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}!beta@{beta}}
+\index{beta@{beta}!QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}}
+\doxysubsubsection{\texorpdfstring{beta}{beta}}
+{\footnotesize\ttfamily \label{namespace_q_c_d___lattice___s_u3_a534b44db7e14e3cc33dcb6e0faf9113c} 
+float QCD\+\_\+\+Lattice\+\_\+\+SU3.\+beta = 6.\+0}
+
+
+
+Definition at line \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source_l00033}{33}} of file \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source}{QCD\+\_\+\+Lattice\+\_\+\+SU3.\+py}}.
+
+\Hypertarget{namespace_q_c_d___lattice___s_u3_a25f57b11207ed74286f74ce6f2005a0d}\index{QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}!bins@{bins}}
+\index{bins@{bins}!QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}}
+\doxysubsubsection{\texorpdfstring{bins}{bins}}
+{\footnotesize\ttfamily \label{namespace_q_c_d___lattice___s_u3_a25f57b11207ed74286f74ce6f2005a0d} 
+QCD\+\_\+\+Lattice\+\_\+\+SU3.\+bins}
+
+
+
+Definition at line \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source_l00468}{468}} of file \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source}{QCD\+\_\+\+Lattice\+\_\+\+SU3.\+py}}.
+
+\Hypertarget{namespace_q_c_d___lattice___s_u3_a682d097050ca82ecdc8445bf11a20844}\index{QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}!burn\_in\_sweeps@{burn\_in\_sweeps}}
+\index{burn\_in\_sweeps@{burn\_in\_sweeps}!QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}}
+\doxysubsubsection{\texorpdfstring{burn\_in\_sweeps}{burn\_in\_sweeps}}
+{\footnotesize\ttfamily \label{namespace_q_c_d___lattice___s_u3_a682d097050ca82ecdc8445bf11a20844} 
+QCD\+\_\+\+Lattice\+\_\+\+SU3.\+burn\+\_\+in\+\_\+sweeps = 500}
+
+
+
+Definition at line \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source_l00035}{35}} of file \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source}{QCD\+\_\+\+Lattice\+\_\+\+SU3.\+py}}.
+
+\Hypertarget{namespace_q_c_d___lattice___s_u3_a8014f922b10181acdcfca439b30ccc43}\index{QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}!D@{D}}
+\index{D@{D}!QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}}
+\doxysubsubsection{\texorpdfstring{D}{D}}
+{\footnotesize\ttfamily \label{namespace_q_c_d___lattice___s_u3_a8014f922b10181acdcfca439b30ccc43} 
+int QCD\+\_\+\+Lattice\+\_\+\+SU3.\+D = \mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_aa6f2d1974f25956a32aa04ef50b3f1b2}{spatial\+\_\+dims}} + 1}
+
+
+
+Definition at line \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source_l00041}{41}} of file \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source}{QCD\+\_\+\+Lattice\+\_\+\+SU3.\+py}}.
+
+\Hypertarget{namespace_q_c_d___lattice___s_u3_ab5c95329b8df4f8e17b62aaf3e155727}\index{QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}!eps\_initial@{eps\_initial}}
+\index{eps\_initial@{eps\_initial}!QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}}
+\doxysubsubsection{\texorpdfstring{eps\_initial}{eps\_initial}}
+{\footnotesize\ttfamily \label{namespace_q_c_d___lattice___s_u3_ab5c95329b8df4f8e17b62aaf3e155727} 
+float QCD\+\_\+\+Lattice\+\_\+\+SU3.\+eps\+\_\+initial = 0.\+06}
+
+
+
+Definition at line \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source_l00034}{34}} of file \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source}{QCD\+\_\+\+Lattice\+\_\+\+SU3.\+py}}.
+
+\Hypertarget{namespace_q_c_d___lattice___s_u3_a8c4347fa4c56d8155d324e1b3cce0226}\index{QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}!eps\_sub@{eps\_sub}}
+\index{eps\_sub@{eps\_sub}!QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}}
+\doxysubsubsection{\texorpdfstring{eps\_sub}{eps\_sub}}
+{\footnotesize\ttfamily \label{namespace_q_c_d___lattice___s_u3_a8c4347fa4c56d8155d324e1b3cce0226} 
+QCD\+\_\+\+Lattice\+\_\+\+SU3.\+eps\+\_\+sub}
+
+
+
+Definition at line \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source_l00452}{452}} of file \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source}{QCD\+\_\+\+Lattice\+\_\+\+SU3.\+py}}.
+
+\Hypertarget{namespace_q_c_d___lattice___s_u3_a5227b83dd71dc3efcbaf57f6f839747f}\index{QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}!eps\_tuned@{eps\_tuned}}
+\index{eps\_tuned@{eps\_tuned}!QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}}
+\doxysubsubsection{\texorpdfstring{eps\_tuned}{eps\_tuned}}
+{\footnotesize\ttfamily \label{namespace_q_c_d___lattice___s_u3_a5227b83dd71dc3efcbaf57f6f839747f} 
+QCD\+\_\+\+Lattice\+\_\+\+SU3.\+eps\+\_\+tuned = \mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_adeb248c505c926e2fe3efc854dd3d5fd}{tune\+\_\+eps\+\_\+su3}}(\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_ac7152d63eac85be58b05b89739ea831c}{link\+\_\+matrix}}, initial\+\_\+eps=\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_ab5c95329b8df4f8e17b62aaf3e155727}{eps\+\_\+initial}})}
+
+
+
+Definition at line \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source_l00450}{450}} of file \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source}{QCD\+\_\+\+Lattice\+\_\+\+SU3.\+py}}.
+
+\Hypertarget{namespace_q_c_d___lattice___s_u3_a1b13b561ef93c1442b0c03fc84d67946}\index{QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}!F2\_avg@{F2\_avg}}
+\index{F2\_avg@{F2\_avg}!QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}}
+\doxysubsubsection{\texorpdfstring{F2\_avg}{F2\_avg}}
+{\footnotesize\ttfamily \label{namespace_q_c_d___lattice___s_u3_a1b13b561ef93c1442b0c03fc84d67946} 
+QCD\+\_\+\+Lattice\+\_\+\+SU3.\+F2\+\_\+avg}
+
+
+
+Definition at line \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source_l00595}{595}} of file \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source}{QCD\+\_\+\+Lattice\+\_\+\+SU3.\+py}}.
+
+\Hypertarget{namespace_q_c_d___lattice___s_u3_aa785b77e663a841aa0110e18cc4ef16e}\index{QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}!figsize@{figsize}}
+\index{figsize@{figsize}!QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}}
+\doxysubsubsection{\texorpdfstring{figsize}{figsize}}
+{\footnotesize\ttfamily \label{namespace_q_c_d___lattice___s_u3_aa785b77e663a841aa0110e18cc4ef16e} 
+QCD\+\_\+\+Lattice\+\_\+\+SU3.\+figsize}
+
+
+
+Definition at line \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source_l00458}{458}} of file \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source}{QCD\+\_\+\+Lattice\+\_\+\+SU3.\+py}}.
+
+\Hypertarget{namespace_q_c_d___lattice___s_u3_a2f643156af520df0747ddf1cd4854f59}\index{QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}!lattice\_size\_L@{lattice\_size\_L}}
+\index{lattice\_size\_L@{lattice\_size\_L}!QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}}
+\doxysubsubsection{\texorpdfstring{lattice\_size\_L}{lattice\_size\_L}}
+{\footnotesize\ttfamily \label{namespace_q_c_d___lattice___s_u3_a2f643156af520df0747ddf1cd4854f59} 
+int QCD\+\_\+\+Lattice\+\_\+\+SU3.\+lattice\+\_\+size\+\_\+L = 8}
+
+
+
+Definition at line \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source_l00032}{32}} of file \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source}{QCD\+\_\+\+Lattice\+\_\+\+SU3.\+py}}.
+
+\Hypertarget{namespace_q_c_d___lattice___s_u3_a27cf82292e519d16191b18855bed5019}\index{QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}!linestyle@{linestyle}}
+\index{linestyle@{linestyle}!QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}}
+\doxysubsubsection{\texorpdfstring{linestyle}{linestyle}}
+{\footnotesize\ttfamily \label{namespace_q_c_d___lattice___s_u3_a27cf82292e519d16191b18855bed5019} 
+QCD\+\_\+\+Lattice\+\_\+\+SU3.\+linestyle}
+
+
+
+Definition at line \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source_l00459}{459}} of file \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source}{QCD\+\_\+\+Lattice\+\_\+\+SU3.\+py}}.
+
+\Hypertarget{namespace_q_c_d___lattice___s_u3_ac7152d63eac85be58b05b89739ea831c}\index{QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}!link\_matrix@{link\_matrix}}
+\index{link\_matrix@{link\_matrix}!QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}}
+\doxysubsubsection{\texorpdfstring{link\_matrix}{link\_matrix}}
+{\footnotesize\ttfamily \label{namespace_q_c_d___lattice___s_u3_ac7152d63eac85be58b05b89739ea831c} 
+QCD\+\_\+\+Lattice\+\_\+\+SU3.\+link\+\_\+matrix = np.\+zeros((\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a8014f922b10181acdcfca439b30ccc43}{D}},) + \mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_aa68f8cd6158a81098b2c2ca22bc2e352}{x\+\_\+shape}} + (3, 3), dtype=np.\+complex128)}
+
+
+
+Definition at line \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source_l00044}{44}} of file \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source}{QCD\+\_\+\+Lattice\+\_\+\+SU3.\+py}}.
+
+\Hypertarget{namespace_q_c_d___lattice___s_u3_aefb5c5d13c1bf2a81fa7650c853b162b}\index{QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}!marker@{marker}}
+\index{marker@{marker}!QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}}
+\doxysubsubsection{\texorpdfstring{marker}{marker}}
+{\footnotesize\ttfamily \label{namespace_q_c_d___lattice___s_u3_aefb5c5d13c1bf2a81fa7650c853b162b} 
+QCD\+\_\+\+Lattice\+\_\+\+SU3.\+marker}
+
+
+
+Definition at line \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source_l00459}{459}} of file \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source}{QCD\+\_\+\+Lattice\+\_\+\+SU3.\+py}}.
+
+\Hypertarget{namespace_q_c_d___lattice___s_u3_ad62acbb88c7f3a50839ea84c06502199}\index{QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}!max\_R@{max\_R}}
+\index{max\_R@{max\_R}!QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}}
+\doxysubsubsection{\texorpdfstring{max\_R}{max\_R}}
+{\footnotesize\ttfamily \label{namespace_q_c_d___lattice___s_u3_ad62acbb88c7f3a50839ea84c06502199} 
+QCD\+\_\+\+Lattice\+\_\+\+SU3.\+max\+\_\+R}
+
+
+
+Definition at line \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source_l00482}{482}} of file \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source}{QCD\+\_\+\+Lattice\+\_\+\+SU3.\+py}}.
+
+\Hypertarget{namespace_q_c_d___lattice___s_u3_a51a6e1b759f8d75aaef0a501dd2e5111}\index{QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}!max\_T@{max\_T}}
+\index{max\_T@{max\_T}!QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}}
+\doxysubsubsection{\texorpdfstring{max\_T}{max\_T}}
+{\footnotesize\ttfamily \label{namespace_q_c_d___lattice___s_u3_a51a6e1b759f8d75aaef0a501dd2e5111} 
+QCD\+\_\+\+Lattice\+\_\+\+SU3.\+max\+\_\+T}
+
+
+
+Definition at line \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source_l00482}{482}} of file \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source}{QCD\+\_\+\+Lattice\+\_\+\+SU3.\+py}}.
+
+\Hypertarget{namespace_q_c_d___lattice___s_u3_a56e170acd295bce714a3b0584f376417}\index{QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}!MC\_measure\_interval@{MC\_measure\_interval}}
+\index{MC\_measure\_interval@{MC\_measure\_interval}!QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}}
+\doxysubsubsection{\texorpdfstring{MC\_measure\_interval}{MC\_measure\_interval}}
+{\footnotesize\ttfamily \label{namespace_q_c_d___lattice___s_u3_a56e170acd295bce714a3b0584f376417} 
+int QCD\+\_\+\+Lattice\+\_\+\+SU3.\+MC\+\_\+measure\+\_\+interval = 5}
+
+
+
+Definition at line \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source_l00037}{37}} of file \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source}{QCD\+\_\+\+Lattice\+\_\+\+SU3.\+py}}.
+
+\Hypertarget{namespace_q_c_d___lattice___s_u3_a2ec881d04c3c76844046c63470ca721d}\index{QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}!MC\_sweeps@{MC\_sweeps}}
+\index{MC\_sweeps@{MC\_sweeps}!QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}}
+\doxysubsubsection{\texorpdfstring{MC\_sweeps}{MC\_sweeps}}
+{\footnotesize\ttfamily \label{namespace_q_c_d___lattice___s_u3_a2ec881d04c3c76844046c63470ca721d} 
+QCD\+\_\+\+Lattice\+\_\+\+SU3.\+MC\+\_\+sweeps = 2000}
+
+
+
+Definition at line \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source_l00036}{36}} of file \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source}{QCD\+\_\+\+Lattice\+\_\+\+SU3.\+py}}.
+
+\Hypertarget{namespace_q_c_d___lattice___s_u3_a1eb83c00e6a1902f9bc4dc440a3abe69}\index{QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}!n\_boot@{n\_boot}}
+\index{n\_boot@{n\_boot}!QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}}
+\doxysubsubsection{\texorpdfstring{n\_boot}{n\_boot}}
+{\footnotesize\ttfamily \label{namespace_q_c_d___lattice___s_u3_a1eb83c00e6a1902f9bc4dc440a3abe69} 
+int QCD\+\_\+\+Lattice\+\_\+\+SU3.\+n\+\_\+boot = 300}
+
+
+
+Definition at line \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source_l00038}{38}} of file \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source}{QCD\+\_\+\+Lattice\+\_\+\+SU3.\+py}}.
+
+\Hypertarget{namespace_q_c_d___lattice___s_u3_aa4fbcaaae095aeaa9bdfdb0b7d942fd3}\index{QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}!N\_correlator@{N\_correlator}}
+\index{N\_correlator@{N\_correlator}!QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}}
+\doxysubsubsection{\texorpdfstring{N\_correlator}{N\_correlator}}
+{\footnotesize\ttfamily \label{namespace_q_c_d___lattice___s_u3_aa4fbcaaae095aeaa9bdfdb0b7d942fd3} 
+QCD\+\_\+\+Lattice\+\_\+\+SU3.\+N\+\_\+correlator}
+
+
+
+Definition at line \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source_l00453}{453}} of file \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source}{QCD\+\_\+\+Lattice\+\_\+\+SU3.\+py}}.
+
+\Hypertarget{namespace_q_c_d___lattice___s_u3_ae10dd8b2a3a4acf827ec4e80f7cd7cb6}\index{QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}!plaq\_err@{plaq\_err}}
+\index{plaq\_err@{plaq\_err}!QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}}
+\doxysubsubsection{\texorpdfstring{plaq\_err}{plaq\_err}}
+{\footnotesize\ttfamily \label{namespace_q_c_d___lattice___s_u3_ae10dd8b2a3a4acf827ec4e80f7cd7cb6} 
+QCD\+\_\+\+Lattice\+\_\+\+SU3.\+plaq\+\_\+err}
+
+
+
+Definition at line \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source_l00451}{451}} of file \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source}{QCD\+\_\+\+Lattice\+\_\+\+SU3.\+py}}.
+
+\Hypertarget{namespace_q_c_d___lattice___s_u3_ae6b60a663e70abd8b57a117cba93bbe1}\index{QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}!plaq\_mean@{plaq\_mean}}
+\index{plaq\_mean@{plaq\_mean}!QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}}
+\doxysubsubsection{\texorpdfstring{plaq\_mean}{plaq\_mean}}
+{\footnotesize\ttfamily \label{namespace_q_c_d___lattice___s_u3_ae6b60a663e70abd8b57a117cba93bbe1} 
+QCD\+\_\+\+Lattice\+\_\+\+SU3.\+plaq\+\_\+mean}
+
+
+
+Definition at line \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source_l00451}{451}} of file \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source}{QCD\+\_\+\+Lattice\+\_\+\+SU3.\+py}}.
+
+\Hypertarget{namespace_q_c_d___lattice___s_u3_a467e2519d8aa8e4f356037d1c8a47622}\index{QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}!potentials@{potentials}}
+\index{potentials@{potentials}!QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}}
+\doxysubsubsection{\texorpdfstring{potentials}{potentials}}
+{\footnotesize\ttfamily \label{namespace_q_c_d___lattice___s_u3_a467e2519d8aa8e4f356037d1c8a47622} 
+list QCD\+\_\+\+Lattice\+\_\+\+SU3.\+potentials = \mbox{[}$\,$\mbox{]}}
+
+
+
+Definition at line \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source_l00489}{489}} of file \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source}{QCD\+\_\+\+Lattice\+\_\+\+SU3.\+py}}.
+
+\Hypertarget{namespace_q_c_d___lattice___s_u3_a637da1a918d408d4b51ee54f0c0bc2f6}\index{QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}!R\_values@{R\_values}}
+\index{R\_values@{R\_values}!QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}}
+\doxysubsubsection{\texorpdfstring{R\_values}{R\_values}}
+{\footnotesize\ttfamily \label{namespace_q_c_d___lattice___s_u3_a637da1a918d408d4b51ee54f0c0bc2f6} 
+QCD\+\_\+\+Lattice\+\_\+\+SU3.\+R\+\_\+values}
+
+
+
+Definition at line \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source_l00479}{479}} of file \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source}{QCD\+\_\+\+Lattice\+\_\+\+SU3.\+py}}.
+
+\Hypertarget{namespace_q_c_d___lattice___s_u3_a0698361e937a615305ea97d8f298a550}\index{QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}!samples@{samples}}
+\index{samples@{samples}!QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}}
+\doxysubsubsection{\texorpdfstring{samples}{samples}}
+{\footnotesize\ttfamily \label{namespace_q_c_d___lattice___s_u3_a0698361e937a615305ea97d8f298a550} 
+QCD\+\_\+\+Lattice\+\_\+\+SU3.\+samples}
+
+
+
+Definition at line \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source_l00451}{451}} of file \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source}{QCD\+\_\+\+Lattice\+\_\+\+SU3.\+py}}.
+
+\Hypertarget{namespace_q_c_d___lattice___s_u3_aa6f2d1974f25956a32aa04ef50b3f1b2}\index{QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}!spatial\_dims@{spatial\_dims}}
+\index{spatial\_dims@{spatial\_dims}!QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}}
+\doxysubsubsection{\texorpdfstring{spatial\_dims}{spatial\_dims}}
+{\footnotesize\ttfamily \label{namespace_q_c_d___lattice___s_u3_aa6f2d1974f25956a32aa04ef50b3f1b2} 
+int QCD\+\_\+\+Lattice\+\_\+\+SU3.\+spatial\+\_\+dims = 1}
+
+
+
+Definition at line \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source_l00031}{31}} of file \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source}{QCD\+\_\+\+Lattice\+\_\+\+SU3.\+py}}.
+
+\Hypertarget{namespace_q_c_d___lattice___s_u3_a050a97b875f1f58a438823107c204363}\index{QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}!T\_values@{T\_values}}
+\index{T\_values@{T\_values}!QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}}
+\doxysubsubsection{\texorpdfstring{T\_values}{T\_values}}
+{\footnotesize\ttfamily \label{namespace_q_c_d___lattice___s_u3_a050a97b875f1f58a438823107c204363} 
+QCD\+\_\+\+Lattice\+\_\+\+SU3.\+T\+\_\+values}
+
+
+
+Definition at line \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source_l00479}{479}} of file \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source}{QCD\+\_\+\+Lattice\+\_\+\+SU3.\+py}}.
+
+\Hypertarget{namespace_q_c_d___lattice___s_u3_ad9c48dfbc49e94f51751c3f793aed0f5}\index{QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}!V\_R@{V\_R}}
+\index{V\_R@{V\_R}!QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}}
+\doxysubsubsection{\texorpdfstring{V\_R}{V\_R}}
+{\footnotesize\ttfamily \label{namespace_q_c_d___lattice___s_u3_ad9c48dfbc49e94f51751c3f793aed0f5} 
+QCD\+\_\+\+Lattice\+\_\+\+SU3.\+V\+\_\+R = np.\+zeros(len(\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a637da1a918d408d4b51ee54f0c0bc2f6}{R\+\_\+values}}))}
+
+
+
+Definition at line \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source_l00487}{487}} of file \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source}{QCD\+\_\+\+Lattice\+\_\+\+SU3.\+py}}.
+
+\Hypertarget{namespace_q_c_d___lattice___s_u3_acb414b2b86d92f06f5d8b958c492669b}\index{QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}!W\_T@{W\_T}}
+\index{W\_T@{W\_T}!QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}}
+\doxysubsubsection{\texorpdfstring{W\_T}{W\_T}}
+{\footnotesize\ttfamily \label{namespace_q_c_d___lattice___s_u3_acb414b2b86d92f06f5d8b958c492669b} 
+QCD\+\_\+\+Lattice\+\_\+\+SU3.\+W\+\_\+T = \mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_aef423ffb377c63e3def76ec8638cf647}{avg\+\_\+wilson\+\_\+loops}}\mbox{[}i, j\mbox{]}}
+
+
+
+Definition at line \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source_l00491}{491}} of file \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source}{QCD\+\_\+\+Lattice\+\_\+\+SU3.\+py}}.
+
+\Hypertarget{namespace_q_c_d___lattice___s_u3_adbe26aa21cf3c355205c6eb94f05eeca}\index{QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}!W\_Tp1@{W\_Tp1}}
+\index{W\_Tp1@{W\_Tp1}!QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}}
+\doxysubsubsection{\texorpdfstring{W\_Tp1}{W\_Tp1}}
+{\footnotesize\ttfamily \label{namespace_q_c_d___lattice___s_u3_adbe26aa21cf3c355205c6eb94f05eeca} 
+QCD\+\_\+\+Lattice\+\_\+\+SU3.\+W\+\_\+\+Tp1 = \mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_aef423ffb377c63e3def76ec8638cf647}{avg\+\_\+wilson\+\_\+loops}}\mbox{[}i, j + 1\mbox{]}}
+
+
+
+Definition at line \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source_l00492}{492}} of file \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source}{QCD\+\_\+\+Lattice\+\_\+\+SU3.\+py}}.
+
+\Hypertarget{namespace_q_c_d___lattice___s_u3_a9f092f4cc05baaa7ee53273a9c276474}\index{QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}!wilson\_loops\_samples@{wilson\_loops\_samples}}
+\index{wilson\_loops\_samples@{wilson\_loops\_samples}!QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}}
+\doxysubsubsection{\texorpdfstring{wilson\_loops\_samples}{wilson\_loops\_samples}}
+{\footnotesize\ttfamily \label{namespace_q_c_d___lattice___s_u3_a9f092f4cc05baaa7ee53273a9c276474} 
+QCD\+\_\+\+Lattice\+\_\+\+SU3.\+wilson\+\_\+loops\+\_\+samples}
+
+
+
+Definition at line \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source_l00479}{479}} of file \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source}{QCD\+\_\+\+Lattice\+\_\+\+SU3.\+py}}.
+
+\Hypertarget{namespace_q_c_d___lattice___s_u3_aa68f8cd6158a81098b2c2ca22bc2e352}\index{QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}!x\_shape@{x\_shape}}
+\index{x\_shape@{x\_shape}!QCD\_Lattice\_SU3@{QCD\_Lattice\_SU3}}
+\doxysubsubsection{\texorpdfstring{x\_shape}{x\_shape}}
+{\footnotesize\ttfamily \label{namespace_q_c_d___lattice___s_u3_aa68f8cd6158a81098b2c2ca22bc2e352} 
+tuple QCD\+\_\+\+Lattice\+\_\+\+SU3.\+x\+\_\+shape = (\mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a2f643156af520df0747ddf1cd4854f59}{lattice\+\_\+size\+\_\+L}},) \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_q_c_d___lattice___s_u3_a8014f922b10181acdcfca439b30ccc43}{D}}}
+
+
+
+Definition at line \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source_l00042}{42}} of file \mbox{\hyperlink{_q_c_d___lattice___s_u3_8py_source}{QCD\+\_\+\+Lattice\+\_\+\+SU3.\+py}}.
+

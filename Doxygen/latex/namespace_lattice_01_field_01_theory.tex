@@ -1,0 +1,113 @@
+\doxysection{Lattice Field Theory Namespace Reference}
+\hypertarget{namespace_lattice_01_field_01_theory}{}\label{namespace_lattice_01_field_01_theory}\index{Lattice Field Theory@{Lattice Field Theory}}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespace_lattice_01_field_01_theory_a3062b3c9ff65df2f149e054cea2c0eb0}{potential\+\_\+at\+\_\+site}} (phi\+\_\+val)
+\item 
+\mbox{\hyperlink{namespace_lattice_01_field_01_theory_aecf68b30de861ee7091a890f3bc42600}{neighbor\+\_\+index}} (idx, mu, shift=1)
+\item 
+\mbox{\hyperlink{namespace_lattice_01_field_01_theory_a0d01476c676ef4801166da04b9898922}{action\+\_\+total}} (field)
+\item 
+\mbox{\hyperlink{namespace_lattice_01_field_01_theory_a4fe760fcc40c84c84fdd0ab4a8fbd90d}{local\+\_\+action\+\_\+contribution}} (idx, field)
+\item 
+\mbox{\hyperlink{namespace_lattice_01_field_01_theory_a6bcd49a276caf11da7ef83b100770f95}{metropolis\+\_\+update\+\_\+field}} (field, \mbox{\hyperlink{namespace_lattice_01_field_01_theory_a05645ad63fc75548b61a419e1f12882d}{eps}}=0.\+5)
+\item 
+\mbox{\hyperlink{namespace_lattice_01_field_01_theory_a18db479cdfef885667047241b5fdc62b}{measure\+\_\+field\+\_\+correlation\+\_\+all\+\_\+origins}} (field)
+\item 
+\mbox{\hyperlink{namespace_lattice_01_field_01_theory_adc29d2b3d84c5edabc435411ef57101f}{compute\+\_\+effective\+\_\+mass}} (G, \mbox{\hyperlink{namespace_lattice_01_field_01_theory_ae9075ec502b788582b807422c03a3aaa}{G\+\_\+err}}=None)
+\item 
+\mbox{\hyperlink{namespace_lattice_01_field_01_theory_acf0d15f1bf4bfd3754c400a8bd028218}{run\+\_\+field\+\_\+simulation}} (field, \mbox{\hyperlink{namespace_lattice_01_field_01_theory_abdeb8be544b7cb704655677858b42c39}{N\+\_\+sweeps}}=2000, \mbox{\hyperlink{namespace_lattice_01_field_01_theory_addf5f123aa9b7ee3f2e50c6b01992536}{N\+\_\+cor}}=10, \mbox{\hyperlink{namespace_lattice_01_field_01_theory_a05645ad63fc75548b61a419e1f12882d}{eps}}=0.\+5, \mbox{\hyperlink{namespace_lattice_01_field_01_theory_a9344d7f973b6343084e4c61313fe7a94}{thermal\+\_\+sweeps}}=500)
+\item 
+\mbox{\hyperlink{namespace_lattice_01_field_01_theory_a8ec712abb1081bb57fdeef74792eaaa3}{run\+\_\+multiple\+\_\+simulations}} (\mbox{\hyperlink{namespace_lattice_01_field_01_theory_aacc2e0b1788eefc74bd8dc2851ef276f}{num\+\_\+runs}}, \mbox{\hyperlink{namespace_lattice_01_field_01_theory_abdeb8be544b7cb704655677858b42c39}{N\+\_\+sweeps}}, \mbox{\hyperlink{namespace_lattice_01_field_01_theory_addf5f123aa9b7ee3f2e50c6b01992536}{N\+\_\+cor}}, \mbox{\hyperlink{namespace_lattice_01_field_01_theory_a05645ad63fc75548b61a419e1f12882d}{eps}}, \mbox{\hyperlink{namespace_lattice_01_field_01_theory_a9344d7f973b6343084e4c61313fe7a94}{thermal\+\_\+sweeps}})
+\item 
+\mbox{\hyperlink{namespace_lattice_01_field_01_theory_a3ac6e1f1356cb47d739d8827e8c08721}{cosh\+\_\+model}} (t, A, \mbox{\hyperlink{namespace_lattice_01_field_01_theory_a403fe9f9ceec6efe8b5060c462bb5d7b}{m}})
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{namespace_lattice_01_field_01_theory_ab0601fa3f76a3c7ab167261eaea8a14c}{d}} = 1
+\item 
+float \mbox{\hyperlink{namespace_lattice_01_field_01_theory_a26cae2ecc5e3b19e78ed14f4c01b9f6d}{a}} = 1.\+0
+\item 
+int \mbox{\hyperlink{namespace_lattice_01_field_01_theory_aa3c652aa6546c314f03bf11907feb83e}{L}} = 32
+\item 
+float \mbox{\hyperlink{namespace_lattice_01_field_01_theory_a403fe9f9ceec6efe8b5060c462bb5d7b}{m}} = 1.\+0
+\item 
+float \mbox{\hyperlink{namespace_lattice_01_field_01_theory_a02d2544f7fd8f2b3615fc94ec4d89b13}{lambda\+\_\+}} = 0.\+1
+\item 
+int \mbox{\hyperlink{namespace_lattice_01_field_01_theory_ab8794292bfde42b1599d38fc3e006a1f}{D}} = \mbox{\hyperlink{namespace_lattice_01_field_01_theory_ab0601fa3f76a3c7ab167261eaea8a14c}{d}} + 1
+\item 
+\mbox{\hyperlink{namespace_lattice_01_field_01_theory_a1df2ebecb7fe5156b478b301688bda57}{phi}} = np.\+zeros((\mbox{\hyperlink{namespace_lattice_01_field_01_theory_aa3c652aa6546c314f03bf11907feb83e}{L}},) \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_lattice_01_field_01_theory_ab8794292bfde42b1599d38fc3e006a1f}{D}})
+\item 
+float \mbox{\hyperlink{namespace_lattice_01_field_01_theory_a5e4630f073fb83f9e07e482fa3ac38ee}{eps\+\_\+tuned}} = 0.\+5
+\item 
+\mbox{\hyperlink{namespace_lattice_01_field_01_theory_a1c8dfffd946cece1f19e240c50b53dee}{G\+\_\+mean}} = 0.\+5 \texorpdfstring{$\ast$}{*} (G\+\_\+mean + G\+\_\+mean\mbox{[}\+::-\/1\mbox{]})
+\item 
+\mbox{\hyperlink{namespace_lattice_01_field_01_theory_ae9075ec502b788582b807422c03a3aaa}{G\+\_\+err}}
+\item 
+\mbox{\hyperlink{namespace_lattice_01_field_01_theory_a110aa7b43a409fdda8911e9f0f4caccb}{m\+\_\+eff}}
+\item 
+\mbox{\hyperlink{namespace_lattice_01_field_01_theory_aacc2e0b1788eefc74bd8dc2851ef276f}{num\+\_\+runs}}
+\item 
+\mbox{\hyperlink{namespace_lattice_01_field_01_theory_abdeb8be544b7cb704655677858b42c39}{N\+\_\+sweeps}}
+\item 
+\mbox{\hyperlink{namespace_lattice_01_field_01_theory_addf5f123aa9b7ee3f2e50c6b01992536}{N\+\_\+cor}}
+\item 
+\mbox{\hyperlink{namespace_lattice_01_field_01_theory_a05645ad63fc75548b61a419e1f12882d}{eps}}
+\item 
+\mbox{\hyperlink{namespace_lattice_01_field_01_theory_a9344d7f973b6343084e4c61313fe7a94}{thermal\+\_\+sweeps}}
+\item 
+\mbox{\hyperlink{namespace_lattice_01_field_01_theory_a18ac285d9d96db2ff6f0a54be7576167}{tdata}} = np.\+arange(\mbox{\hyperlink{namespace_lattice_01_field_01_theory_aa3c652aa6546c314f03bf11907feb83e}{L}})
+\item 
+int \mbox{\hyperlink{namespace_lattice_01_field_01_theory_a4cc2e4dcc90522bafdf8ace1be419482}{mask}} = \mbox{\hyperlink{namespace_lattice_01_field_01_theory_a1c8dfffd946cece1f19e240c50b53dee}{G\+\_\+mean}} $>$ 5 \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_lattice_01_field_01_theory_ae9075ec502b788582b807422c03a3aaa}{G\+\_\+err}}
+\item 
+\mbox{\hyperlink{namespace_lattice_01_field_01_theory_a51f12d387c6c4d14a368fd970f7a4e67}{A\+\_\+fit}}
+\item 
+\mbox{\hyperlink{namespace_lattice_01_field_01_theory_a028a04455f4fd7f33770b9eb9b555160}{m\+\_\+fit}}
+\item 
+\mbox{\hyperlink{namespace_lattice_01_field_01_theory_a4041ae1463e8e9ec22cec4512171e9ab}{p0}}
+\item 
+\mbox{\hyperlink{namespace_lattice_01_field_01_theory_a33313ac096bcc7b00f862678c87dabc3}{G\+\_\+plot}} = np.\+abs(\mbox{\hyperlink{namespace_lattice_01_field_01_theory_a1c8dfffd946cece1f19e240c50b53dee}{G\+\_\+mean}})
+\item 
+\mbox{\hyperlink{namespace_lattice_01_field_01_theory_aa4847481fc0bb017f907227545c3db0c}{yerr}}
+\item 
+\mbox{\hyperlink{namespace_lattice_01_field_01_theory_a46763a2ae3ebb74c3e6ca2a6be3cc497}{fmt}}
+\item 
+\mbox{\hyperlink{namespace_lattice_01_field_01_theory_a354085fb496979bcfd6841b3d5dd0bed}{capsize}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{namespace_lattice_01_field_01_theory_a0d01476c676ef4801166da04b9898922}\index{Lattice Field Theory@{Lattice Field Theory}!action\_total@{action\_total}}
+\index{action\_total@{action\_total}!Lattice Field Theory@{Lattice Field Theory}}
+\doxysubsubsection{\texorpdfstring{action\_total()}{action\_total()}}
+{\footnotesize\ttfamily \label{namespace_lattice_01_field_01_theory_a0d01476c676ef4801166da04b9898922} 
+Lattice Field Theory.\+action\+\_\+total (\begin{DoxyParamCaption}\item[{}]{field}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Full lattice action including kinetic nearest-neighbor term.
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{_lattice_01_field_01_theory_8py_source_l00055}{55}} of file \mbox{\hyperlink{_lattice_01_field_01_theory_8py_source}{Lattice Field Theory.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00055\ \textcolor{keyword}{def\ }action\_total(field):}
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{00057\ \textcolor{stringliteral}{\ \ \ \ Full\ lattice\ action\ including\ kinetic\ nearest-\/neighbor\ term.}}
+\DoxyCodeLine{00058\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{00059\ \ \ \ \ S\ =\ 0.0}
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keywordflow}{for}\ idx\ \textcolor{keywordflow}{in}\ np.ndindex(*field.shape):}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ phi\_site\ =\ field[idx]}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ S\ +=\ potential\_at\_site(phi\_site)}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ mu\ \textcolor{keywordflow}{in}\ range(field.ndim):}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \ \ \ \ neigh\ =\ neighbor\_index(idx,\ mu,\ shift=1)}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \ \ \ \ diff\ =\ field[neigh]\ -\/\ phi\_site}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \ \ \ \ S\ +=\ 0.5\ *\ (diff**2)\ /\ (a**2)}
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keywordflow}{return}\ S}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00069\ }
+
+\end{DoxyCode}
+Here is the call graph for this function\+:

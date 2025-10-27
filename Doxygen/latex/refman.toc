@@ -1,0 +1,122 @@
+\@ifundefined {etoctocstyle}{\let \etoc@startlocaltoc \@gobble \let \etoc@settocdepth \@gobble \let \etoc@depthtag \@gobble \let \etoc@setlocaltop \@gobble }{}
+\contentsline {chapter}{\numberline {1}Namespace Index}{1}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Namespace List}{1}{section.1.1}%
+\contentsline {chapter}{\numberline {2}File Index}{3}{chapter.2}%
+\contentsline {section}{\numberline {2.1}File List}{3}{section.2.1}%
+\contentsline {chapter}{\numberline {3}Namespace Documentation}{5}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Lattice Namespace Reference}{5}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}Detailed Description}{5}{subsection.3.1.1}%
+\contentsline {section}{\numberline {3.2}Lattice Field Theory Namespace Reference}{5}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Function Documentation}{6}{subsection.3.2.1}%
+\contentsline {subsubsection}{\numberline {3.2.1.1}action\_total()}{6}{subsubsection.3.2.1.1}%
+\contentsline {section}{\numberline {3.3}Monte Namespace Reference}{7}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Detailed Description}{7}{subsection.3.3.1}%
+\contentsline {section}{\numberline {3.4}Monte Carlo integral Namespace Reference}{7}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}Function Documentation}{8}{subsection.3.4.1}%
+\contentsline {subsubsection}{\numberline {3.4.1.1}delta\_action\_change()}{8}{subsubsection.3.4.1.1}%
+\contentsline {subsubsection}{\numberline {3.4.1.2}local\_action()}{8}{subsubsection.3.4.1.2}%
+\contentsline {subsubsection}{\numberline {3.4.1.3}potential\_energy\_V()}{9}{subsubsection.3.4.1.3}%
+\contentsline {subsubsection}{\numberline {3.4.1.4}run\_monte\_carlo()}{9}{subsubsection.3.4.1.4}%
+\contentsline {subsection}{\numberline {3.4.2}Variable Documentation}{10}{subsection.3.4.2}%
+\contentsline {subsubsection}{\numberline {3.4.2.1}acceptance\_rate}{10}{subsubsection.3.4.2.1}%
+\contentsline {subsubsection}{\numberline {3.4.2.2}anharmonicity\_values}{10}{subsubsection.3.4.2.2}%
+\contentsline {subsubsection}{\numberline {3.4.2.3}correlation\_function}{11}{subsubsection.3.4.2.3}%
+\contentsline {subsubsection}{\numberline {3.4.2.4}estimated\_E0}{11}{subsubsection.3.4.2.4}%
+\contentsline {subsubsection}{\numberline {3.4.2.5}estimated\_ground\_energies}{11}{subsubsection.3.4.2.5}%
+\contentsline {subsubsection}{\numberline {3.4.2.6}euclidean\_times}{11}{subsubsection.3.4.2.6}%
+\contentsline {subsubsection}{\numberline {3.4.2.7}fit\_slice}{11}{subsubsection.3.4.2.7}%
+\contentsline {subsubsection}{\numberline {3.4.2.8}intercept}{11}{subsubsection.3.4.2.8}%
+\contentsline {subsubsection}{\numberline {3.4.2.9}lattice\_spacing\_a}{11}{subsubsection.3.4.2.9}%
+\contentsline {subsubsection}{\numberline {3.4.2.10}lw}{11}{subsubsection.3.4.2.10}%
+\contentsline {subsubsection}{\numberline {3.4.2.11}number\_of\_sites}{12}{subsubsection.3.4.2.11}%
+\contentsline {subsubsection}{\numberline {3.4.2.12}particle\_mass}{12}{subsubsection.3.4.2.12}%
+\contentsline {subsubsection}{\numberline {3.4.2.13}proposal\_step\_size}{12}{subsubsection.3.4.2.13}%
+\contentsline {subsubsection}{\numberline {3.4.2.14}slope}{12}{subsubsection.3.4.2.14}%
+\contentsline {subsubsection}{\numberline {3.4.2.15}thermalization\_steps}{12}{subsubsection.3.4.2.15}%
+\contentsline {subsubsection}{\numberline {3.4.2.16}total\_monte\_carlo\_steps}{12}{subsubsection.3.4.2.16}%
+\contentsline {section}{\numberline {3.5}Path Namespace Reference}{12}{section.3.5}%
+\contentsline {subsection}{\numberline {3.5.1}Detailed Description}{13}{subsection.3.5.1}%
+\contentsline {section}{\numberline {3.6}Path integral Namespace Reference}{13}{section.3.6}%
+\contentsline {subsection}{\numberline {3.6.1}Function Documentation}{13}{subsection.3.6.1}%
+\contentsline {subsubsection}{\numberline {3.6.1.1}integrand()}{13}{subsubsection.3.6.1.1}%
+\contentsline {subsubsection}{\numberline {3.6.1.2}potential\_V()}{14}{subsubsection.3.6.1.2}%
+\contentsline {subsubsection}{\numberline {3.6.1.3}S\_lat()}{14}{subsubsection.3.6.1.3}%
+\contentsline {subsection}{\numberline {3.6.2}Variable Documentation}{15}{subsection.3.6.2}%
+\contentsline {subsubsection}{\numberline {3.6.2.1}bound\_limit}{15}{subsubsection.3.6.2.1}%
+\contentsline {subsubsection}{\numberline {3.6.2.2}bounds}{15}{subsubsection.3.6.2.2}%
+\contentsline {subsubsection}{\numberline {3.6.2.3}error}{15}{subsubsection.3.6.2.3}%
+\contentsline {subsubsection}{\numberline {3.6.2.4}lattice\_spacing\_a}{15}{subsubsection.3.6.2.4}%
+\contentsline {subsubsection}{\numberline {3.6.2.5}N}{16}{subsubsection.3.6.2.5}%
+\contentsline {subsubsection}{\numberline {3.6.2.6}normalization\_A}{16}{subsubsection.3.6.2.6}%
+\contentsline {subsubsection}{\numberline {3.6.2.7}particle\_mass}{16}{subsubsection.3.6.2.7}%
+\contentsline {subsubsection}{\numberline {3.6.2.8}propagator}{16}{subsubsection.3.6.2.8}%
+\contentsline {subsubsection}{\numberline {3.6.2.9}result}{16}{subsubsection.3.6.2.9}%
+\contentsline {subsubsection}{\numberline {3.6.2.10}x\_values}{16}{subsubsection.3.6.2.10}%
+\contentsline {section}{\numberline {3.7}QCD\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\_\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Lattice\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\_\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}SU3 Namespace Reference}{17}{section.3.7}%
+\contentsline {subsection}{\numberline {3.7.1}Detailed Description}{18}{subsection.3.7.1}%
+\contentsline {subsection}{\numberline {3.7.2}Function Documentation}{18}{subsection.3.7.2}%
+\contentsline {subsubsection}{\numberline {3.7.2.1}average\_plaquette\_su3()}{18}{subsubsection.3.7.2.1}%
+\contentsline {subsubsection}{\numberline {3.7.2.2}bootstrap\_mean\_std()}{19}{subsubsection.3.7.2.2}%
+\contentsline {subsubsection}{\numberline {3.7.2.3}embed\_su2\_into\_su3()}{19}{subsubsection.3.7.2.3}%
+\contentsline {subsubsection}{\numberline {3.7.2.4}extract\_gluon\_field()}{20}{subsubsection.3.7.2.4}%
+\contentsline {subsubsection}{\numberline {3.7.2.5}field\_strength\_tensor()}{20}{subsubsection.3.7.2.5}%
+\contentsline {subsubsection}{\numberline {3.7.2.6}gell\_mann\_matrices()}{21}{subsubsection.3.7.2.6}%
+\contentsline {subsubsection}{\numberline {3.7.2.7}init\_links\_identity()}{21}{subsubsection.3.7.2.7}%
+\contentsline {subsubsection}{\numberline {3.7.2.8}measure\_avg\_A2\_and\_F2()}{22}{subsubsection.3.7.2.8}%
+\contentsline {subsubsection}{\numberline {3.7.2.9}measure\_wilson\_loop\_RT()}{22}{subsubsection.3.7.2.9}%
+\contentsline {subsubsection}{\numberline {3.7.2.10}metropolis\_update()}{23}{subsubsection.3.7.2.10}%
+\contentsline {subsubsection}{\numberline {3.7.2.11}plaquette\_matrix()}{24}{subsubsection.3.7.2.11}%
+\contentsline {subsubsection}{\numberline {3.7.2.12}plaquettes\_touching\_link()}{25}{subsubsection.3.7.2.12}%
+\contentsline {subsubsection}{\numberline {3.7.2.13}randomize\_links\_small()}{25}{subsubsection.3.7.2.13}%
+\contentsline {subsubsection}{\numberline {3.7.2.14}real\_trace\_plaquette()}{26}{subsubsection.3.7.2.14}%
+\contentsline {subsubsection}{\numberline {3.7.2.15}run\_su3\_simulation()}{26}{subsubsection.3.7.2.15}%
+\contentsline {subsubsection}{\numberline {3.7.2.16}su2\_random\_unitary()}{27}{subsubsection.3.7.2.16}%
+\contentsline {subsubsection}{\numberline {3.7.2.17}su3\_matrices()}{28}{subsubsection.3.7.2.17}%
+\contentsline {subsubsection}{\numberline {3.7.2.18}su3\_simulation\_with\_wilson\_loops()}{28}{subsubsection.3.7.2.18}%
+\contentsline {subsubsection}{\numberline {3.7.2.19}tune\_eps\_su3()}{29}{subsubsection.3.7.2.19}%
+\contentsline {subsubsection}{\numberline {3.7.2.20}x\_neighbor()}{30}{subsubsection.3.7.2.20}%
+\contentsline {subsection}{\numberline {3.7.3}Variable Documentation}{30}{subsection.3.7.3}%
+\contentsline {subsubsection}{\numberline {3.7.3.1}A2\_avg}{30}{subsubsection.3.7.3.1}%
+\contentsline {subsubsection}{\numberline {3.7.3.2}alpha}{31}{subsubsection.3.7.3.2}%
+\contentsline {subsubsection}{\numberline {3.7.3.3}amplitude}{31}{subsubsection.3.7.3.3}%
+\contentsline {subsubsection}{\numberline {3.7.3.4}avg\_wilson\_loops}{31}{subsubsection.3.7.3.4}%
+\contentsline {subsubsection}{\numberline {3.7.3.5}beta}{31}{subsubsection.3.7.3.5}%
+\contentsline {subsubsection}{\numberline {3.7.3.6}bins}{31}{subsubsection.3.7.3.6}%
+\contentsline {subsubsection}{\numberline {3.7.3.7}burn\_in\_sweeps}{31}{subsubsection.3.7.3.7}%
+\contentsline {subsubsection}{\numberline {3.7.3.8}D}{31}{subsubsection.3.7.3.8}%
+\contentsline {subsubsection}{\numberline {3.7.3.9}eps\_initial}{31}{subsubsection.3.7.3.9}%
+\contentsline {subsubsection}{\numberline {3.7.3.10}eps\_sub}{32}{subsubsection.3.7.3.10}%
+\contentsline {subsubsection}{\numberline {3.7.3.11}eps\_tuned}{32}{subsubsection.3.7.3.11}%
+\contentsline {subsubsection}{\numberline {3.7.3.12}F2\_avg}{32}{subsubsection.3.7.3.12}%
+\contentsline {subsubsection}{\numberline {3.7.3.13}figsize}{32}{subsubsection.3.7.3.13}%
+\contentsline {subsubsection}{\numberline {3.7.3.14}lattice\_size\_L}{32}{subsubsection.3.7.3.14}%
+\contentsline {subsubsection}{\numberline {3.7.3.15}linestyle}{32}{subsubsection.3.7.3.15}%
+\contentsline {subsubsection}{\numberline {3.7.3.16}link\_matrix}{32}{subsubsection.3.7.3.16}%
+\contentsline {subsubsection}{\numberline {3.7.3.17}marker}{32}{subsubsection.3.7.3.17}%
+\contentsline {subsubsection}{\numberline {3.7.3.18}max\_R}{33}{subsubsection.3.7.3.18}%
+\contentsline {subsubsection}{\numberline {3.7.3.19}max\_T}{33}{subsubsection.3.7.3.19}%
+\contentsline {subsubsection}{\numberline {3.7.3.20}MC\_measure\_interval}{33}{subsubsection.3.7.3.20}%
+\contentsline {subsubsection}{\numberline {3.7.3.21}MC\_sweeps}{33}{subsubsection.3.7.3.21}%
+\contentsline {subsubsection}{\numberline {3.7.3.22}n\_boot}{33}{subsubsection.3.7.3.22}%
+\contentsline {subsubsection}{\numberline {3.7.3.23}N\_correlator}{33}{subsubsection.3.7.3.23}%
+\contentsline {subsubsection}{\numberline {3.7.3.24}plaq\_err}{33}{subsubsection.3.7.3.24}%
+\contentsline {subsubsection}{\numberline {3.7.3.25}plaq\_mean}{33}{subsubsection.3.7.3.25}%
+\contentsline {subsubsection}{\numberline {3.7.3.26}potentials}{34}{subsubsection.3.7.3.26}%
+\contentsline {subsubsection}{\numberline {3.7.3.27}R\_values}{34}{subsubsection.3.7.3.27}%
+\contentsline {subsubsection}{\numberline {3.7.3.28}samples}{34}{subsubsection.3.7.3.28}%
+\contentsline {subsubsection}{\numberline {3.7.3.29}spatial\_dims}{34}{subsubsection.3.7.3.29}%
+\contentsline {subsubsection}{\numberline {3.7.3.30}T\_values}{34}{subsubsection.3.7.3.30}%
+\contentsline {subsubsection}{\numberline {3.7.3.31}V\_R}{34}{subsubsection.3.7.3.31}%
+\contentsline {subsubsection}{\numberline {3.7.3.32}W\_T}{34}{subsubsection.3.7.3.32}%
+\contentsline {subsubsection}{\numberline {3.7.3.33}W\_Tp1}{34}{subsubsection.3.7.3.33}%
+\contentsline {subsubsection}{\numberline {3.7.3.34}wilson\_loops\_samples}{34}{subsubsection.3.7.3.34}%
+\contentsline {subsubsection}{\numberline {3.7.3.35}x\_shape}{34}{subsubsection.3.7.3.35}%
+\contentsline {chapter}{\numberline {4}File Documentation}{35}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Lattice Field Theory.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}py File Reference}{35}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Lattice Field Theory.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}py}{36}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Monte Carlo integral.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}py File Reference}{38}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Monte Carlo integral.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}py}{39}{section.4.4}%
+\contentsline {section}{\numberline {4.5}Path integral.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}py File Reference}{41}{section.4.5}%
+\contentsline {section}{\numberline {4.6}Path integral.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}py}{42}{section.4.6}%
+\contentsline {section}{\numberline {4.7}QCD\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\_\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Lattice\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\_\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}SU3.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}py File Reference}{43}{section.4.7}%
+\contentsline {section}{\numberline {4.8}QCD\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\_\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Lattice\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\_\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}SU3.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}py}{45}{section.4.8}%

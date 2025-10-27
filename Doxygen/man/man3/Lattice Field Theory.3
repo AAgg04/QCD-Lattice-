@@ -1,0 +1,525 @@
+.TH "Lattice Field Theory" 3 "QCD Lattice" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Lattice Field Theory
+.SH SYNOPSIS
+.br
+.PP
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBpotential_at_site\fP (phi_val)"
+.br
+.ti -1c
+.RI "\fBneighbor_index\fP (idx, mu, shift=1)"
+.br
+.ti -1c
+.RI "\fBaction_total\fP (field)"
+.br
+.ti -1c
+.RI "\fBlocal_action_contribution\fP (idx, field)"
+.br
+.ti -1c
+.RI "\fBmetropolis_update_field\fP (field, \fBeps\fP=0\&.5)"
+.br
+.ti -1c
+.RI "\fBmeasure_field_correlation_all_origins\fP (field)"
+.br
+.ti -1c
+.RI "\fBcompute_effective_mass\fP (G, \fBG_err\fP=None)"
+.br
+.ti -1c
+.RI "\fBrun_field_simulation\fP (field, \fBN_sweeps\fP=2000, \fBN_cor\fP=10, \fBeps\fP=0\&.5, \fBthermal_sweeps\fP=500)"
+.br
+.ti -1c
+.RI "\fBrun_multiple_simulations\fP (\fBnum_runs\fP, \fBN_sweeps\fP, \fBN_cor\fP, \fBeps\fP, \fBthermal_sweeps\fP)"
+.br
+.ti -1c
+.RI "\fBcosh_model\fP (t, A, \fBm\fP)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBd\fP = 1"
+.br
+.ti -1c
+.RI "float \fBa\fP = 1\&.0"
+.br
+.ti -1c
+.RI "int \fBL\fP = 32"
+.br
+.ti -1c
+.RI "float \fBm\fP = 1\&.0"
+.br
+.ti -1c
+.RI "float \fBlambda_\fP = 0\&.1"
+.br
+.ti -1c
+.RI "int \fBD\fP = \fBd\fP + 1"
+.br
+.ti -1c
+.RI "\fBphi\fP = np\&.zeros((\fBL\fP,) * \fBD\fP)"
+.br
+.ti -1c
+.RI "float \fBeps_tuned\fP = 0\&.5"
+.br
+.ti -1c
+.RI "\fBG_mean\fP = 0\&.5 * (G_mean + G_mean[::\-1])"
+.br
+.ti -1c
+.RI "\fBG_err\fP"
+.br
+.ti -1c
+.RI "\fBm_eff\fP"
+.br
+.ti -1c
+.RI "\fBnum_runs\fP"
+.br
+.ti -1c
+.RI "\fBN_sweeps\fP"
+.br
+.ti -1c
+.RI "\fBN_cor\fP"
+.br
+.ti -1c
+.RI "\fBeps\fP"
+.br
+.ti -1c
+.RI "\fBthermal_sweeps\fP"
+.br
+.ti -1c
+.RI "\fBtdata\fP = np\&.arange(\fBL\fP)"
+.br
+.ti -1c
+.RI "int \fBmask\fP = \fBG_mean\fP > 5 * \fBG_err\fP"
+.br
+.ti -1c
+.RI "\fBA_fit\fP"
+.br
+.ti -1c
+.RI "\fBm_fit\fP"
+.br
+.ti -1c
+.RI "\fBp0\fP"
+.br
+.ti -1c
+.RI "\fBG_plot\fP = np\&.abs(\fBG_mean\fP)"
+.br
+.ti -1c
+.RI "\fByerr\fP"
+.br
+.ti -1c
+.RI "\fBfmt\fP"
+.br
+.ti -1c
+.RI "\fBcapsize\fP"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "Lattice Field Theory\&.action_total ( field)"
+
+.PP
+.nf
+Full lattice action including kinetic nearest-neighbor term\&.
+
+.fi
+.PP
+ 
+.PP
+Definition at line \fB55\fP of file \fBLattice Field Theory\&.py\fP\&.
+.nf
+55 def action_total(field):
+56     """
+57     Full lattice action including kinetic nearest\-neighbor term\&.
+58     """
+59     S = 0\&.0
+60     for idx in np\&.ndindex(*field\&.shape):
+61         phi_site = field[idx]
+62         S += potential_at_site(phi_site)
+63         for mu in range(field\&.ndim):
+64             neigh = neighbor_index(idx, mu, shift=1)
+65             diff = field[neigh] \- phi_site
+66             S += 0\&.5 * (diff**2) / (a**2)
+67     return S
+68 
+69 
+.PP
+.fi
+
+.SS "Lattice Field Theory\&.compute_effective_mass ( G,  G_err = \fRNone\fP)"
+
+.PP
+.nf
+Effective mass via m_eff(t) = log(G(t)/G(t+1))\&.
+Masked if too noisy\&.
+
+.fi
+.PP
+ 
+.PP
+Definition at line \fB129\fP of file \fBLattice Field Theory\&.py\fP\&.
+.nf
+129 def compute_effective_mass(G, G_err=None):
+130     """
+131     Effective mass via m_eff(t) = log(G(t)/G(t+1))\&.
+132     Masked if too noisy\&.
+133     """
+134     m_eff = np\&.full(len(G) \- 1, np\&.nan)
+135     for t in range(len(G) \- 1):
+136         if G[t] > 0 and G[t+1] > 0:
+137             if G_err is not None and (G[t] < 2*G_err[t] or G[t+1] < 2*G_err[t+1]):
+138                 continue
+139             m_eff[t] = np\&.log(G[t] / G[t+1])
+140     return m_eff
+141 
+142 
+143 # \-\-\- Simulation driver \-\-\-
+.PP
+.fi
+
+.SS "Lattice Field Theory\&.cosh_model ( t,  A,  m)"
+
+.PP
+Definition at line \fB195\fP of file \fBLattice Field Theory\&.py\fP\&.
+.nf
+195 def cosh_model(t, A, m):
+196     return A * (np\&.exp(\-m*t) + np\&.exp(\-m*(L \- t)))
+197 
+.PP
+.fi
+
+.SS "Lattice Field Theory\&.local_action_contribution ( idx,  field)"
+
+.PP
+.nf
+Local action contribution at a given lattice site incl\&. neighbors\&.
+Used for fast ΔS in Metropolis updates\&.
+
+.fi
+.PP
+ 
+.PP
+Definition at line \fB70\fP of file \fBLattice Field Theory\&.py\fP\&.
+.nf
+70 def local_action_contribution(idx, field):
+71     """
+72     Local action contribution at a given lattice site incl\&. neighbors\&.
+73     Used for fast ΔS in Metropolis updates\&.
+74     """
+75     phi_site = field[idx]
+76     S = potential_at_site(phi_site)
+77     for mu in range(field\&.ndim):
+78         neigh_f = neighbor_index(idx, mu, shift=1)
+79         neigh_b = neighbor_index(idx, mu, shift=\-1)
+80         S += 0\&.5 * (field[neigh_f] \- phi_site)**2 / (a**2)
+81         S += 0\&.5 * (field[neigh_b] \- phi_site)**2 / (a**2)
+82     return S
+83 
+84 
+85 # \-\-\- Metropolis updates \-\-\-
+.PP
+.fi
+
+.SS "Lattice Field Theory\&.measure_field_correlation_all_origins ( field)"
+
+.PP
+.nf
+Compute averaged two-point function G(Δt) over all origins\&.
+
+.fi
+.PP
+ 
+.PP
+Definition at line \fB110\fP of file \fBLattice Field Theory\&.py\fP\&.
+.nf
+110 def measure_field_correlation_all_origins(field):
+111     """
+112     Compute averaged two\-point function G(Δt) over all origins\&.
+113     """
+114     Lt = field\&.shape[\-1]
+115     spatial = field\&.shape[:\-1]
+116     G = np\&.zeros(Lt)
+117     for dt in range(Lt):
+118         corr = 0\&.0
+119         count = 0
+120         for t0 in range(Lt):
+121             t1 = (t0 + dt) % Lt
+122             for idx in np\&.ndindex(*spatial):
+123                 corr += field[idx + (t0,)] * field[idx + (t1,)]
+124                 count += 1
+125         G[dt] = corr / count
+126     return G
+127 
+128 
+.PP
+.fi
+
+.SS "Lattice Field Theory\&.metropolis_update_field ( field,  eps = \fR0\&.5\fP)"
+
+.PP
+.nf
+Perform one Metropolis sweep; return accepted/proposed counts\&.
+
+.fi
+.PP
+ 
+.PP
+Definition at line \fB86\fP of file \fBLattice Field Theory\&.py\fP\&.
+.nf
+86 def metropolis_update_field(field, eps=0\&.5):
+87     """
+88     Perform one Metropolis sweep; return accepted/proposed counts\&.
+89     """
+90     accepted = 0
+91     proposals = 0
+92     for idx in np\&.ndindex(*field\&.shape):
+93         old_val = field[idx]
+94         old_loc = local_action_contribution(idx, field)
+95 
+96         new_val = old_val + np\&.random\&.uniform(\-eps, eps)
+97         field[idx] = new_val
+98         new_loc = local_action_contribution(idx, field)
+99 
+100         dS = new_loc \- old_loc
+101         proposals += 1
+102         if dS > 0 and np\&.exp(\-dS) < np\&.random\&.rand():
+103             field[idx] = old_val
+104         else:
+105             accepted += 1
+106     return accepted, proposals
+107 
+108 
+109 # \-\-\- Measurements \-\-\-
+.PP
+.fi
+
+.SS "Lattice Field Theory\&.neighbor_index ( idx,  mu,  shift = \fR1\fP)"
+
+.PP
+.nf
+Periodic-BC neighbor index shift by ±1 in direction μ\&.
+
+.fi
+.PP
+ 
+.PP
+Definition at line \fB46\fP of file \fBLattice Field Theory\&.py\fP\&.
+.nf
+46 def neighbor_index(idx, mu, shift=1):
+47     """
+48     Periodic\-BC neighbor index shift by ±1 in direction μ\&.
+49     """
+50     new = list(idx)
+51     new[mu] = (new[mu] + shift) % L
+52     return tuple(new)
+53 
+54 
+.PP
+.fi
+
+.SS "Lattice Field Theory\&.potential_at_site ( phi_val)"
+
+.PP
+.nf
+Compute potential energy: V(φ) = ½ m²φ² + λ/4 φ⁴\&.
+
+.fi
+.PP
+ 
+.PP
+Definition at line \fB39\fP of file \fBLattice Field Theory\&.py\fP\&.
+.nf
+39 def potential_at_site(phi_val):
+40     """
+41     Compute potential energy: V(φ) = ½ m²φ² + λ/4 φ⁴\&.
+42     """
+43     return 0\&.5 * m**2 * phi_val**2 + (lambda_/4\&.0) * phi_val**4
+44 
+45 
+.PP
+.fi
+
+.SS "Lattice Field Theory\&.run_field_simulation ( field,  N_sweeps = \fR2000\fP,  N_cor = \fR10\fP,  eps = \fR0\&.5\fP,  thermal_sweeps = \fR500\fP)"
+
+.PP
+.nf
+Run simulation: thermalize, measure correlations, return G and m_eff\&.
+
+.fi
+.PP
+ 
+.PP
+Definition at line \fB144\fP of file \fBLattice Field Theory\&.py\fP\&.
+.nf
+144 def run_field_simulation(field, N_sweeps=2000, N_cor=10, eps=0\&.5, thermal_sweeps=500):
+145     """
+146     Run simulation: thermalize, measure correlations, return G and m_eff\&.
+147     """
+148     accepted = proposed = 0
+149     for _ in range(thermal_sweeps):
+150         a, p = metropolis_update_field(field, eps)
+151         accepted += a; proposed += p
+152     print(f"Post\-thermalization acceptance: {accepted/proposed:\&.3f}")
+153 
+154     measurements = []
+155     accepted = proposed = 0
+156     for sweep in range(N_sweeps):
+157         a, p = metropolis_update_field(field, eps)
+158         accepted += a; proposed += p
+159         if sweep % N_cor == 0:
+160             measurements\&.append(measure_field_correlation_all_origins(field))
+161     print(f"Measurement acceptance: {accepted/proposed:\&.3f}")
+162 
+163     meas_arr = np\&.array(measurements)
+164     G_mean = np\&.mean(meas_arr, axis=0)
+165     G_err = np\&.std(meas_arr, axis=0, ddof=1)
+166     m_eff = compute_effective_mass(G_mean, G_err)
+167     return meas_arr, G_mean, G_err, m_eff
+168 
+169 
+.PP
+.fi
+
+.SS "Lattice Field Theory\&.run_multiple_simulations ( num_runs,  N_sweeps,  N_cor,  eps,  thermal_sweeps)"
+
+.PP
+.nf
+Run multiple independent simulations and average observed correlators\&.
+
+.fi
+.PP
+ 
+.PP
+Definition at line \fB170\fP of file \fBLattice Field Theory\&.py\fP\&.
+.nf
+170 def run_multiple_simulations(num_runs, N_sweeps, N_cor, eps, thermal_sweeps):
+171     """
+172     Run multiple independent simulations and average observed correlators\&.
+173     """
+174     all_meas = []
+175     for _ in range(num_runs):
+176         field = 0\&.01 * np\&.random\&.randn(*(L,) * D)
+177         meas_arr, *_ = run_field_simulation(field, N_sweeps, N_cor, eps, thermal_sweeps)
+178         all_meas\&.append(meas_arr)
+179 
+180     all_meas = np\&.vstack(all_meas)
+181     G_mean = np\&.mean(all_meas, axis=0)
+182     G_err = np\&.std(all_meas, axis=0, ddof=1) / np\&.sqrt(all_meas\&.shape[0])
+183     m_eff = compute_effective_mass(G_mean, G_err)
+184     return G_mean, G_err, m_eff
+185 
+186 
+187 # \-\-\- Analysis & visualization \-\-\-
+.PP
+.fi
+
+.SH "Variable Documentation"
+.PP 
+.SS "float Lattice Field Theory\&.a = 1\&.0"
+
+.PP
+Definition at line \fB19\fP of file \fBLattice Field Theory\&.py\fP\&.
+.SS "Lattice Field Theory\&.A_fit"
+
+.PP
+Definition at line \fB202\fP of file \fBLattice Field Theory\&.py\fP\&.
+.SS "Lattice Field Theory\&.capsize"
+
+.PP
+Definition at line \fB206\fP of file \fBLattice Field Theory\&.py\fP\&.
+.SS "int Lattice Field Theory\&.D = \fBd\fP + 1"
+
+.PP
+Definition at line \fB31\fP of file \fBLattice Field Theory\&.py\fP\&.
+.SS "int Lattice Field Theory\&.d = 1"
+
+.PP
+Definition at line \fB16\fP of file \fBLattice Field Theory\&.py\fP\&.
+.SS "Lattice Field Theory\&.eps"
+
+.PP
+Definition at line \fB190\fP of file \fBLattice Field Theory\&.py\fP\&.
+.SS "Lattice Field Theory\&.eps_tuned = 0\&.5"
+
+.PP
+Definition at line \fB188\fP of file \fBLattice Field Theory\&.py\fP\&.
+.SS "Lattice Field Theory\&.fmt"
+
+.PP
+Definition at line \fB206\fP of file \fBLattice Field Theory\&.py\fP\&.
+.SS "Lattice Field Theory\&.G_err"
+
+.PP
+Definition at line \fB189\fP of file \fBLattice Field Theory\&.py\fP\&.
+.SS "float Lattice Field Theory\&.G_mean = 0\&.5 * (G_mean + G_mean[::\-1])"
+
+.PP
+Definition at line \fB189\fP of file \fBLattice Field Theory\&.py\fP\&.
+.SS "Lattice Field Theory\&.G_plot = np\&.abs(\fBG_mean\fP)"
+
+.PP
+Definition at line \fB205\fP of file \fBLattice Field Theory\&.py\fP\&.
+.SS "int Lattice Field Theory\&.L = 32"
+
+.PP
+Definition at line \fB22\fP of file \fBLattice Field Theory\&.py\fP\&.
+.SS "float Lattice Field Theory\&.lambda_ = 0\&.1"
+
+.PP
+Definition at line \fB28\fP of file \fBLattice Field Theory\&.py\fP\&.
+.SS "float Lattice Field Theory\&.m = 1\&.0"
+
+.PP
+Definition at line \fB25\fP of file \fBLattice Field Theory\&.py\fP\&.
+.SS "Lattice Field Theory\&.m_eff"
+
+.PP
+Definition at line \fB189\fP of file \fBLattice Field Theory\&.py\fP\&.
+.SS "Lattice Field Theory\&.m_fit"
+
+.PP
+Definition at line \fB202\fP of file \fBLattice Field Theory\&.py\fP\&.
+.SS "int Lattice Field Theory\&.mask = \fBG_mean\fP > 5 * \fBG_err\fP"
+
+.PP
+Definition at line \fB201\fP of file \fBLattice Field Theory\&.py\fP\&.
+.SS "Lattice Field Theory\&.N_cor"
+
+.PP
+Definition at line \fB190\fP of file \fBLattice Field Theory\&.py\fP\&.
+.SS "Lattice Field Theory\&.N_sweeps"
+
+.PP
+Definition at line \fB190\fP of file \fBLattice Field Theory\&.py\fP\&.
+.SS "Lattice Field Theory\&.num_runs"
+
+.PP
+Definition at line \fB190\fP of file \fBLattice Field Theory\&.py\fP\&.
+.SS "Lattice Field Theory\&.p0"
+
+.PP
+Definition at line \fB202\fP of file \fBLattice Field Theory\&.py\fP\&.
+.SS "Lattice Field Theory\&.phi = np\&.zeros((\fBL\fP,) * \fBD\fP)"
+
+.PP
+Definition at line \fB34\fP of file \fBLattice Field Theory\&.py\fP\&.
+.SS "Lattice Field Theory\&.tdata = np\&.arange(\fBL\fP)"
+
+.PP
+Definition at line \fB200\fP of file \fBLattice Field Theory\&.py\fP\&.
+.SS "Lattice Field Theory\&.thermal_sweeps"
+
+.PP
+Definition at line \fB190\fP of file \fBLattice Field Theory\&.py\fP\&.
+.SS "Lattice Field Theory\&.yerr"
+
+.PP
+Definition at line \fB206\fP of file \fBLattice Field Theory\&.py\fP\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for QCD Lattice from the source code\&.

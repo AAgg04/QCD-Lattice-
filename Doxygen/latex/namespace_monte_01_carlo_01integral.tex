@@ -1,0 +1,430 @@
+\doxysection{Monte Carlo integral Namespace Reference}
+\hypertarget{namespace_monte_01_carlo_01integral}{}\label{namespace_monte_01_carlo_01integral}\index{Monte Carlo integral@{Monte Carlo integral}}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespace_monte_01_carlo_01integral_ad7af17fed7ce4a859736d663b5b89414}{potential\+\_\+energy\+\_\+V}} (position, lambda\+\_\+parameter)
+\item 
+\mbox{\hyperlink{namespace_monte_01_carlo_01integral_aa3e96e57101efb05ac94168b70e9bc0d}{local\+\_\+action}} (x\+\_\+prev, x\+\_\+current, x\+\_\+next, lambda\+\_\+parameter)
+\item 
+\mbox{\hyperlink{namespace_monte_01_carlo_01integral_a7268ea8818fd19b8c3d019fd8b83edda}{delta\+\_\+action\+\_\+change}} (x\+\_\+path, j, x\+\_\+new, lambda\+\_\+parameter)
+\item 
+\mbox{\hyperlink{namespace_monte_01_carlo_01integral_a1ecd4625d86ac81c31ad13983becfcae}{run\+\_\+monte\+\_\+carlo}} (lambda\+\_\+parameter)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+float \mbox{\hyperlink{namespace_monte_01_carlo_01integral_ab0fd219247cd7ed774edc17a5642da3c}{particle\+\_\+mass}} = 1.\+0
+\item 
+float \mbox{\hyperlink{namespace_monte_01_carlo_01integral_a9e7bc09f7251ca180317231d3a7a846b}{lattice\+\_\+spacing\+\_\+a}} = 0.\+1
+\item 
+int \mbox{\hyperlink{namespace_monte_01_carlo_01integral_aea3a6fbe80a967f13b9d1dfbdd16ac59}{number\+\_\+of\+\_\+sites}} = 100
+\item 
+int \mbox{\hyperlink{namespace_monte_01_carlo_01integral_a993841cd2661d3e699127229426340c3}{total\+\_\+monte\+\_\+carlo\+\_\+steps}} = 30000
+\item 
+int \mbox{\hyperlink{namespace_monte_01_carlo_01integral_a13c9ae99df84d55b27939ac4f1cdcfb6}{thermalization\+\_\+steps}} = 5000
+\item 
+float \mbox{\hyperlink{namespace_monte_01_carlo_01integral_a1f69f0bd1cb0e12fd17b9a4cc89c54cd}{proposal\+\_\+step\+\_\+size}} = 0.\+5
+\item 
+list \mbox{\hyperlink{namespace_monte_01_carlo_01integral_af402df0bbfe1e6001d2820946138c6e8}{anharmonicity\+\_\+values}} = \mbox{[}0.\+0, 0.\+1, 0.\+3, 0.\+5, 1.\+0\mbox{]}
+\item 
+list \mbox{\hyperlink{namespace_monte_01_carlo_01integral_a53d890c14c8578a0f7d92a1ce524fc5f}{estimated\+\_\+ground\+\_\+energies}} = \mbox{[}$\,$\mbox{]}
+\item 
+\mbox{\hyperlink{namespace_monte_01_carlo_01integral_a75248d9fc2bf6385fcf050379c6ef426}{correlation\+\_\+function}}
+\item 
+\mbox{\hyperlink{namespace_monte_01_carlo_01integral_af0fc9aec82b94370019aeff9c967b8a1}{acceptance\+\_\+rate}}
+\item 
+float \mbox{\hyperlink{namespace_monte_01_carlo_01integral_abb3f4f3bff384c4414e2fe2801d61df9}{euclidean\+\_\+times}} = np.\+arange(len(\mbox{\hyperlink{namespace_monte_01_carlo_01integral_a75248d9fc2bf6385fcf050379c6ef426}{correlation\+\_\+function}})) \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_monte_01_carlo_01integral_a9e7bc09f7251ca180317231d3a7a846b}{lattice\+\_\+spacing\+\_\+a}}
+\item 
+\mbox{\hyperlink{namespace_monte_01_carlo_01integral_a16f0ce30fc4f76bee7b4e1deffa81d41}{fit\+\_\+slice}} = slice(1, 6)
+\item 
+\mbox{\hyperlink{namespace_monte_01_carlo_01integral_a5f9b87959665f7b948663ba28237e7b3}{slope}}
+\item 
+\mbox{\hyperlink{namespace_monte_01_carlo_01integral_a345b7b7a2be189d9c1fcf3001ea7e76e}{intercept}}
+\item 
+\mbox{\hyperlink{namespace_monte_01_carlo_01integral_a3c284efa84d6a0ad889388a8af9761af}{estimated\+\_\+\+E0}} = -\/\mbox{\hyperlink{namespace_monte_01_carlo_01integral_a5f9b87959665f7b948663ba28237e7b3}{slope}}
+\item 
+\mbox{\hyperlink{namespace_monte_01_carlo_01integral_aa5a1c7c854e3ea0f8ff5b2240e8b311a}{lw}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{namespace_monte_01_carlo_01integral_a7268ea8818fd19b8c3d019fd8b83edda}\index{Monte Carlo integral@{Monte Carlo integral}!delta\_action\_change@{delta\_action\_change}}
+\index{delta\_action\_change@{delta\_action\_change}!Monte Carlo integral@{Monte Carlo integral}}
+\doxysubsubsection{\texorpdfstring{delta\_action\_change()}{delta\_action\_change()}}
+{\footnotesize\ttfamily \label{namespace_monte_01_carlo_01integral_a7268ea8818fd19b8c3d019fd8b83edda} 
+Monte Carlo integral.\+delta\+\_\+action\+\_\+change (\begin{DoxyParamCaption}\item[{}]{x\+\_\+path}{, }\item[{}]{j}{, }\item[{}]{x\+\_\+new}{, }\item[{}]{lambda\+\_\+parameter}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Compute local change ΔS_E for a proposed update at site j.
+@param x_path ndarray(float): full current path configuration.
+@param j int: lattice site index for update.
+@param x_new float: proposed new value for x[j].
+@param lambda_parameter float: anharmonicity λ.
+@return float: ΔS = S_new − S_old.
+@details
+Only the action terms involving sites {j−1, j, j+1} contribute to ΔS.
+Indices wrap via periodic boundary conditions.
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{_monte_01_carlo_01integral_8py_source_l00096}{96}} of file \mbox{\hyperlink{_monte_01_carlo_01integral_8py_source}{Monte Carlo integral.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00096\ \textcolor{keyword}{def\ }delta\_action\_change(x\_path,\ j,\ x\_new,\ lambda\_parameter):}
+\DoxyCodeLine{00097\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{00098\ \textcolor{stringliteral}{\ \ \ \ @brief\ Compute\ local\ change\ ΔS\_E\ for\ a\ proposed\ update\ at\ site\ j.}}
+\DoxyCodeLine{00099\ \textcolor{stringliteral}{\ \ \ \ @param\ x\_path\ ndarray(float):\ full\ current\ path\ configuration.}}
+\DoxyCodeLine{00100\ \textcolor{stringliteral}{\ \ \ \ @param\ j\ int:\ lattice\ site\ index\ for\ update.}}
+\DoxyCodeLine{00101\ \textcolor{stringliteral}{\ \ \ \ @param\ x\_new\ float:\ proposed\ new\ value\ for\ x[j].}}
+\DoxyCodeLine{00102\ \textcolor{stringliteral}{\ \ \ \ @param\ lambda\_parameter\ float:\ anharmonicity\ λ.}}
+\DoxyCodeLine{00103\ \textcolor{stringliteral}{\ \ \ \ @return\ float:\ ΔS\ =\ S\_new\ −\ S\_old.}}
+\DoxyCodeLine{00104\ \textcolor{stringliteral}{\ \ \ \ @details}}
+\DoxyCodeLine{00105\ \textcolor{stringliteral}{\ \ \ \ Only\ the\ action\ terms\ involving\ sites\ \{j−1,\ j,\ j+1\}\ contribute\ to\ ΔS.}}
+\DoxyCodeLine{00106\ \textcolor{stringliteral}{\ \ \ \ Indices\ wrap\ via\ periodic\ boundary\ conditions.}}
+\DoxyCodeLine{00107\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{00108\ \ \ \ \ j\_minus\ =\ (j\ -\/\ 1)\ \%\ number\_of\_sites}
+\DoxyCodeLine{00109\ \ \ \ \ j\_plus\ =\ (j\ +\ 1)\ \%\ number\_of\_sites}
+\DoxyCodeLine{00110\ }
+\DoxyCodeLine{00111\ \ \ \ \ S\_old\ =\ local\_action(x\_path[j\_minus],\ x\_path[j],\ x\_path[j\_plus],\ lambda\_parameter)}
+\DoxyCodeLine{00112\ \ \ \ \ S\_new\ =\ local\_action(x\_path[j\_minus],\ x\_new,\ x\_path[j\_plus],\ lambda\_parameter)}
+\DoxyCodeLine{00113\ }
+\DoxyCodeLine{00114\ \ \ \ \ \textcolor{keywordflow}{return}\ S\_new\ -\/\ S\_old}
+\DoxyCodeLine{00115\ }
+\DoxyCodeLine{00116\ }
+\DoxyCodeLine{00117\ \textcolor{comment}{\#\ ===============================================================}}
+\DoxyCodeLine{00118\ \textcolor{comment}{\#\ \ \ \ \ \ \ \ \ Monte\ Carlo\ Simulation\ for\ Given\ λ}}
+\DoxyCodeLine{00119\ \textcolor{comment}{\#\ ===============================================================}}
+\DoxyCodeLine{00120\ }
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+% FIG 0
+Here is the caller graph for this function\+:
+% FIG 1
+\Hypertarget{namespace_monte_01_carlo_01integral_aa3e96e57101efb05ac94168b70e9bc0d}\index{Monte Carlo integral@{Monte Carlo integral}!local\_action@{local\_action}}
+\index{local\_action@{local\_action}!Monte Carlo integral@{Monte Carlo integral}}
+\doxysubsubsection{\texorpdfstring{local\_action()}{local\_action()}}
+{\footnotesize\ttfamily \label{namespace_monte_01_carlo_01integral_aa3e96e57101efb05ac94168b70e9bc0d} 
+Monte Carlo integral.\+local\+\_\+action (\begin{DoxyParamCaption}\item[{}]{x\+\_\+prev}{, }\item[{}]{x\+\_\+current}{, }\item[{}]{x\+\_\+next}{, }\item[{}]{lambda\+\_\+parameter}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Local contribution to discretized Euclidean action around site j.
+@param x_prev float: x at site j−1.
+@param x_current float: x at site j.
+@param x_next float: x at site j+1.
+@param lambda_parameter float: anharmonicity λ.
+@return float: local action S_E(j).
+@details
+Uses symmetric discretized kinetic term:
+    S_kin(j) = m/(4a)[(x_{j+1}-x_j)² + (x_j - x_{j-1})²]
+plus potential:
+    S_pot(j) = a V(x_j).
+Periodic boundary conditions handled externally.
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{_monte_01_carlo_01integral_8py_source_l00075}{75}} of file \mbox{\hyperlink{_monte_01_carlo_01integral_8py_source}{Monte Carlo integral.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00075\ \textcolor{keyword}{def\ }local\_action(x\_prev,\ x\_current,\ x\_next,\ lambda\_parameter):}
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{00077\ \textcolor{stringliteral}{\ \ \ \ @brief\ Local\ contribution\ to\ discretized\ Euclidean\ action\ around\ site\ j.}}
+\DoxyCodeLine{00078\ \textcolor{stringliteral}{\ \ \ \ @param\ x\_prev\ float:\ x\ at\ site\ j−1.}}
+\DoxyCodeLine{00079\ \textcolor{stringliteral}{\ \ \ \ @param\ x\_current\ float:\ x\ at\ site\ j.}}
+\DoxyCodeLine{00080\ \textcolor{stringliteral}{\ \ \ \ @param\ x\_next\ float:\ x\ at\ site\ j+1.}}
+\DoxyCodeLine{00081\ \textcolor{stringliteral}{\ \ \ \ @param\ lambda\_parameter\ float:\ anharmonicity\ λ.}}
+\DoxyCodeLine{00082\ \textcolor{stringliteral}{\ \ \ \ @return\ float:\ local\ action\ S\_E(j).}}
+\DoxyCodeLine{00083\ \textcolor{stringliteral}{\ \ \ \ @details}}
+\DoxyCodeLine{00084\ \textcolor{stringliteral}{\ \ \ \ Uses\ symmetric\ discretized\ kinetic\ term:}}
+\DoxyCodeLine{00085\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ S\_kin(j)\ =\ m/(4a)[(x\_\{j+1\}-\/x\_j)²\ +\ (x\_j\ -\/\ x\_\{j-\/1\})²]}}
+\DoxyCodeLine{00086\ \textcolor{stringliteral}{\ \ \ \ plus\ potential:}}
+\DoxyCodeLine{00087\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ S\_pot(j)\ =\ a\ V(x\_j).}}
+\DoxyCodeLine{00088\ \textcolor{stringliteral}{\ \ \ \ Periodic\ boundary\ conditions\ handled\ externally.}}
+\DoxyCodeLine{00089\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{00090\ \ \ \ \ S\_kinetic\_local\ =\ 0.5\ *\ particle\_mass\ /\ lattice\_spacing\_a\ *\ \(\backslash\)}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ((x\_next\ -\/\ x\_current)**2\ +\ (x\_current\ -\/\ x\_prev)**2)\ /\ 2}
+\DoxyCodeLine{00092\ \ \ \ \ S\_potential\_local\ =\ lattice\_spacing\_a\ *\ potential\_energy\_V(x\_current,\ lambda\_parameter)}
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{keywordflow}{return}\ S\_kinetic\_local\ +\ S\_potential\_local}
+\DoxyCodeLine{00094\ }
+\DoxyCodeLine{00095\ }
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+% FIG 2
+Here is the caller graph for this function\+:
+% FIG 3
+\Hypertarget{namespace_monte_01_carlo_01integral_ad7af17fed7ce4a859736d663b5b89414}\index{Monte Carlo integral@{Monte Carlo integral}!potential\_energy\_V@{potential\_energy\_V}}
+\index{potential\_energy\_V@{potential\_energy\_V}!Monte Carlo integral@{Monte Carlo integral}}
+\doxysubsubsection{\texorpdfstring{potential\_energy\_V()}{potential\_energy\_V()}}
+{\footnotesize\ttfamily \label{namespace_monte_01_carlo_01integral_ad7af17fed7ce4a859736d663b5b89414} 
+Monte Carlo integral.\+potential\+\_\+energy\+\_\+V (\begin{DoxyParamCaption}\item[{}]{position}{, }\item[{}]{lambda\+\_\+parameter}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Anharmonic potential energy V(x).
+@param position float or ndarray: spatial coordinate(s) x.
+@param lambda_parameter float: anharmonicity λ (λ → 0 gives harmonic limit).
+@return float or ndarray: potential energy V(x).
+@details
+Implements:
+    V(x) = 1/2 x² + λ x⁴.
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{_monte_01_carlo_01integral_8py_source_l00058}{58}} of file \mbox{\hyperlink{_monte_01_carlo_01integral_8py_source}{Monte Carlo integral.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00058\ \textcolor{keyword}{def\ }potential\_energy\_V(position,\ lambda\_parameter):}
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{00060\ \textcolor{stringliteral}{\ \ \ \ @brief\ Anharmonic\ potential\ energy\ V(x).}}
+\DoxyCodeLine{00061\ \textcolor{stringliteral}{\ \ \ \ @param\ position\ float\ or\ ndarray:\ spatial\ coordinate(s)\ x.}}
+\DoxyCodeLine{00062\ \textcolor{stringliteral}{\ \ \ \ @param\ lambda\_parameter\ float:\ anharmonicity\ λ\ (λ\ →\ 0\ gives\ harmonic\ limit).}}
+\DoxyCodeLine{00063\ \textcolor{stringliteral}{\ \ \ \ @return\ float\ or\ ndarray:\ potential\ energy\ V(x).}}
+\DoxyCodeLine{00064\ \textcolor{stringliteral}{\ \ \ \ @details}}
+\DoxyCodeLine{00065\ \textcolor{stringliteral}{\ \ \ \ Implements:}}
+\DoxyCodeLine{00066\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ V(x)\ =\ 1/2\ x²\ +\ λ\ x⁴.}}
+\DoxyCodeLine{00067\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{keywordflow}{return}\ 0.5\ *\ position**2\ +\ lambda\_parameter\ *\ position**4}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00071\ \textcolor{comment}{\#\ ===============================================================}}
+\DoxyCodeLine{00072\ \textcolor{comment}{\#\ \ \ \ \ \ \ \ \ Local\ Euclidean\ Action\ Contributions}}
+\DoxyCodeLine{00073\ \textcolor{comment}{\#\ ===============================================================}}
+\DoxyCodeLine{00074\ }
+
+\end{DoxyCode}
+Here is the caller graph for this function\+:
+% FIG 4
+\Hypertarget{namespace_monte_01_carlo_01integral_a1ecd4625d86ac81c31ad13983becfcae}\index{Monte Carlo integral@{Monte Carlo integral}!run\_monte\_carlo@{run\_monte\_carlo}}
+\index{run\_monte\_carlo@{run\_monte\_carlo}!Monte Carlo integral@{Monte Carlo integral}}
+\doxysubsubsection{\texorpdfstring{run\_monte\_carlo()}{run\_monte\_carlo()}}
+{\footnotesize\ttfamily \label{namespace_monte_01_carlo_01integral_a1ecd4625d86ac81c31ad13983becfcae} 
+Monte Carlo integral.\+run\+\_\+monte\+\_\+carlo (\begin{DoxyParamCaption}\item[{}]{lambda\+\_\+parameter}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}@brief Perform local Metropolis updates to sample Euclidean paths for fixed λ.
+@param lambda_parameter float: anharmonicity value for this simulation.
+@return tuple: (C_tau, acceptance_fraction)
+    - C_tau: ndarray(float) correlator C(τ) for τ up to T/2
+    - acceptance_fraction: overall acceptance rate of updates
+@details
+• Initializes x(τ)=0 path
+• Local updates at every site each sweep
+• Observables recorded every 10 steps post-thermalization
+• Correlator estimator:
+        C(τ) = ⟨ x_j x_{j+τ} ⟩ averaged over j and Monte Carlo samples
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{_monte_01_carlo_01integral_8py_source_l00121}{121}} of file \mbox{\hyperlink{_monte_01_carlo_01integral_8py_source}{Monte Carlo integral.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00121\ \textcolor{keyword}{def\ }run\_monte\_carlo(lambda\_parameter):}
+\DoxyCodeLine{00122\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{00123\ \textcolor{stringliteral}{\ \ \ \ @brief\ Perform\ local\ Metropolis\ updates\ to\ sample\ Euclidean\ paths\ for\ fixed\ λ.}}
+\DoxyCodeLine{00124\ \textcolor{stringliteral}{\ \ \ \ @param\ lambda\_parameter\ float:\ anharmonicity\ value\ for\ this\ simulation.}}
+\DoxyCodeLine{00125\ \textcolor{stringliteral}{\ \ \ \ @return\ tuple:\ (C\_tau,\ acceptance\_fraction)}}
+\DoxyCodeLine{00126\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ -\/\ C\_tau:\ ndarray(float)\ correlator\ C(τ)\ for\ τ\ up\ to\ T/2}}
+\DoxyCodeLine{00127\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ -\/\ acceptance\_fraction:\ overall\ acceptance\ rate\ of\ updates}}
+\DoxyCodeLine{00128\ \textcolor{stringliteral}{\ \ \ \ @details}}
+\DoxyCodeLine{00129\ \textcolor{stringliteral}{\ \ \ \ •\ Initializes\ x(τ)=0\ path}}
+\DoxyCodeLine{00130\ \textcolor{stringliteral}{\ \ \ \ •\ Local\ updates\ at\ every\ site\ each\ sweep}}
+\DoxyCodeLine{00131\ \textcolor{stringliteral}{\ \ \ \ •\ Observables\ recorded\ every\ 10\ steps\ post-\/thermalization}}
+\DoxyCodeLine{00132\ \textcolor{stringliteral}{\ \ \ \ •\ Correlator\ estimator:}}
+\DoxyCodeLine{00133\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ C(τ)\ =\ ⟨\ x\_j\ x\_\{j+τ\}\ ⟩\ averaged\ over\ j\ and\ Monte\ Carlo\ samples}}
+\DoxyCodeLine{00134\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{00135\ \ \ \ \ x\_path\ =\ np.zeros(number\_of\_sites)}
+\DoxyCodeLine{00136\ \ \ \ \ G\_correlator\ =\ np.zeros(number\_of\_sites\ //\ 2)}
+\DoxyCodeLine{00137\ \ \ \ \ N\_measure\ =\ 0}
+\DoxyCodeLine{00138\ \ \ \ \ accepted\_updates\ =\ 0}
+\DoxyCodeLine{00139\ }
+\DoxyCodeLine{00140\ \ \ \ \ \textcolor{keywordflow}{for}\ monte\_carlo\_step\ \textcolor{keywordflow}{in}\ range(total\_monte\_carlo\_steps):}
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ j\ \textcolor{keywordflow}{in}\ range(number\_of\_sites):}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \ \ \ \ x\_new\ =\ x\_path[j]\ +\ np.random.uniform(-\/proposal\_step\_size,\ proposal\_step\_size)}
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \ \ \ \ delta\_S\_local\ =\ delta\_action\_change(x\_path,\ j,\ x\_new,\ lambda\_parameter)}
+\DoxyCodeLine{00144\ }
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ delta\_S\_local\ <\ 0\ \textcolor{keywordflow}{or}\ np.exp(-\/delta\_S\_local)\ >\ np.random.rand():}
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ x\_path[j]\ =\ x\_new}
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ accepted\_updates\ +=\ 1}
+\DoxyCodeLine{00148\ }
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ monte\_carlo\_step\ >=\ thermalization\_steps\ \textcolor{keywordflow}{and}\ monte\_carlo\_step\ \%\ 10\ ==\ 0:}
+\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ t\_index\ \textcolor{keywordflow}{in}\ range(number\_of\_sites\ //\ 2):}
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ G\_correlator[t\_index]\ +=\ np.mean(x\_path\ *\ np.roll(x\_path,\ -\/t\_index))}
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \ \ \ \ N\_measure\ +=\ 1}
+\DoxyCodeLine{00153\ }
+\DoxyCodeLine{00154\ \ \ \ \ G\_correlator\ /=\ N\_measure}
+\DoxyCodeLine{00155\ \ \ \ \ acceptance\_fraction\ =\ accepted\_updates\ /\ (total\_monte\_carlo\_steps\ *\ number\_of\_sites)}
+\DoxyCodeLine{00156\ \ \ \ \ \textcolor{keywordflow}{return}\ G\_correlator,\ acceptance\_fraction}
+\DoxyCodeLine{00157\ }
+\DoxyCodeLine{00158\ }
+\DoxyCodeLine{00159\ \textcolor{comment}{\#\ ===============================================================}}
+\DoxyCodeLine{00160\ \textcolor{comment}{\#\ \ \ \ \ \ \ \ \ \ Main\ Loop\ —\ Extract\ Ground-\/State\ Energy}}
+\DoxyCodeLine{00161\ \textcolor{comment}{\#\ ===============================================================}}
+\DoxyCodeLine{00162\ }
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+% FIG 5
+
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{namespace_monte_01_carlo_01integral_af0fc9aec82b94370019aeff9c967b8a1}\index{Monte Carlo integral@{Monte Carlo integral}!acceptance\_rate@{acceptance\_rate}}
+\index{acceptance\_rate@{acceptance\_rate}!Monte Carlo integral@{Monte Carlo integral}}
+\doxysubsubsection{\texorpdfstring{acceptance\_rate}{acceptance\_rate}}
+{\footnotesize\ttfamily \label{namespace_monte_01_carlo_01integral_af0fc9aec82b94370019aeff9c967b8a1} 
+Monte Carlo integral.\+acceptance\+\_\+rate}
+
+
+
+Definition at line \mbox{\hyperlink{_monte_01_carlo_01integral_8py_source_l00167}{167}} of file \mbox{\hyperlink{_monte_01_carlo_01integral_8py_source}{Monte Carlo integral.\+py}}.
+
+\Hypertarget{namespace_monte_01_carlo_01integral_af402df0bbfe1e6001d2820946138c6e8}\index{Monte Carlo integral@{Monte Carlo integral}!anharmonicity\_values@{anharmonicity\_values}}
+\index{anharmonicity\_values@{anharmonicity\_values}!Monte Carlo integral@{Monte Carlo integral}}
+\doxysubsubsection{\texorpdfstring{anharmonicity\_values}{anharmonicity\_values}}
+{\footnotesize\ttfamily \label{namespace_monte_01_carlo_01integral_af402df0bbfe1e6001d2820946138c6e8} 
+list Monte Carlo integral.\+anharmonicity\+\_\+values = \mbox{[}0.\+0, 0.\+1, 0.\+3, 0.\+5, 1.\+0\mbox{]}}
+
+
+
+Definition at line \mbox{\hyperlink{_monte_01_carlo_01integral_8py_source_l00048}{48}} of file \mbox{\hyperlink{_monte_01_carlo_01integral_8py_source}{Monte Carlo integral.\+py}}.
+
+\Hypertarget{namespace_monte_01_carlo_01integral_a75248d9fc2bf6385fcf050379c6ef426}\index{Monte Carlo integral@{Monte Carlo integral}!correlation\_function@{correlation\_function}}
+\index{correlation\_function@{correlation\_function}!Monte Carlo integral@{Monte Carlo integral}}
+\doxysubsubsection{\texorpdfstring{correlation\_function}{correlation\_function}}
+{\footnotesize\ttfamily \label{namespace_monte_01_carlo_01integral_a75248d9fc2bf6385fcf050379c6ef426} 
+Monte Carlo integral.\+correlation\+\_\+function}
+
+
+
+Definition at line \mbox{\hyperlink{_monte_01_carlo_01integral_8py_source_l00167}{167}} of file \mbox{\hyperlink{_monte_01_carlo_01integral_8py_source}{Monte Carlo integral.\+py}}.
+
+\Hypertarget{namespace_monte_01_carlo_01integral_a3c284efa84d6a0ad889388a8af9761af}\index{Monte Carlo integral@{Monte Carlo integral}!estimated\_E0@{estimated\_E0}}
+\index{estimated\_E0@{estimated\_E0}!Monte Carlo integral@{Monte Carlo integral}}
+\doxysubsubsection{\texorpdfstring{estimated\_E0}{estimated\_E0}}
+{\footnotesize\ttfamily \label{namespace_monte_01_carlo_01integral_a3c284efa84d6a0ad889388a8af9761af} 
+Monte Carlo integral.\+estimated\+\_\+\+E0 = -\/\mbox{\hyperlink{namespace_monte_01_carlo_01integral_a5f9b87959665f7b948663ba28237e7b3}{slope}}}
+
+
+
+Definition at line \mbox{\hyperlink{_monte_01_carlo_01integral_8py_source_l00175}{175}} of file \mbox{\hyperlink{_monte_01_carlo_01integral_8py_source}{Monte Carlo integral.\+py}}.
+
+\Hypertarget{namespace_monte_01_carlo_01integral_a53d890c14c8578a0f7d92a1ce524fc5f}\index{Monte Carlo integral@{Monte Carlo integral}!estimated\_ground\_energies@{estimated\_ground\_energies}}
+\index{estimated\_ground\_energies@{estimated\_ground\_energies}!Monte Carlo integral@{Monte Carlo integral}}
+\doxysubsubsection{\texorpdfstring{estimated\_ground\_energies}{estimated\_ground\_energies}}
+{\footnotesize\ttfamily \label{namespace_monte_01_carlo_01integral_a53d890c14c8578a0f7d92a1ce524fc5f} 
+list Monte Carlo integral.\+estimated\+\_\+ground\+\_\+energies = \mbox{[}$\,$\mbox{]}}
+
+
+
+Definition at line \mbox{\hyperlink{_monte_01_carlo_01integral_8py_source_l00163}{163}} of file \mbox{\hyperlink{_monte_01_carlo_01integral_8py_source}{Monte Carlo integral.\+py}}.
+
+\Hypertarget{namespace_monte_01_carlo_01integral_abb3f4f3bff384c4414e2fe2801d61df9}\index{Monte Carlo integral@{Monte Carlo integral}!euclidean\_times@{euclidean\_times}}
+\index{euclidean\_times@{euclidean\_times}!Monte Carlo integral@{Monte Carlo integral}}
+\doxysubsubsection{\texorpdfstring{euclidean\_times}{euclidean\_times}}
+{\footnotesize\ttfamily \label{namespace_monte_01_carlo_01integral_abb3f4f3bff384c4414e2fe2801d61df9} 
+float Monte Carlo integral.\+euclidean\+\_\+times = np.\+arange(len(\mbox{\hyperlink{namespace_monte_01_carlo_01integral_a75248d9fc2bf6385fcf050379c6ef426}{correlation\+\_\+function}})) \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespace_monte_01_carlo_01integral_a9e7bc09f7251ca180317231d3a7a846b}{lattice\+\_\+spacing\+\_\+a}}}
+
+
+
+Definition at line \mbox{\hyperlink{_monte_01_carlo_01integral_8py_source_l00170}{170}} of file \mbox{\hyperlink{_monte_01_carlo_01integral_8py_source}{Monte Carlo integral.\+py}}.
+
+\Hypertarget{namespace_monte_01_carlo_01integral_a16f0ce30fc4f76bee7b4e1deffa81d41}\index{Monte Carlo integral@{Monte Carlo integral}!fit\_slice@{fit\_slice}}
+\index{fit\_slice@{fit\_slice}!Monte Carlo integral@{Monte Carlo integral}}
+\doxysubsubsection{\texorpdfstring{fit\_slice}{fit\_slice}}
+{\footnotesize\ttfamily \label{namespace_monte_01_carlo_01integral_a16f0ce30fc4f76bee7b4e1deffa81d41} 
+Monte Carlo integral.\+fit\+\_\+slice = slice(1, 6)}
+
+
+
+Definition at line \mbox{\hyperlink{_monte_01_carlo_01integral_8py_source_l00172}{172}} of file \mbox{\hyperlink{_monte_01_carlo_01integral_8py_source}{Monte Carlo integral.\+py}}.
+
+\Hypertarget{namespace_monte_01_carlo_01integral_a345b7b7a2be189d9c1fcf3001ea7e76e}\index{Monte Carlo integral@{Monte Carlo integral}!intercept@{intercept}}
+\index{intercept@{intercept}!Monte Carlo integral@{Monte Carlo integral}}
+\doxysubsubsection{\texorpdfstring{intercept}{intercept}}
+{\footnotesize\ttfamily \label{namespace_monte_01_carlo_01integral_a345b7b7a2be189d9c1fcf3001ea7e76e} 
+Monte Carlo integral.\+intercept}
+
+
+
+Definition at line \mbox{\hyperlink{_monte_01_carlo_01integral_8py_source_l00173}{173}} of file \mbox{\hyperlink{_monte_01_carlo_01integral_8py_source}{Monte Carlo integral.\+py}}.
+
+\Hypertarget{namespace_monte_01_carlo_01integral_a9e7bc09f7251ca180317231d3a7a846b}\index{Monte Carlo integral@{Monte Carlo integral}!lattice\_spacing\_a@{lattice\_spacing\_a}}
+\index{lattice\_spacing\_a@{lattice\_spacing\_a}!Monte Carlo integral@{Monte Carlo integral}}
+\doxysubsubsection{\texorpdfstring{lattice\_spacing\_a}{lattice\_spacing\_a}}
+{\footnotesize\ttfamily \label{namespace_monte_01_carlo_01integral_a9e7bc09f7251ca180317231d3a7a846b} 
+float Monte Carlo integral.\+lattice\+\_\+spacing\+\_\+a = 0.\+1}
+
+
+
+Definition at line \mbox{\hyperlink{_monte_01_carlo_01integral_8py_source_l00033}{33}} of file \mbox{\hyperlink{_monte_01_carlo_01integral_8py_source}{Monte Carlo integral.\+py}}.
+
+\Hypertarget{namespace_monte_01_carlo_01integral_aa5a1c7c854e3ea0f8ff5b2240e8b311a}\index{Monte Carlo integral@{Monte Carlo integral}!lw@{lw}}
+\index{lw@{lw}!Monte Carlo integral@{Monte Carlo integral}}
+\doxysubsubsection{\texorpdfstring{lw}{lw}}
+{\footnotesize\ttfamily \label{namespace_monte_01_carlo_01integral_aa5a1c7c854e3ea0f8ff5b2240e8b311a} 
+Monte Carlo integral.\+lw}
+
+
+
+Definition at line \mbox{\hyperlink{_monte_01_carlo_01integral_8py_source_l00186}{186}} of file \mbox{\hyperlink{_monte_01_carlo_01integral_8py_source}{Monte Carlo integral.\+py}}.
+
+\Hypertarget{namespace_monte_01_carlo_01integral_aea3a6fbe80a967f13b9d1dfbdd16ac59}\index{Monte Carlo integral@{Monte Carlo integral}!number\_of\_sites@{number\_of\_sites}}
+\index{number\_of\_sites@{number\_of\_sites}!Monte Carlo integral@{Monte Carlo integral}}
+\doxysubsubsection{\texorpdfstring{number\_of\_sites}{number\_of\_sites}}
+{\footnotesize\ttfamily \label{namespace_monte_01_carlo_01integral_aea3a6fbe80a967f13b9d1dfbdd16ac59} 
+int Monte Carlo integral.\+number\+\_\+of\+\_\+sites = 100}
+
+
+
+Definition at line \mbox{\hyperlink{_monte_01_carlo_01integral_8py_source_l00036}{36}} of file \mbox{\hyperlink{_monte_01_carlo_01integral_8py_source}{Monte Carlo integral.\+py}}.
+
+\Hypertarget{namespace_monte_01_carlo_01integral_ab0fd219247cd7ed774edc17a5642da3c}\index{Monte Carlo integral@{Monte Carlo integral}!particle\_mass@{particle\_mass}}
+\index{particle\_mass@{particle\_mass}!Monte Carlo integral@{Monte Carlo integral}}
+\doxysubsubsection{\texorpdfstring{particle\_mass}{particle\_mass}}
+{\footnotesize\ttfamily \label{namespace_monte_01_carlo_01integral_ab0fd219247cd7ed774edc17a5642da3c} 
+float Monte Carlo integral.\+particle\+\_\+mass = 1.\+0}
+
+
+
+Definition at line \mbox{\hyperlink{_monte_01_carlo_01integral_8py_source_l00030}{30}} of file \mbox{\hyperlink{_monte_01_carlo_01integral_8py_source}{Monte Carlo integral.\+py}}.
+
+\Hypertarget{namespace_monte_01_carlo_01integral_a1f69f0bd1cb0e12fd17b9a4cc89c54cd}\index{Monte Carlo integral@{Monte Carlo integral}!proposal\_step\_size@{proposal\_step\_size}}
+\index{proposal\_step\_size@{proposal\_step\_size}!Monte Carlo integral@{Monte Carlo integral}}
+\doxysubsubsection{\texorpdfstring{proposal\_step\_size}{proposal\_step\_size}}
+{\footnotesize\ttfamily \label{namespace_monte_01_carlo_01integral_a1f69f0bd1cb0e12fd17b9a4cc89c54cd} 
+float Monte Carlo integral.\+proposal\+\_\+step\+\_\+size = 0.\+5}
+
+
+
+Definition at line \mbox{\hyperlink{_monte_01_carlo_01integral_8py_source_l00045}{45}} of file \mbox{\hyperlink{_monte_01_carlo_01integral_8py_source}{Monte Carlo integral.\+py}}.
+
+\Hypertarget{namespace_monte_01_carlo_01integral_a5f9b87959665f7b948663ba28237e7b3}\index{Monte Carlo integral@{Monte Carlo integral}!slope@{slope}}
+\index{slope@{slope}!Monte Carlo integral@{Monte Carlo integral}}
+\doxysubsubsection{\texorpdfstring{slope}{slope}}
+{\footnotesize\ttfamily \label{namespace_monte_01_carlo_01integral_a5f9b87959665f7b948663ba28237e7b3} 
+Monte Carlo integral.\+slope}
+
+
+
+Definition at line \mbox{\hyperlink{_monte_01_carlo_01integral_8py_source_l00173}{173}} of file \mbox{\hyperlink{_monte_01_carlo_01integral_8py_source}{Monte Carlo integral.\+py}}.
+
+\Hypertarget{namespace_monte_01_carlo_01integral_a13c9ae99df84d55b27939ac4f1cdcfb6}\index{Monte Carlo integral@{Monte Carlo integral}!thermalization\_steps@{thermalization\_steps}}
+\index{thermalization\_steps@{thermalization\_steps}!Monte Carlo integral@{Monte Carlo integral}}
+\doxysubsubsection{\texorpdfstring{thermalization\_steps}{thermalization\_steps}}
+{\footnotesize\ttfamily \label{namespace_monte_01_carlo_01integral_a13c9ae99df84d55b27939ac4f1cdcfb6} 
+int Monte Carlo integral.\+thermalization\+\_\+steps = 5000}
+
+
+
+Definition at line \mbox{\hyperlink{_monte_01_carlo_01integral_8py_source_l00042}{42}} of file \mbox{\hyperlink{_monte_01_carlo_01integral_8py_source}{Monte Carlo integral.\+py}}.
+
+\Hypertarget{namespace_monte_01_carlo_01integral_a993841cd2661d3e699127229426340c3}\index{Monte Carlo integral@{Monte Carlo integral}!total\_monte\_carlo\_steps@{total\_monte\_carlo\_steps}}
+\index{total\_monte\_carlo\_steps@{total\_monte\_carlo\_steps}!Monte Carlo integral@{Monte Carlo integral}}
+\doxysubsubsection{\texorpdfstring{total\_monte\_carlo\_steps}{total\_monte\_carlo\_steps}}
+{\footnotesize\ttfamily \label{namespace_monte_01_carlo_01integral_a993841cd2661d3e699127229426340c3} 
+int Monte Carlo integral.\+total\+\_\+monte\+\_\+carlo\+\_\+steps = 30000}
+
+
+
+Definition at line \mbox{\hyperlink{_monte_01_carlo_01integral_8py_source_l00039}{39}} of file \mbox{\hyperlink{_monte_01_carlo_01integral_8py_source}{Monte Carlo integral.\+py}}.
+

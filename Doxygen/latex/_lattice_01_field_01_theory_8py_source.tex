@@ -1,0 +1,225 @@
+\doxysection{Lattice Field Theory.\+py}
+\hypertarget{_lattice_01_field_01_theory_8py_source}{}\label{_lattice_01_field_01_theory_8py_source}\mbox{\hyperlink{_lattice_01_field_01_theory_8py}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00001}\mbox{\hyperlink{namespace_lattice}{00001}}\ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00002}00002\ \textcolor{stringliteral}{Lattice\ field\ theory\ simulation\ for\ a\ scalar\ φ⁴\ field\ in\ (d+1)\ dimensions.}}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00003}00003\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00004}00004\ \textcolor{stringliteral}{Implements\ Metropolis\ Monte-\/Carlo\ updates\ for\ a\ real\ scalar\ field,\ computes}}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00005}00005\ \textcolor{stringliteral}{correlation\ functions,\ extracts\ effective\ mass\ via\ logarithmic\ and\ cosh\ fits.}}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00006}00006\ \textcolor{stringliteral}{Includes\ thermalization,\ autocorrelation\ spacing,\ and\ multi-\/run\ averaging.}}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00007}00007\ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00009}00009\ \textcolor{keyword}{import}\ numpy\ \textcolor{keyword}{as}\ np}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00010}00010\ \textcolor{keyword}{from}\ scipy.optimize\ \textcolor{keyword}{import}\ curve\_fit}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00011}00011\ \textcolor{keyword}{import}\ itertools}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00012}00012\ \textcolor{keyword}{import}\ matplotlib.pyplot\ \textcolor{keyword}{as}\ plt}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00015}00015\ \textcolor{comment}{\#\ -\/-\/-\/\ Parameters\ -\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00016}\mbox{\hyperlink{namespace_lattice_01_field_01_theory_ab0601fa3f76a3c7ab167261eaea8a14c}{00016}}\ d\ =\ 1}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00017}00017\ \textcolor{stringliteral}{"{}"{}"{}Spatial\ dimensions."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00019}\mbox{\hyperlink{namespace_lattice_01_field_01_theory_a26cae2ecc5e3b19e78ed14f4c01b9f6d}{00019}}\ a\ =\ 1.0}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00020}00020\ \textcolor{stringliteral}{"{}"{}"{}Lattice\ spacing."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00021}00021\ }
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00022}\mbox{\hyperlink{namespace_lattice_01_field_01_theory_aa3c652aa6546c314f03bf11907feb83e}{00022}}\ L\ =\ 32}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00023}00023\ \textcolor{stringliteral}{"{}"{}"{}Sites\ per\ spatial\ and\ temporal\ direction."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00024}00024\ }
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00025}\mbox{\hyperlink{namespace_lattice_01_field_01_theory_a403fe9f9ceec6efe8b5060c462bb5d7b}{00025}}\ m\ =\ 1.0}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00026}00026\ \textcolor{stringliteral}{"{}"{}"{}Bare\ mass\ parameter."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00027}00027\ }
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00028}\mbox{\hyperlink{namespace_lattice_01_field_01_theory_a02d2544f7fd8f2b3615fc94ec4d89b13}{00028}}\ lambda\_\ =\ 0.1}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00029}00029\ \textcolor{stringliteral}{"{}"{}"{}φ⁴\ interaction\ coupling.\ Set\ 0\ for\ free-\/field\ tests."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00030}00030\ }
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00031}\mbox{\hyperlink{namespace_lattice_01_field_01_theory_ab8794292bfde42b1599d38fc3e006a1f}{00031}}\ D\ =\ d\ +\ 1}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00032}00032\ \textcolor{stringliteral}{"{}"{}"{}Spacetime\ dimensions."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00033}00033\ }
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00034}\mbox{\hyperlink{namespace_lattice_01_field_01_theory_a1df2ebecb7fe5156b478b301688bda57}{00034}}\ phi\ =\ np.zeros((L,)\ *\ D)}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00035}00035\ \textcolor{stringliteral}{"{}"{}"{}Scalar\ field\ array;\ last\ axis\ =\ Euclidean\ time."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00036}00036\ }
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00037}00037\ }
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00038}00038\ \textcolor{comment}{\#\ -\/-\/-\/\ Local\ physics\ functions\ -\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00039}\mbox{\hyperlink{namespace_lattice_01_field_01_theory_a3062b3c9ff65df2f149e054cea2c0eb0}{00039}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespace_lattice_01_field_01_theory_a3062b3c9ff65df2f149e054cea2c0eb0}{potential\_at\_site}}(phi\_val):}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00040}00040\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00041}00041\ \textcolor{stringliteral}{\ \ \ \ Compute\ potential\ energy:\ V(φ)\ =\ ½\ m²φ²\ +\ λ/4\ φ⁴.}}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00042}00042\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00043}00043\ \ \ \ \ \textcolor{keywordflow}{return}\ 0.5\ *\ m**2\ *\ phi\_val**2\ +\ (lambda\_/4.0)\ *\ phi\_val**4}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00044}00044\ }
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00045}00045\ }
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00046}\mbox{\hyperlink{namespace_lattice_01_field_01_theory_aecf68b30de861ee7091a890f3bc42600}{00046}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespace_lattice_01_field_01_theory_aecf68b30de861ee7091a890f3bc42600}{neighbor\_index}}(idx,\ mu,\ shift=1):}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00047}00047\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00048}00048\ \textcolor{stringliteral}{\ \ \ \ Periodic-\/BC\ neighbor\ index\ shift\ by\ ±1\ in\ direction\ μ.}}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00049}00049\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00050}00050\ \ \ \ \ new\ =\ list(idx)}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00051}00051\ \ \ \ \ new[mu]\ =\ (new[mu]\ +\ shift)\ \%\ L}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00052}00052\ \ \ \ \ \textcolor{keywordflow}{return}\ tuple(new)}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00053}00053\ }
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00054}00054\ }
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00055}\mbox{\hyperlink{namespace_lattice_01_field_01_theory_a0d01476c676ef4801166da04b9898922}{00055}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespace_lattice_01_field_01_theory_a0d01476c676ef4801166da04b9898922}{action\_total}}(field):}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00056}00056\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00057}00057\ \textcolor{stringliteral}{\ \ \ \ Full\ lattice\ action\ including\ kinetic\ nearest-\/neighbor\ term.}}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00058}00058\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00059}00059\ \ \ \ \ S\ =\ 0.0}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00060}00060\ \ \ \ \ \textcolor{keywordflow}{for}\ idx\ \textcolor{keywordflow}{in}\ np.ndindex(*field.shape):}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00061}00061\ \ \ \ \ \ \ \ \ phi\_site\ =\ field[idx]}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00062}00062\ \ \ \ \ \ \ \ \ S\ +=\ \mbox{\hyperlink{namespace_lattice_01_field_01_theory_a3062b3c9ff65df2f149e054cea2c0eb0}{potential\_at\_site}}(phi\_site)}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00063}00063\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ mu\ \textcolor{keywordflow}{in}\ range(field.ndim):}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ neigh\ =\ \mbox{\hyperlink{namespace_lattice_01_field_01_theory_aecf68b30de861ee7091a890f3bc42600}{neighbor\_index}}(idx,\ mu,\ shift=1)}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ diff\ =\ field[neigh]\ -\/\ phi\_site}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ S\ +=\ 0.5\ *\ (diff**2)\ /\ (a**2)}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00067}00067\ \ \ \ \ \textcolor{keywordflow}{return}\ S}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00068}00068\ }
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00069}00069\ }
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00070}\mbox{\hyperlink{namespace_lattice_01_field_01_theory_a4fe760fcc40c84c84fdd0ab4a8fbd90d}{00070}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespace_lattice_01_field_01_theory_a4fe760fcc40c84c84fdd0ab4a8fbd90d}{local\_action\_contribution}}(idx,\ field):}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00071}00071\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00072}00072\ \textcolor{stringliteral}{\ \ \ \ Local\ action\ contribution\ at\ a\ given\ lattice\ site\ incl.\ neighbors.}}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00073}00073\ \textcolor{stringliteral}{\ \ \ \ Used\ for\ fast\ ΔS\ in\ Metropolis\ updates.}}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00074}00074\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00075}00075\ \ \ \ \ phi\_site\ =\ field[idx]}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00076}00076\ \ \ \ \ S\ =\ \mbox{\hyperlink{namespace_lattice_01_field_01_theory_a3062b3c9ff65df2f149e054cea2c0eb0}{potential\_at\_site}}(phi\_site)}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00077}00077\ \ \ \ \ \textcolor{keywordflow}{for}\ mu\ \textcolor{keywordflow}{in}\ range(field.ndim):}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00078}00078\ \ \ \ \ \ \ \ \ neigh\_f\ =\ \mbox{\hyperlink{namespace_lattice_01_field_01_theory_aecf68b30de861ee7091a890f3bc42600}{neighbor\_index}}(idx,\ mu,\ shift=1)}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00079}00079\ \ \ \ \ \ \ \ \ neigh\_b\ =\ \mbox{\hyperlink{namespace_lattice_01_field_01_theory_aecf68b30de861ee7091a890f3bc42600}{neighbor\_index}}(idx,\ mu,\ shift=-\/1)}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00080}00080\ \ \ \ \ \ \ \ \ S\ +=\ 0.5\ *\ (field[neigh\_f]\ -\/\ phi\_site)**2\ /\ (a**2)}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00081}00081\ \ \ \ \ \ \ \ \ S\ +=\ 0.5\ *\ (field[neigh\_b]\ -\/\ phi\_site)**2\ /\ (a**2)}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00082}00082\ \ \ \ \ \textcolor{keywordflow}{return}\ S}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00083}00083\ }
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00084}00084\ }
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00085}00085\ \textcolor{comment}{\#\ -\/-\/-\/\ Metropolis\ updates\ -\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00086}\mbox{\hyperlink{namespace_lattice_01_field_01_theory_a6bcd49a276caf11da7ef83b100770f95}{00086}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespace_lattice_01_field_01_theory_a6bcd49a276caf11da7ef83b100770f95}{metropolis\_update\_field}}(field,\ eps=0.5):}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00087}00087\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00088}00088\ \textcolor{stringliteral}{\ \ \ \ Perform\ one\ Metropolis\ sweep;\ return\ accepted/proposed\ counts.}}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00089}00089\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00090}00090\ \ \ \ \ accepted\ =\ 0}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00091}00091\ \ \ \ \ proposals\ =\ 0}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00092}00092\ \ \ \ \ \textcolor{keywordflow}{for}\ idx\ \textcolor{keywordflow}{in}\ np.ndindex(*field.shape):}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00093}00093\ \ \ \ \ \ \ \ \ old\_val\ =\ field[idx]}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00094}00094\ \ \ \ \ \ \ \ \ old\_loc\ =\ \mbox{\hyperlink{namespace_lattice_01_field_01_theory_a4fe760fcc40c84c84fdd0ab4a8fbd90d}{local\_action\_contribution}}(idx,\ field)}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00095}00095\ }
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00096}00096\ \ \ \ \ \ \ \ \ new\_val\ =\ old\_val\ +\ np.random.uniform(-\/eps,\ eps)}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00097}00097\ \ \ \ \ \ \ \ \ field[idx]\ =\ new\_val}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00098}00098\ \ \ \ \ \ \ \ \ new\_loc\ =\ \mbox{\hyperlink{namespace_lattice_01_field_01_theory_a4fe760fcc40c84c84fdd0ab4a8fbd90d}{local\_action\_contribution}}(idx,\ field)}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00099}00099\ }
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00100}00100\ \ \ \ \ \ \ \ \ dS\ =\ new\_loc\ -\/\ old\_loc}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00101}00101\ \ \ \ \ \ \ \ \ proposals\ +=\ 1}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00102}00102\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ dS\ >\ 0\ \textcolor{keywordflow}{and}\ np.exp(-\/dS)\ <\ np.random.rand():}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ field[idx]\ =\ old\_val}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00104}00104\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ accepted\ +=\ 1}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00106}00106\ \ \ \ \ \textcolor{keywordflow}{return}\ accepted,\ proposals}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00107}00107\ }
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00108}00108\ }
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00109}00109\ \textcolor{comment}{\#\ -\/-\/-\/\ Measurements\ -\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00110}\mbox{\hyperlink{namespace_lattice_01_field_01_theory_a18db479cdfef885667047241b5fdc62b}{00110}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespace_lattice_01_field_01_theory_a18db479cdfef885667047241b5fdc62b}{measure\_field\_correlation\_all\_origins}}(field):}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00111}00111\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00112}00112\ \textcolor{stringliteral}{\ \ \ \ Compute\ averaged\ two-\/point\ function\ G(Δt)\ over\ all\ origins.}}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00113}00113\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00114}00114\ \ \ \ \ Lt\ =\ field.shape[-\/1]}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00115}00115\ \ \ \ \ spatial\ =\ field.shape[:-\/1]}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00116}00116\ \ \ \ \ G\ =\ np.zeros(Lt)}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00117}00117\ \ \ \ \ \textcolor{keywordflow}{for}\ dt\ \textcolor{keywordflow}{in}\ range(Lt):}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00118}00118\ \ \ \ \ \ \ \ \ corr\ =\ 0.0}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00119}00119\ \ \ \ \ \ \ \ \ count\ =\ 0}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00120}00120\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ t0\ \textcolor{keywordflow}{in}\ range(Lt):}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ t1\ =\ (t0\ +\ dt)\ \%\ Lt}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ idx\ \textcolor{keywordflow}{in}\ np.ndindex(*spatial):}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00123}00123\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ corr\ +=\ field[idx\ +\ (t0,)]\ *\ field[idx\ +\ (t1,)]}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00124}00124\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ count\ +=\ 1}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00125}00125\ \ \ \ \ \ \ \ \ G[dt]\ =\ corr\ /\ count}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00126}00126\ \ \ \ \ \textcolor{keywordflow}{return}\ G}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00127}00127\ }
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00128}00128\ }
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00129}\mbox{\hyperlink{namespace_lattice_01_field_01_theory_adc29d2b3d84c5edabc435411ef57101f}{00129}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespace_lattice_01_field_01_theory_adc29d2b3d84c5edabc435411ef57101f}{compute\_effective\_mass}}(G,\ G\_err=None):}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00130}00130\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00131}00131\ \textcolor{stringliteral}{\ \ \ \ Effective\ mass\ via\ m\_eff(t)\ =\ log(G(t)/G(t+1)).}}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00132}00132\ \textcolor{stringliteral}{\ \ \ \ Masked\ if\ too\ noisy.}}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00133}00133\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00134}00134\ \ \ \ \ m\_eff\ =\ np.full(len(G)\ -\/\ 1,\ np.nan)}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00135}00135\ \ \ \ \ \textcolor{keywordflow}{for}\ t\ \textcolor{keywordflow}{in}\ range(len(G)\ -\/\ 1):}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00136}00136\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ G[t]\ >\ 0\ \textcolor{keywordflow}{and}\ G[t+1]\ >\ 0:}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00137}00137\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ G\_err\ \textcolor{keywordflow}{is}\ \textcolor{keywordflow}{not}\ \textcolor{keywordtype}{None}\ \textcolor{keywordflow}{and}\ (G[t]\ <\ 2*G\_err[t]\ \textcolor{keywordflow}{or}\ G[t+1]\ <\ 2*G\_err[t+1]):}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00138}00138\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue}}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00139}00139\ \ \ \ \ \ \ \ \ \ \ \ \ m\_eff[t]\ =\ np.log(G[t]\ /\ G[t+1])}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00140}00140\ \ \ \ \ \textcolor{keywordflow}{return}\ m\_eff}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00141}00141\ }
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00142}00142\ }
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00143}00143\ \textcolor{comment}{\#\ -\/-\/-\/\ Simulation\ driver\ -\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00144}\mbox{\hyperlink{namespace_lattice_01_field_01_theory_acf0d15f1bf4bfd3754c400a8bd028218}{00144}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespace_lattice_01_field_01_theory_acf0d15f1bf4bfd3754c400a8bd028218}{run\_field\_simulation}}(field,\ N\_sweeps=2000,\ N\_cor=10,\ eps=0.5,\ thermal\_sweeps=500):}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00145}00145\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00146}00146\ \textcolor{stringliteral}{\ \ \ \ Run\ simulation:\ thermalize,\ measure\ correlations,\ return\ G\ and\ m\_eff.}}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00147}00147\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00148}00148\ \ \ \ \ accepted\ =\ proposed\ =\ 0}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00149}00149\ \ \ \ \ \textcolor{keywordflow}{for}\ \_\ \textcolor{keywordflow}{in}\ range(thermal\_sweeps):}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00150}00150\ \ \ \ \ \ \ \ \ a,\ p\ =\ \mbox{\hyperlink{namespace_lattice_01_field_01_theory_a6bcd49a276caf11da7ef83b100770f95}{metropolis\_update\_field}}(field,\ eps)}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00151}00151\ \ \ \ \ \ \ \ \ accepted\ +=\ a;\ proposed\ +=\ p}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00152}00152\ \ \ \ \ print(f\textcolor{stringliteral}{"{}Post-\/thermalization\ acceptance:\ \{accepted/proposed:.3f\}"{}})}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00153}00153\ }
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00154}00154\ \ \ \ \ measurements\ =\ []}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00155}00155\ \ \ \ \ accepted\ =\ proposed\ =\ 0}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00156}00156\ \ \ \ \ \textcolor{keywordflow}{for}\ sweep\ \textcolor{keywordflow}{in}\ range(N\_sweeps):}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00157}00157\ \ \ \ \ \ \ \ \ a,\ p\ =\ \mbox{\hyperlink{namespace_lattice_01_field_01_theory_a6bcd49a276caf11da7ef83b100770f95}{metropolis\_update\_field}}(field,\ eps)}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00158}00158\ \ \ \ \ \ \ \ \ accepted\ +=\ a;\ proposed\ +=\ p}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00159}00159\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ sweep\ \%\ N\_cor\ ==\ 0:}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00160}00160\ \ \ \ \ \ \ \ \ \ \ \ \ measurements.append(\mbox{\hyperlink{namespace_lattice_01_field_01_theory_a18db479cdfef885667047241b5fdc62b}{measure\_field\_correlation\_all\_origins}}(field))}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00161}00161\ \ \ \ \ print(f\textcolor{stringliteral}{"{}Measurement\ acceptance:\ \{accepted/proposed:.3f\}"{}})}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00162}00162\ }
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00163}00163\ \ \ \ \ meas\_arr\ =\ np.array(measurements)}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00164}00164\ \ \ \ \ G\_mean\ =\ np.mean(meas\_arr,\ axis=0)}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00165}00165\ \ \ \ \ G\_err\ =\ np.std(meas\_arr,\ axis=0,\ ddof=1)}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00166}00166\ \ \ \ \ m\_eff\ =\ \mbox{\hyperlink{namespace_lattice_01_field_01_theory_adc29d2b3d84c5edabc435411ef57101f}{compute\_effective\_mass}}(G\_mean,\ G\_err)}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00167}00167\ \ \ \ \ \textcolor{keywordflow}{return}\ meas\_arr,\ G\_mean,\ G\_err,\ m\_eff}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00168}00168\ }
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00169}00169\ }
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00170}\mbox{\hyperlink{namespace_lattice_01_field_01_theory_a8ec712abb1081bb57fdeef74792eaaa3}{00170}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespace_lattice_01_field_01_theory_a8ec712abb1081bb57fdeef74792eaaa3}{run\_multiple\_simulations}}(num\_runs,\ N\_sweeps,\ N\_cor,\ eps,\ thermal\_sweeps):}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00171}00171\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00172}00172\ \textcolor{stringliteral}{\ \ \ \ Run\ multiple\ independent\ simulations\ and\ average\ observed\ correlators.}}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00173}00173\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00174}00174\ \ \ \ \ all\_meas\ =\ []}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00175}00175\ \ \ \ \ \textcolor{keywordflow}{for}\ \_\ \textcolor{keywordflow}{in}\ range(num\_runs):}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00176}00176\ \ \ \ \ \ \ \ \ field\ =\ 0.01\ *\ np.random.randn(*(L,)\ *\ D)}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00177}00177\ \ \ \ \ \ \ \ \ meas\_arr,\ *\_\ =\ \mbox{\hyperlink{namespace_lattice_01_field_01_theory_acf0d15f1bf4bfd3754c400a8bd028218}{run\_field\_simulation}}(field,\ N\_sweeps,\ N\_cor,\ eps,\ thermal\_sweeps)}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00178}00178\ \ \ \ \ \ \ \ \ all\_meas.append(meas\_arr)}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00179}00179\ }
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00180}00180\ \ \ \ \ all\_meas\ =\ np.vstack(all\_meas)}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00181}00181\ \ \ \ \ G\_mean\ =\ np.mean(all\_meas,\ axis=0)}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00182}00182\ \ \ \ \ G\_err\ =\ np.std(all\_meas,\ axis=0,\ ddof=1)\ /\ np.sqrt(all\_meas.shape[0])}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00183}00183\ \ \ \ \ m\_eff\ =\ \mbox{\hyperlink{namespace_lattice_01_field_01_theory_adc29d2b3d84c5edabc435411ef57101f}{compute\_effective\_mass}}(G\_mean,\ G\_err)}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00184}00184\ \ \ \ \ \textcolor{keywordflow}{return}\ G\_mean,\ G\_err,\ m\_eff}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00185}00185\ }
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00186}00186\ }
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00187}00187\ \textcolor{comment}{\#\ -\/-\/-\/\ Analysis\ \&\ visualization\ -\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00188}\mbox{\hyperlink{namespace_lattice_01_field_01_theory_a5e4630f073fb83f9e07e482fa3ac38ee}{00188}}\ eps\_tuned\ =\ 0.5}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00189}\mbox{\hyperlink{namespace_lattice_01_field_01_theory_ae9075ec502b788582b807422c03a3aaa}{00189}}\ G\_mean,\ G\_err,\ m\_eff\ =\ \mbox{\hyperlink{namespace_lattice_01_field_01_theory_a8ec712abb1081bb57fdeef74792eaaa3}{run\_multiple\_simulations}}(}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00190}\mbox{\hyperlink{namespace_lattice_01_field_01_theory_a05645ad63fc75548b61a419e1f12882d}{00190}}\ \ \ \ \ num\_runs=5,\ N\_sweeps=4000,\ N\_cor=20,\ eps=eps\_tuned,\ thermal\_sweeps=1000}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00191}00191\ )}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00192}00192\ }
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00193}00193\ print(\textcolor{stringliteral}{"{}G\_mean:"{}},\ G\_mean)}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00194}00194\ }
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00195}\mbox{\hyperlink{namespace_lattice_01_field_01_theory_a3ac6e1f1356cb47d739d8827e8c08721}{00195}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespace_lattice_01_field_01_theory_a3ac6e1f1356cb47d739d8827e8c08721}{cosh\_model}}(t,\ A,\ m):}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00196}00196\ \ \ \ \ \textcolor{keywordflow}{return}\ A\ *\ (np.exp(-\/m*t)\ +\ np.exp(-\/m*(L\ -\/\ t)))}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00197}00197\ }
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00198}00198\ G\_mean\ =\ 0.5\ *\ (G\_mean\ +\ G\_mean[::-\/1])\ \ \textcolor{comment}{\#\ symmetrize}}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00199}00199\ }
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00200}\mbox{\hyperlink{namespace_lattice_01_field_01_theory_a18ac285d9d96db2ff6f0a54be7576167}{00200}}\ tdata\ =\ np.arange(L)}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00201}\mbox{\hyperlink{namespace_lattice_01_field_01_theory_a4cc2e4dcc90522bafdf8ace1be419482}{00201}}\ mask\ =\ G\_mean\ >\ 5\ *\ G\_err}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00202}\mbox{\hyperlink{namespace_lattice_01_field_01_theory_a51f12d387c6c4d14a368fd970f7a4e67}{00202}}\ A\_fit,\ m\_fit\ =\ curve\_fit(cosh\_model,\ tdata[mask],\ G\_mean[mask],\ p0=[0.2,\ 1.0])[0]}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00203}00203\ print(f\textcolor{stringliteral}{"{}Fitted\ mass\ m\ =\ \{m\_fit:.3f\}"{}})}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00204}00204\ }
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00205}\mbox{\hyperlink{namespace_lattice_01_field_01_theory_a33313ac096bcc7b00f862678c87dabc3}{00205}}\ G\_plot\ =\ np.abs(G\_mean)}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00206}\mbox{\hyperlink{namespace_lattice_01_field_01_theory_a354085fb496979bcfd6841b3d5dd0bed}{00206}}\ plt.errorbar(tdata,\ G\_plot,\ yerr=G\_err,\ fmt=\textcolor{stringliteral}{'o'},\ capsize=3)}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00207}00207\ plt.yscale(\textcolor{stringliteral}{'log'})}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00208}00208\ plt.ylim(1e-\/5,\ 1e0)}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00209}00209\ plt.xlabel(\textcolor{stringliteral}{'Euclidean\ time\ t'})}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00210}00210\ plt.ylabel(\textcolor{stringliteral}{'G(t)'})}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00211}00211\ plt.title(\textcolor{stringliteral}{'Two-\/point\ correlation\ function'})}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00212}00212\ plt.grid(\textcolor{keyword}{True})}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00213}00213\ plt.show()}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00214}00214\ }
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00215}00215\ plt.plot(np.arange(len(m\_eff)),\ m\_eff,\ \textcolor{stringliteral}{'o-\/'})}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00216}00216\ plt.xlabel(\textcolor{stringliteral}{'t'})}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00217}00217\ plt.ylabel(\textcolor{stringliteral}{'m\_eff(t)'})}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00218}00218\ plt.title(\textcolor{stringliteral}{'Effective\ mass\ vs\ time'})}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00219}00219\ plt.grid(\textcolor{keyword}{True})}
+\DoxyCodeLine{\Hypertarget{_lattice_01_field_01_theory_8py_source_l00220}00220\ plt.show()}
+
+\end{DoxyCode}

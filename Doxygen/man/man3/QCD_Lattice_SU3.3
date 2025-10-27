@@ -1,0 +1,1259 @@
+.TH "QCD_Lattice_SU3" 3 "QCD Lattice" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+QCD_Lattice_SU3
+.SH SYNOPSIS
+.br
+.PP
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBx_neighbor\fP (x, mu, shift=1)"
+.br
+.ti -1c
+.RI "\fBsu3_matrices\fP (M)"
+.br
+.ti -1c
+.RI "\fBsu2_random_unitary\fP (eps)"
+.br
+.ti -1c
+.RI "\fBembed_su2_into_su3\fP (R2, i, j)"
+.br
+.ti -1c
+.RI "\fBplaquette_matrix\fP (x, mu, nu, link_sites)"
+.br
+.ti -1c
+.RI "\fBreal_trace_plaquette\fP (x, mu, nu, link_sites)"
+.br
+.ti -1c
+.RI "\fBplaquettes_touching_link\fP (x, mu, link_sites)"
+.br
+.ti -1c
+.RI "\fBmetropolis_update\fP (link_sites, \fBeps_sub\fP=0\&.06)"
+.br
+.ti -1c
+.RI "\fBaverage_plaquette_su3\fP (link_sites)"
+.br
+.ti -1c
+.RI "\fBbootstrap_mean_std\fP (values, nboot=300)"
+.br
+.ti -1c
+.RI "\fBtune_eps_su3\fP (matrix0, target=0\&.5, initial_eps=0\&.06, tries=10, test_sweeps=150)"
+.br
+.ti -1c
+.RI "\fBrun_su3_simulation\fP (link_sites, \fBeps_sub\fP=0\&.06, \fBburn_in_sweeps\fP=500, \fBMC_sweeps\fP=2000, \fBN_correlator\fP=5)"
+.br
+.ti -1c
+.RI "\fBinit_links_identity\fP (link_sites)"
+.br
+.ti -1c
+.RI "\fBrandomize_links_small\fP (link_sites, \fBamplitude\fP=0\&.02)"
+.br
+.ti -1c
+.RI "\fBmeasure_wilson_loop_RT\fP (link_sites, R, T, spatial_direction=0, time_direction=None)"
+.br
+.ti -1c
+.RI "\fBsu3_simulation_with_wilson_loops\fP (link_sites, \fBeps_sub\fP=0\&.06, \fBburn_in_sweeps\fP=500, \fBMC_sweeps\fP=2000, \fBN_correlator\fP=5, \fBmax_R\fP=None, \fBmax_T\fP=None)"
+.br
+.ti -1c
+.RI "\fBgell_mann_matrices\fP ()"
+.br
+.ti -1c
+.RI "\fBextract_gluon_field\fP (U, g=1\&.0, a=1\&.0)"
+.br
+.ti -1c
+.RI "\fBfield_strength_tensor\fP (link_sites, x, mu, nu, g=1\&.0, a=1\&.0)"
+.br
+.ti -1c
+.RI "\fBmeasure_avg_A2_and_F2\fP (link_sites, g=1\&.0, a=1\&.0)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBspatial_dims\fP = 1"
+.br
+.ti -1c
+.RI "int \fBlattice_size_L\fP = 8"
+.br
+.ti -1c
+.RI "float \fBbeta\fP = 6\&.0"
+.br
+.ti -1c
+.RI "float \fBeps_initial\fP = 0\&.06"
+.br
+.ti -1c
+.RI "int \fBburn_in_sweeps\fP = 500"
+.br
+.ti -1c
+.RI "int \fBMC_sweeps\fP = 2000"
+.br
+.ti -1c
+.RI "int \fBMC_measure_interval\fP = 5"
+.br
+.ti -1c
+.RI "int \fBn_boot\fP = 300"
+.br
+.ti -1c
+.RI "int \fBD\fP = \fBspatial_dims\fP + 1"
+.br
+.ti -1c
+.RI "tuple \fBx_shape\fP = (\fBlattice_size_L\fP,) * \fBD\fP"
+.br
+.ti -1c
+.RI "\fBlink_matrix\fP = np\&.zeros((\fBD\fP,) + \fBx_shape\fP + (3, 3), dtype=np\&.complex128)"
+.br
+.ti -1c
+.RI "\fBamplitude\fP"
+.br
+.ti -1c
+.RI "\fBeps_tuned\fP = \fBtune_eps_su3\fP(\fBlink_matrix\fP, initial_eps=\fBeps_initial\fP)"
+.br
+.ti -1c
+.RI "\fBsamples\fP"
+.br
+.ti -1c
+.RI "\fBplaq_mean\fP"
+.br
+.ti -1c
+.RI "\fBplaq_err\fP"
+.br
+.ti -1c
+.RI "\fBeps_sub\fP"
+.br
+.ti -1c
+.RI "\fBN_correlator\fP"
+.br
+.ti -1c
+.RI "\fBfigsize\fP"
+.br
+.ti -1c
+.RI "\fBmarker\fP"
+.br
+.ti -1c
+.RI "\fBlinestyle\fP"
+.br
+.ti -1c
+.RI "\fBbins\fP"
+.br
+.ti -1c
+.RI "\fBalpha\fP"
+.br
+.ti -1c
+.RI "\fBwilson_loops_samples\fP"
+.br
+.ti -1c
+.RI "\fBR_values\fP"
+.br
+.ti -1c
+.RI "\fBT_values\fP"
+.br
+.ti -1c
+.RI "\fBmax_R\fP"
+.br
+.ti -1c
+.RI "\fBmax_T\fP"
+.br
+.ti -1c
+.RI "\fBavg_wilson_loops\fP = np\&.mean(\fBwilson_loops_samples\fP, axis=0)"
+.br
+.ti -1c
+.RI "\fBV_R\fP = np\&.zeros(len(\fBR_values\fP))"
+.br
+.ti -1c
+.RI "list \fBpotentials\fP = []"
+.br
+.ti -1c
+.RI "\fBW_T\fP = \fBavg_wilson_loops\fP[i, j]"
+.br
+.ti -1c
+.RI "\fBW_Tp1\fP = \fBavg_wilson_loops\fP[i, j + 1]"
+.br
+.ti -1c
+.RI "\fBA2_avg\fP"
+.br
+.ti -1c
+.RI "\fBF2_avg\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+
+.PP
+.nf
+@mainpage SU(3) Lattice Gauge Theory (Wilson action) — Cabibbo–Marinari Implementation
+
+@file QCD_Lattice_SU3\&.py
+@brief SU(3) lattice gauge theory simulation using Cabibbo–Marinari SU(2) subgroup updates\&.
+@details
+This module implements a pragmatic SU(3) lattice gauge theory code based on the Wilson action,
+using Cabibbo–Marinari updates (embedded SU(2) rotations) together with local ΔS computations
+(only plaquettes touching a link are recomputed) and reprojection to SU(3) via SVD to maintain
+unitarity and $\\det U = 1$\&.
+
+It contains:
+ - Local Metropolis updates applying a sequence of small SU(2) rotations embedded into SU(3)\&.
+ - Efficient local plaquette recomputation for ΔS evaluations\&.
+ - Utilities for plaquette measurement, bootstrap error estimation, Wilson loops and static potential\&.
+ - Helpers to extract approximate gauge fields (A^a) and field-strength components F^{\\mu\\nu}_a
+   from link matrices for diagnostic/classical analysis\&.
+
+@section references Key references
+ - K\&. G\&. Wilson, "Confinement of quarks," Phys\&. Rev\&. D 10, 2445 (1974)\&.
+ - N\&. Cabibbo and E\&. Marinari, "A new method for updating SU(N) matrices," Phys\&. Lett\&. B119 (1982)\&.
+ - G\&. P\&. Lepage lecture notes for pragmatic algorithmic choices\&.
+
+.fi
+.PP
+ 
+.SH "Function Documentation"
+.PP 
+.SS "QCD_Lattice_SU3\&.average_plaquette_su3 ( link_sites)"
+
+.PP
+.nf
+@brief Compute the normalized average plaquette ⟨Re Tr P⟩/3 over the lattice\&.
+@param link_sites ndarray: link array\&.
+@return float: average plaquette normalized by color factor (3)\&.
+@details The Wilson action density per plaquette is proportional to (1 - Re Tr P / 3)\&.
+
+.fi
+.PP
+ 
+.PP
+Definition at line \fB239\fP of file \fBQCD_Lattice_SU3\&.py\fP\&.
+.nf
+239 def average_plaquette_su3(link_sites):
+240     """
+241     @brief Compute the normalized average plaquette ⟨Re Tr P⟩/3 over the lattice\&.
+242     @param link_sites ndarray: link array\&.
+243     @return float: average plaquette normalized by color factor (3)\&.
+244     @details The Wilson action density per plaquette is proportional to (1 \- Re Tr P / 3)\&.
+245     """
+246     total = 0\&.0
+247     count = 0
+248     for x in np\&.ndindex(*x_shape):
+249         for mu in range(D):
+250             for nu in range(mu + 1, D):
+251                 trace = real_trace_plaquette(x, mu, nu, link_sites)
+252                 total += trace
+253                 count += 1
+254     # Normalize by color dimension (Tr 1 = 3)
+255     return (total / count) / 3\&.0
+256 
+257 
+.PP
+.fi
+
+.SS "QCD_Lattice_SU3\&.bootstrap_mean_std ( values,  nboot = \fR300\fP)"
+
+.PP
+.nf
+@brief Estimate mean and bootstrap standard error for a 1D array of samples\&.
+@param values array-like: measurement samples\&.
+@param nboot int: number of bootstrap resamples\&.
+@return tuple: (boot_mean, boot_std)
+@details We resample with replacement and compute sample means for each bootstrap
+         realization; the returned std is the bootstrap estimate of the error\&.
+
+.fi
+.PP
+ 
+.PP
+Definition at line \fB258\fP of file \fBQCD_Lattice_SU3\&.py\fP\&.
+.nf
+258 def bootstrap_mean_std(values, nboot=300):
+259     """
+260     @brief Estimate mean and bootstrap standard error for a 1D array of samples\&.
+261     @param values array\-like: measurement samples\&.
+262     @param nboot int: number of bootstrap resamples\&.
+263     @return tuple: (boot_mean, boot_std)
+264     @details We resample with replacement and compute sample means for each bootstrap
+265              realization; the returned std is the bootstrap estimate of the error\&.
+266     """
+267     vals = np\&.asarray(values)
+268     N = len(vals)
+269     boots = np\&.zeros(nboot)
+270     for i in range(nboot):
+271         inds = np\&.random\&.randint(0, N, size=N)
+272         boots[i] = np\&.mean(vals[inds])
+273     return boots\&.mean(), boots\&.std(ddof=1)
+274 
+275 
+276 # \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\- Tuner & Runner \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
+.PP
+.fi
+
+.SS "QCD_Lattice_SU3\&.embed_su2_into_su3 ( R2,  i,  j)"
+
+.PP
+.nf
+@brief Embed a 2x2 SU(2) matrix into SU(3) acting on indices (i, j)\&.
+@param R2 ndarray: 2x2 SU(2) matrix\&.
+@param i int: first SU(2) index (0\&.\&.2)\&.
+@param j int: second SU(2) index (0\&.\&.2), must satisfy i < j\&.
+@return ndarray: 3x3 matrix equal to identity except the 2x2 block at (i,j) replaced by R2\&.
+@details This is the standard Cabibbo–Marinari embedding that extends SU(2) subgroup rotations
+         to SU(3) by acting non-trivially on a chosen 2D subspace\&.
+
+.fi
+.PP
+ 
+.PP
+Definition at line \fB116\fP of file \fBQCD_Lattice_SU3\&.py\fP\&.
+.nf
+116 def embed_su2_into_su3(R2, i, j):
+117     """
+118     @brief Embed a 2x2 SU(2) matrix into SU(3) acting on indices (i, j)\&.
+119     @param R2 ndarray: 2x2 SU(2) matrix\&.
+120     @param i int: first SU(2) index (0\&.\&.2)\&.
+121     @param j int: second SU(2) index (0\&.\&.2), must satisfy i < j\&.
+122     @return ndarray: 3x3 matrix equal to identity except the 2x2 block at (i,j) replaced by R2\&.
+123     @details This is the standard Cabibbo–Marinari embedding that extends SU(2) subgroup rotations
+124              to SU(3) by acting non\-trivially on a chosen 2D subspace\&.
+125     """
+126     R = np\&.eye(3, dtype=complex)
+127     R[i, i] = R2[0, 0]
+128     R[i, j] = R2[0, 1]
+129     R[j, i] = R2[1, 0]
+130     R[j, j] = R2[1, 1]
+131     return R
+132 
+133 
+134 # \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\- Plaquette helpers & local ΔS computation \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
+.PP
+.fi
+
+.SS "QCD_Lattice_SU3\&.extract_gluon_field ( U,  g = \fR1\&.0\fP,  a = \fR1\&.0\fP)"
+
+.PP
+.nf
+@brief Extract approximate local gauge field components A^a from a single SU(3) link\&.
+@param U ndarray: SU(3) link matrix\&.
+@param g float: gauge coupling (default 1\&.0)\&.
+@param a float: lattice spacing (default 1\&.0)\&.
+@return ndarray: array shape (8,) containing A^a components (real)\&.
+@details For small lattice spacing we approximate U ≈ exp(i g a A) => A ≈ (U - U†)/(2 i g a)\&.
+         We then project the traceless anti-Hermitian part onto the Gell-Mann basis\&.
+
+.fi
+.PP
+ 
+.PP
+Definition at line \fB530\fP of file \fBQCD_Lattice_SU3\&.py\fP\&.
+.nf
+530 def extract_gluon_field(U, g=1\&.0, a=1\&.0):
+531     """
+532     @brief Extract approximate local gauge field components A^a from a single SU(3) link\&.
+533     @param U ndarray: SU(3) link matrix\&.
+534     @param g float: gauge coupling (default 1\&.0)\&.
+535     @param a float: lattice spacing (default 1\&.0)\&.
+536     @return ndarray: array shape (8,) containing A^a components (real)\&.
+537     @details For small lattice spacing we approximate U ≈ exp(i g a A) => A ≈ (U \- U†)/(2 i g a)\&.
+538              We then project the traceless anti\-Hermitian part onto the Gell\-Mann basis\&.
+539     """
+540     difference = (U \- U\&.conj()\&.T) / (2j * g * a)
+541     difference \-= np\&.trace(difference)\&.real / 3\&.0 * np\&.eye(3)
+542     lambda_ = gell_mann_matrices()
+543     A_components = np\&.array([np\&.real(np\&.trace(difference @ lambda_a)) / 2\&.0 for lambda_a in lambda_])
+544     return A_components
+545 
+546 
+.PP
+.fi
+
+.SS "QCD_Lattice_SU3\&.field_strength_tensor ( link_sites,  x,  mu,  nu,  g = \fR1\&.0\fP,  a = \fR1\&.0\fP)"
+
+.PP
+.nf
+@brief Compute the lattice field-strength components F_{mu,nu}^a at site x from the plaquette\&.
+@param link_sites ndarray: link variables\&.
+@param x tuple: lattice coordinate\&.
+@param mu int: direction mu\&.
+@param nu int: direction nu\&.
+@param g float: gauge coupling\&.
+@param a float: lattice spacing\&.
+@return ndarray: shape (8,) F^a components (real)\&.
+@details Uses the anti-Hermitian traceless projection of the plaquette:
+         F ~ (P - P†)/(2 i g a^2) projected on Gell-Mann matrices\&.
+
+.fi
+.PP
+ 
+.PP
+Definition at line \fB547\fP of file \fBQCD_Lattice_SU3\&.py\fP\&.
+.nf
+547 def field_strength_tensor(link_sites, x, mu, nu, g=1\&.0, a=1\&.0):
+548     """
+549     @brief Compute the lattice field\-strength components F_{mu,nu}^a at site x from the plaquette\&.
+550     @param link_sites ndarray: link variables\&.
+551     @param x tuple: lattice coordinate\&.
+552     @param mu int: direction mu\&.
+553     @param nu int: direction nu\&.
+554     @param g float: gauge coupling\&.
+555     @param a float: lattice spacing\&.
+556     @return ndarray: shape (8,) F^a components (real)\&.
+557     @details Uses the anti\-Hermitian traceless projection of the plaquette:
+558              F ~ (P \- P†)/(2 i g a^2) projected on Gell\-Mann matrices\&.
+559     """
+560     P = plaquette_matrix(x, mu, nu, link_sites)
+561     difference = (P \- P\&.conj()\&.T) / (2j * g * a ** 2)
+562     difference \-= np\&.trace(difference)\&.real / 3\&.0 * np\&.eye(3)
+563     lambda_ = gell_mann_matrices()
+564     F_components = np\&.array([np\&.real(np\&.trace(difference @ lambda_a)) / 2\&.0 for lambda_a in lambda_])
+565     return F_components
+566 
+567 
+.PP
+.fi
+
+.SS "QCD_Lattice_SU3\&.gell_mann_matrices ()"
+
+.PP
+.nf
+@brief Return the eight Gell-Mann matrices λ^a (3x3)\&.
+@return list: eight 3x3 numpy arrays forming a basis for su(3)\&.
+@details These are used to project Lie-algebra components from SU(3) link matrices\&.
+
+.fi
+.PP
+ 
+.PP
+Definition at line \fB512\fP of file \fBQCD_Lattice_SU3\&.py\fP\&.
+.nf
+512 def gell_mann_matrices():
+513     """
+514     @brief Return the eight Gell\-Mann matrices λ^a (3x3)\&.
+515     @return list: eight 3x3 numpy arrays forming a basis for su(3)\&.
+516     @details These are used to project Lie\-algebra components from SU(3) link matrices\&.
+517     """
+518     lambda_ = []
+519     lambda_\&.append(np\&.array([[0, 1, 0], [1, 0, 0], [0, 0, 0]], dtype=complex))
+520     lambda_\&.append(np\&.array([[0, \-1j, 0], [1j, 0, 0], [0, 0, 0]], dtype=complex))
+521     lambda_\&.append(np\&.array([[1, 0, 0], [0, \-1, 0], [0, 0, 0]], dtype=complex))
+522     lambda_\&.append(np\&.array([[0, 0, 1], [0, 0, 0], [1, 0, 0]], dtype=complex))
+523     lambda_\&.append(np\&.array([[0, 0, \-1j], [0, 0, 0], [1j, 0, 0]], dtype=complex))
+524     lambda_\&.append(np\&.array([[0, 0, 0], [0, 0, 1], [0, 1, 0]], dtype=complex))
+525     lambda_\&.append(np\&.array([[0, 0, 0], [0, 0, \-1j], [0, 1j, 0]], dtype=complex))
+526     lambda_\&.append((1 / np\&.sqrt(3)) * np\&.array([[1, 0, 0], [0, 1, 0], [0, 0, \-2]], dtype=complex))
+527     return lambda_
+528 
+529 
+.PP
+.fi
+
+.SS "QCD_Lattice_SU3\&.init_links_identity ( link_sites)"
+
+.PP
+.nf
+@brief Initialize all links to the identity matrix\&.
+@param link_sites ndarray: link array to initialize (modified in-place)\&.
+
+.fi
+.PP
+ 
+.PP
+Definition at line \fB335\fP of file \fBQCD_Lattice_SU3\&.py\fP\&.
+.nf
+335 def init_links_identity(link_sites):
+336     """
+337     @brief Initialize all links to the identity matrix\&.
+338     @param link_sites ndarray: link array to initialize (modified in\-place)\&.
+339     """
+340     for mu in range(D):
+341         for x in np\&.ndindex(*x_shape):
+342             link_sites[(mu,) + x] = np\&.eye(3, dtype=complex)
+343 
+344 
+.PP
+.fi
+
+.SS "QCD_Lattice_SU3\&.measure_avg_A2_and_F2 ( link_sites,  g = \fR1\&.0\fP,  a = \fR1\&.0\fP)"
+
+.PP
+.nf
+@brief Compute averages ⟨A^2⟩ and ⟨F^2⟩ over the entire lattice as diagnostics\&.
+@param link_sites ndarray: link configuration\&.
+@param g float: gauge coupling\&.
+@param a float: lattice spacing\&.
+@return tuple: (A2_avg float, F2_avg float)
+@details A^2 and F^2 are computed by summing squares of components and normalizing by counts\&.
+
+.fi
+.PP
+ 
+.PP
+Definition at line \fB568\fP of file \fBQCD_Lattice_SU3\&.py\fP\&.
+.nf
+568 def measure_avg_A2_and_F2(link_sites, g=1\&.0, a=1\&.0):
+569     """
+570     @brief Compute averages ⟨A^2⟩ and ⟨F^2⟩ over the entire lattice as diagnostics\&.
+571     @param link_sites ndarray: link configuration\&.
+572     @param g float: gauge coupling\&.
+573     @param a float: lattice spacing\&.
+574     @return tuple: (A2_avg float, F2_avg float)
+575     @details A^2 and F^2 are computed by summing squares of components and normalizing by counts\&.
+576     """
+577     A2_sum = 0\&.0
+578     F2_sum = 0\&.0
+579     nA = 0
+580     nF = 0
+581     for x in np\&.ndindex(*x_shape):
+582         for mu in range(D):
+583             U = link_sites[(mu,) + x]
+584             A = extract_gluon_field(U, g=g, a=a)
+585             A2_sum += np\&.dot(A, A)
+586             nA += 1
+587         for mu in range(D):
+588             for nu in range(mu + 1, D):
+589                 F = field_strength_tensor(link_sites, x, mu, nu, g=g, a=a)
+590                 F2_sum += np\&.dot(F, F)
+591                 nF += 1
+592     return A2_sum / nA, F2_sum / nF
+593 
+594 
+.PP
+.fi
+
+.SS "QCD_Lattice_SU3\&.measure_wilson_loop_RT ( link_sites,  R,  T,  spatial_direction = \fR0\fP,  time_direction = \fRNone\fP)"
+
+.PP
+.nf
+@brief Measure the average Wilson loop W(R,T) for rectangular loops of spatial size R and temporal extent T\&.
+@param link_sites ndarray: link configuration\&.
+@param R int: spatial extent (number of spatial steps)\&.
+@param T int: temporal extent (number of temporal steps)\&.
+@param spatial_direction int: spatial direction index used for the R side\&.
+@param time_direction int or None: time direction index; defaults to D-1 (last axis)\&.
+@return float: average Re Tr[W(R,T)] / 3 over all possible loop origins\&.
+@details
+The loop path starts at each lattice site x and multiplies the link matrices along the rectangular contour\&.
+Backward traversals multiply by Hermitian conjugate of the traversed link\&.
+
+.fi
+.PP
+ 
+.PP
+Definition at line \fB361\fP of file \fBQCD_Lattice_SU3\&.py\fP\&.
+.nf
+361 def measure_wilson_loop_RT(link_sites, R, T, spatial_direction=0, time_direction=None):
+362     """
+363     @brief Measure the average Wilson loop W(R,T) for rectangular loops of spatial size R and temporal extent T\&.
+364     @param link_sites ndarray: link configuration\&.
+365     @param R int: spatial extent (number of spatial steps)\&.
+366     @param T int: temporal extent (number of temporal steps)\&.
+367     @param spatial_direction int: spatial direction index used for the R side\&.
+368     @param time_direction int or None: time direction index; defaults to D\-1 (last axis)\&.
+369     @return float: average Re Tr[W(R,T)] / 3 over all possible loop origins\&.
+370     @details
+371     The loop path starts at each lattice site x and multiplies the link matrices along the rectangular contour\&.
+372     Backward traversals multiply by Hermitian conjugate of the traversed link\&.
+373     """
+374     if time_direction is None:
+375         time_direction = D \- 1
+376     total = 0\&.0
+377     count = 0
+378     for x in np\&.ndindex(*x_shape):
+379         current_x = x
+380         W = np\&.eye(3, dtype=complex)
+381         # R steps + spatial_direction
+382         for i in range(R):
+383             U = link_sites[(spatial_direction,) + current_x]
+384             W = W @ U
+385             current_x = x_neighbor(current_x, spatial_direction, 1)
+386         # T steps + time_direction
+387         for i in range(T):
+388             U = link_sites[(time_direction,) + current_x]
+389             W = W @ U
+390             current_x = x_neighbor(current_x, time_direction, 1)
+391         # R steps \- spatial_direction (backwards)
+392         for i in range(R):
+393             current_x = x_neighbor(current_x, spatial_direction, \-1)
+394             U = link_sites[(spatial_direction,) + current_x]
+395             W = W @ U\&.conj()\&.T
+396         # T steps \- time_direction (backwards)
+397         for i in range(T):
+398             current_x = x_neighbor(current_x, time_direction, \-1)
+399             U = link_sites[(time_direction,) + current_x]
+400             W = W @ U\&.conj()\&.T
+401         total += np\&.real(np\&.trace(W)) / 3\&.0
+402         count += 1
+403     return total / count
+404 
+405 
+.PP
+.fi
+
+.SS "QCD_Lattice_SU3\&.metropolis_update ( link_sites,  eps_sub = \fR0\&.06\fP)"
+
+.PP
+.nf
+@brief Perform a single Metropolis sweep over all links applying embedded SU(2) updates\&.
+@param link_sites ndarray: link variable array (modified in-place)\&.
+@param eps_sub float: SU(2) proposal amplitude for each embedded sub-update\&.
+@return tuple: (accepted int, proposals int)
+@details
+For each link U_mu(x) we cycle through the three SU(2) subgroups (0,1), (0,2), (1,2)\&.
+For each subgroup:
+  1\&. compute sum_old = Σ Re Tr(P) over plaquettes touching the link,
+  2\&. propose an SU(2) rotation R2, embed into SU(3) → R3,
+  3\&. set U_candidate = R3 @ U_old and reproject to SU(3),
+  4\&. compute sum_new and ΔS = - (β/3) (sum_new - sum_old),
+  5\&. accept/reject with Metropolis probability\&.
+Using only touching plaquettes makes ΔS computation local and efficient\&.
+
+.fi
+.PP
+ 
+.PP
+Definition at line \fB190\fP of file \fBQCD_Lattice_SU3\&.py\fP\&.
+.nf
+190 def metropolis_update(link_sites, eps_sub=0\&.06):
+191     """
+192     @brief Perform a single Metropolis sweep over all links applying embedded SU(2) updates\&.
+193     @param link_sites ndarray: link variable array (modified in\-place)\&.
+194     @param eps_sub float: SU(2) proposal amplitude for each embedded sub\-update\&.
+195     @return tuple: (accepted int, proposals int)
+196     @details
+197     For each link U_mu(x) we cycle through the three SU(2) subgroups (0,1), (0,2), (1,2)\&.
+198     For each subgroup:
+199       1\&. compute sum_old = Σ Re Tr(P) over plaquettes touching the link,
+200       2\&. propose an SU(2) rotation R2, embed into SU(3) → R3,
+201       3\&. set U_candidate = R3 @ U_old and reproject to SU(3),
+202       4\&. compute sum_new and ΔS = \- (β/3) (sum_new \- sum_old),
+203       5\&. accept/reject with Metropolis probability\&.
+204     Using only touching plaquettes makes ΔS computation local and efficient\&.
+205     """
+206     accepted = 0
+207     proposals = 0
+208     su2_pairs = [(0, 1), (0, 2), (1, 2)]
+209     for mu in range(D):
+210         for x in np\&.ndindex(*x_shape):
+211             U_old = link_sites[(mu,) + x]\&.copy()
+212             for (i, j) in su2_pairs:
+213                 plist = plaquettes_touching_link(x, mu, link_sites)
+214                 sum_old = sum(trace for (_meta, trace) in plist)
+215 
+216                 R2 = su2_random_unitary(eps_sub)
+217                 R3 = embed_su2_into_su3(R2, i, j)
+218                 link_sites[(mu,) + x] = R3 @ U_old
+219                 # Reproject to SU(3) to correct numerical drift
+220                 link_sites[(mu,) + x] = su3_matrices(link_sites[(mu,) + x])
+221 
+222                 new_p_list = plaquettes_touching_link(x, mu, link_sites)
+223                 sum_new = sum(trace for (_meta, trace) in new_p_list)
+224 
+225                 dS = \- (beta / 3\&.0) * (sum_new \- sum_old)
+226                 proposals += 1
+227                 # Metropolis acceptance: accept if dS <= 0 or with probability exp(\-dS)
+228                 if dS > 0 and np\&.exp(\-dS) < np\&.random\&.rand():
+229                     # reject: revert this subgroup update (resume next subgroup from U_old)
+230                     link_sites[(mu,) + x] = U_old\&.copy()
+231                 else:
+232                     # accept: update U_old so subsequent subgroup multiplications act on accepted matrix
+233                     U_old = link_sites[(mu,) + x]\&.copy()
+234                     accepted += 1
+235     return accepted, proposals
+236 
+237 
+238 # \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\- Observables \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
+.PP
+.fi
+
+.SS "QCD_Lattice_SU3\&.plaquette_matrix ( x,  mu,  nu,  link_sites)"
+
+.PP
+.nf
+@brief Construct the plaquette matrix U_mu(x) U_nu(x+mu) U_mu^\\dagger(x+nu) U_nu^\\dagger(x)\&.
+@param x tuple: lattice coordinate\&.
+@param mu int: direction index mu\&.
+@param nu int: direction index nu\&.
+@param link_sites ndarray: link variable array\&.
+@return ndarray: 3x3 plaquette matrix P_{mu,nu}(x)\&.
+
+.fi
+.PP
+ 
+.PP
+Definition at line \fB135\fP of file \fBQCD_Lattice_SU3\&.py\fP\&.
+.nf
+135 def plaquette_matrix(x, mu, nu, link_sites):
+136     """
+137     @brief Construct the plaquette matrix U_mu(x) U_nu(x+mu) U_mu^\\dagger(x+nu) U_nu^\\dagger(x)\&.
+138     @param x tuple: lattice coordinate\&.
+139     @param mu int: direction index mu\&.
+140     @param nu int: direction index nu\&.
+141     @param link_sites ndarray: link variable array\&.
+142     @return ndarray: 3x3 plaquette matrix P_{mu,nu}(x)\&.
+143     """
+144     x_plus_mu = x_neighbor(x, mu, 1)
+145     x_plus_nu = x_neighbor(x, nu, 1)
+146     U_mu = link_sites[(mu,) + x]
+147     U_nu_xmu = link_sites[(nu,) + x_plus_mu]
+148     U_mu_xnu = link_sites[(mu,) + x_plus_nu]
+149     U_nu = link_sites[(nu,) + x]
+150     P = U_mu @ U_nu_xmu @ U_mu_xnu\&.conj()\&.T @ U_nu\&.conj()\&.T
+151     return P
+152 
+153 
+.PP
+.fi
+
+.SS "QCD_Lattice_SU3\&.plaquettes_touching_link ( x,  mu,  link_sites)"
+
+.PP
+.nf
+@brief List plaquettes that include the link at (mu, x)\&.
+@param x tuple: lattice coordinate of the starting site of the link\&.
+@param mu int: link direction\&.
+@param link_sites ndarray: array of link matrices\&.
+@return list: entries [((x_plaq, mu, nu), real_trace), \&.\&.\&.] for all plaquettes touching the link\&.
+@details
+For each nu != mu, the link (mu,x) sits in two elementary plaquettes:
+  - the plaquette at x in the (mu,nu) plane,
+  - the plaquette at x - e_nu in the (mu,nu) plane\&.
+Only these plaquettes are required to compute the local change in action when U_mu(x) is updated\&.
+
+.fi
+.PP
+ 
+.PP
+Definition at line \fB164\fP of file \fBQCD_Lattice_SU3\&.py\fP\&.
+.nf
+164 def plaquettes_touching_link(x, mu, link_sites):
+165     """
+166     @brief List plaquettes that include the link at (mu, x)\&.
+167     @param x tuple: lattice coordinate of the starting site of the link\&.
+168     @param mu int: link direction\&.
+169     @param link_sites ndarray: array of link matrices\&.
+170     @return list: entries [((x_plaq, mu, nu), real_trace), \&.\&.\&.] for all plaquettes touching the link\&.
+171     @details
+172     For each nu != mu, the link (mu,x) sits in two elementary plaquettes:
+173       \- the plaquette at x in the (mu,nu) plane,
+174       \- the plaquette at x \- e_nu in the (mu,nu) plane\&.
+175     Only these plaquettes are required to compute the local change in action when U_mu(x) is updated\&.
+176     """
+177     p_list = []
+178     for nu in range(D):
+179         if nu == mu:
+180             continue
+181         trace_1 = real_trace_plaquette(x, mu, nu, link_sites)
+182         p_list\&.append(((x, mu, nu), trace_1))
+183         x_minus_nu = x_neighbor(x, nu, \-1)
+184         trace_2 = real_trace_plaquette(x_minus_nu, mu, nu, link_sites)
+185         p_list\&.append(((x_minus_nu, mu, nu), trace_2))
+186     return p_list
+187 
+188 
+189 # \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\- Local update: Metropolis with embedded SU(2) updates \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
+.PP
+.fi
+
+.SS "QCD_Lattice_SU3\&.randomize_links_small ( link_sites,  amplitude = \fR0\&.02\fP)"
+
+.PP
+.nf
+@brief Apply small random SU(3) rotations (via embedded SU(2)) to each link for breaking symmetry\&.
+@param link_sites ndarray: link array (modified in-place)\&.
+@param amplitude float: small rotation amplitude used for initial randomization\&.
+@details Useful to seed the Markov chain with a slightly randomized starting configuration\&.
+
+.fi
+.PP
+ 
+.PP
+Definition at line \fB345\fP of file \fBQCD_Lattice_SU3\&.py\fP\&.
+.nf
+345 def randomize_links_small(link_sites, amplitude=0\&.02):
+346     """
+347     @brief Apply small random SU(3) rotations (via embedded SU(2)) to each link for breaking symmetry\&.
+348     @param link_sites ndarray: link array (modified in\-place)\&.
+349     @param amplitude float: small rotation amplitude used for initial randomization\&.
+350     @details Useful to seed the Markov chain with a slightly randomized starting configuration\&.
+351     """
+352     for mu in range(D):
+353         for x in np\&.ndindex(*x_shape):
+354             for (i, j) in [(0, 1), (0, 2), (1, 2)]:
+355                 R2 = su2_random_unitary(amplitude)
+356                 R3 = embed_su2_into_su3(R2, i, j)
+357                 link_sites[(mu,) + x] = su3_matrices(R3 @ link_sites[(mu,) + x])
+358 
+359 
+360 # \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\- Wilson loop helper \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
+.PP
+.fi
+
+.SS "QCD_Lattice_SU3\&.real_trace_plaquette ( x,  mu,  nu,  link_sites)"
+
+.PP
+.nf
+@brief Compute the real part of the trace of the plaquette matrix\&.
+@return float: Re Tr[P_{mu,nu}(x)]\&.
+
+.fi
+.PP
+ 
+.PP
+Definition at line \fB154\fP of file \fBQCD_Lattice_SU3\&.py\fP\&.
+.nf
+154 def real_trace_plaquette(x, mu, nu, link_sites):
+155     """
+156     @brief Compute the real part of the trace of the plaquette matrix\&.
+157     @return float: Re Tr[P_{mu,nu}(x)]\&.
+158     """
+159     P = plaquette_matrix(x, mu, nu, link_sites)
+160     trace = np\&.trace(P)
+161     return float(np\&.real(trace))
+162 
+163 
+.PP
+.fi
+
+.SS "QCD_Lattice_SU3\&.run_su3_simulation ( link_sites,  eps_sub = \fR0\&.06\fP,  burn_in_sweeps = \fR500\fP,  MC_sweeps = \fR2000\fP,  N_correlator = \fR5\fP)"
+
+.PP
+.nf
+@brief Run SU(3) Metropolis simulation collecting plaquette samples\&.
+@param link_sites ndarray: initial link configuration (modified in-place)\&.
+@param eps_sub float: SU(2) subgroup proposal amplitude\&.
+@param burn_in_sweeps int: thermalization sweeps\&.
+@param MC_sweeps int: measurement sweeps\&.
+@param N_correlator int: interval between stored measurements\&.
+@return tuple: (plaquette_samples ndarray, mean_plaquette float, error_plaquette float)
+@details After burn-in we perform MC_sweeps sweeps and measure the average plaquette every
+         N_correlator sweeps\&. Bootstrap error estimation is applied to the set of plaquette samples\&.
+
+.fi
+.PP
+ 
+.PP
+Definition at line \fB306\fP of file \fBQCD_Lattice_SU3\&.py\fP\&.
+.nf
+306 def run_su3_simulation(link_sites, eps_sub=0\&.06, burn_in_sweeps=500, MC_sweeps=2000, N_correlator=5):
+307     """
+308     @brief Run SU(3) Metropolis simulation collecting plaquette samples\&.
+309     @param link_sites ndarray: initial link configuration (modified in\-place)\&.
+310     @param eps_sub float: SU(2) subgroup proposal amplitude\&.
+311     @param burn_in_sweeps int: thermalization sweeps\&.
+312     @param MC_sweeps int: measurement sweeps\&.
+313     @param N_correlator int: interval between stored measurements\&.
+314     @return tuple: (plaquette_samples ndarray, mean_plaquette float, error_plaquette float)
+315     @details After burn\-in we perform MC_sweeps sweeps and measure the average plaquette every
+316              N_correlator sweeps\&. Bootstrap error estimation is applied to the set of plaquette samples\&.
+317     """
+318     accepted = proposed = 0
+319     for i in range(burn_in_sweeps):
+320         a, p = metropolis_update(link_sites, eps_sub=eps_sub)
+321         accepted += a; proposed += p
+322     plaquette_samples = []
+323     accepted = proposed = 0
+324     for sweep in range(MC_sweeps):
+325         a, p = metropolis_update(link_sites, eps_sub=eps_sub)
+326         accepted += a; proposed += p
+327         if sweep % N_correlator == 0:
+328             plaquette = average_plaquette_su3(link_sites)
+329             plaquette_samples\&.append(plaquette)
+330     mean_plaquette, error_plaquette = bootstrap_mean_std(plaquette_samples, nboot=n_boot)
+331     return np\&.array(plaquette_samples), mean_plaquette, error_plaquette
+332 
+333 
+334 # \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\- Initialization helpers \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
+.PP
+.fi
+
+.SS "QCD_Lattice_SU3\&.su2_random_unitary ( eps)"
+
+.PP
+.nf
+@brief Generate a small random SU(2) rotation matrix using Gaussian parameters\&.
+@param eps float: amplitude controlling rotation angle scale (a = eps * |r|)\&.
+@return ndarray: 2x2 complex SU(2) matrix\&.
+@details
+The parametrization uses R = cos(a) I + i sin(a) n·σ where n is a unit 3-vector
+and σ_i are the Pauli matrices\&. We project via SVD to correct numerical drift and
+ensure exact unitarity, then enforce det=1\&.
+
+.fi
+.PP
+ 
+.PP
+Definition at line \fB86\fP of file \fBQCD_Lattice_SU3\&.py\fP\&.
+.nf
+86 def su2_random_unitary(eps):
+87     """
+88     @brief Generate a small random SU(2) rotation matrix using Gaussian parameters\&.
+89     @param eps float: amplitude controlling rotation angle scale (a = eps * |r|)\&.
+90     @return ndarray: 2x2 complex SU(2) matrix\&.
+91     @details
+92     The parametrization uses R = cos(a) I + i sin(a) n·σ where n is a unit 3\-vector
+93     and σ_i are the Pauli matrices\&. We project via SVD to correct numerical drift and
+94     ensure exact unitarity, then enforce det=1\&.
+95     """
+96     r = np\&.random\&.normal(size=3)
+97     r_norm = np\&.linalg\&.norm(r)
+98     if r_norm == 0:
+99         return np\&.eye(2, dtype=complex)
+100     a = eps * r_norm
+101     n = r / r_norm
+102     # Pauli matrices
+103     sigma1 = np\&.array([[0\&.0, 1\&.0], [1\&.0, 0\&.0]], dtype=complex)
+104     sigma2 = np\&.array([[0\&.0, \-1j], [1j, 0\&.0]], dtype=complex)
+105     sigma3 = np\&.array([[1\&.0, 0\&.0], [0\&.0, \-1\&.0]], dtype=complex)
+106     ndotsigma = n[0] * sigma1 + n[1] * sigma2 + n[2] * sigma3
+107     R = np\&.cos(a) * np\&.eye(2, dtype=complex) + 1j * np\&.sin(a) * ndotsigma
+108     # Project R to exact SU(2) via SVD/polar projection and fix determinant
+109     U, s, Vh = LA\&.svd(R)
+110     R_projection = U @ Vh
+111     det = LA\&.det(R_projection)
+112     R_projection /= (det ** 0\&.5)
+113     return R_projection
+114 
+115 
+.PP
+.fi
+
+.SS "QCD_Lattice_SU3\&.su3_matrices ( M)"
+
+.PP
+.nf
+@brief Project a general complex 3x3 matrix to SU(3) via unitary polar/SVD projection\&.
+@param M (ndarray): 3x3 complex matrix (candidate link)\&.
+@return ndarray: Unitary 3x3 matrix with det = 1 (projection of M into SU(3))\&.
+@details
+We perform an SVD: M = U S V^H and set U_proj = U V^H (closest unitary in Frobenius norm)\&.
+A global phase is then removed to enforce det(U_proj) = 1\&. If the projection yields
+a near-singular matrix we add a tiny perturbation as fallback\&.
+
+.fi
+.PP
+ 
+.PP
+Definition at line \fB62\fP of file \fBQCD_Lattice_SU3\&.py\fP\&.
+.nf
+62 def su3_matrices(M):
+63     """
+64     @brief Project a general complex 3x3 matrix to SU(3) via unitary polar/SVD projection\&.
+65     @param M (ndarray): 3x3 complex matrix (candidate link)\&.
+66     @return ndarray: Unitary 3x3 matrix with det = 1 (projection of M into SU(3))\&.
+67     @details
+68     We perform an SVD: M = U S V^H and set U_proj = U V^H (closest unitary in Frobenius norm)\&.
+69     A global phase is then removed to enforce det(U_proj) = 1\&. If the projection yields
+70     a near\-singular matrix we add a tiny perturbation as fallback\&.
+71     """
+72     U, s, Vh = LA\&.svd(M)
+73     U_projection = U @ Vh
+74     determinant = LA\&.det(U_projection)
+75     if determinant == 0 or np\&.isnan(determinant):
+76         # Numerical fallback: small perturbation then reproject
+77         U_projection = U_projection + 1e\-12 * np\&.eye(3, dtype=complex)
+78         determinant = LA\&.det(U_projection)
+79     # Remove global phase to ensure unit determinant
+80     phase = determinant ** (1\&.0 / 3\&.0)
+81     U_projection /= phase
+82     return U_projection
+83 
+84 
+85 # \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\- SU(2) small updater (embedded in SU(3)) \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
+.PP
+.fi
+
+.SS "QCD_Lattice_SU3\&.su3_simulation_with_wilson_loops ( link_sites,  eps_sub = \fR0\&.06\fP,  burn_in_sweeps = \fR500\fP,  MC_sweeps = \fR2000\fP,  N_correlator = \fR5\fP,  max_R = \fRNone\fP,  max_T = \fRNone\fP)"
+
+.PP
+.nf
+@brief Run full SU(3) simulation storing Wilson loop matrices for each measurement\&.
+@param link_sites ndarray: initial link configuration (modified in-place)\&.
+@param eps_sub float: SU(2) subgroup proposal amplitude\&.
+@param burn_in_sweeps int: thermalization sweeps\&.
+@param MC_sweeps int: measurement sweeps\&.
+@param N_correlator int: interval between stored measurements\&.
+@param max_R int or None: maximum spatial size to measure (defaults to L/2)\&.
+@param max_T int or None: maximum temporal size to measure (defaults to L/2)\&.
+@return tuple: (wilson_loops_samples ndarray [n_meas, n_R, n_T], R_values ndarray, T_values ndarray)
+@details
+Measures a grid of Wilson loops W(R,T) for R in [1\&.\&.max_R], T in [1\&.\&.max_T] at each stored configuration\&.
+
+.fi
+.PP
+ 
+.PP
+Definition at line \fB406\fP of file \fBQCD_Lattice_SU3\&.py\fP\&.
+.nf
+406 def su3_simulation_with_wilson_loops(link_sites, eps_sub=0\&.06, burn_in_sweeps=500, MC_sweeps=2000, N_correlator=5, max_R=None, max_T=None):
+407     """
+408     @brief Run full SU(3) simulation storing Wilson loop matrices for each measurement\&.
+409     @param link_sites ndarray: initial link configuration (modified in\-place)\&.
+410     @param eps_sub float: SU(2) subgroup proposal amplitude\&.
+411     @param burn_in_sweeps int: thermalization sweeps\&.
+412     @param MC_sweeps int: measurement sweeps\&.
+413     @param N_correlator int: interval between stored measurements\&.
+414     @param max_R int or None: maximum spatial size to measure (defaults to L/2)\&.
+415     @param max_T int or None: maximum temporal size to measure (defaults to L/2)\&.
+416     @return tuple: (wilson_loops_samples ndarray [n_meas, n_R, n_T], R_values ndarray, T_values ndarray)
+417     @details
+418     Measures a grid of Wilson loops W(R,T) for R in [1\&.\&.max_R], T in [1\&.\&.max_T] at each stored configuration\&.
+419     """
+420     if max_R is None:
+421         max_R = lattice_size_L // 2
+422     if max_T is None:
+423         max_T = lattice_size_L // 2
+424     R_values = np\&.arange(1, max_R + 1)
+425     T_values = np\&.arange(1, max_T + 1)
+426     n_R = len(R_values)
+427     n_T = len(T_values)
+428     # Thermalize
+429     for i in range(burn_in_sweeps):
+430         metropolis_update(link_sites, eps_sub=eps_sub)
+431     wilson_loops_samples = []
+432     for sweep in range(MC_sweeps):
+433         metropolis_update(link_sites, eps_sub=eps_sub)
+434         if sweep % N_correlator == 0:
+435             W_sample = np\&.zeros((n_R, n_T))
+436             for i, R in enumerate(R_values):
+437                 for j, T in enumerate(T_values):
+438                     W_sample[i, j] = measure_wilson_loop_RT(link_sites, R, T)
+439             wilson_loops_samples\&.append(W_sample)
+440     wilson_loops_samples = np\&.array(wilson_loops_samples)
+441     return wilson_loops_samples, R_values, T_values
+442 
+443 
+444 # ============================================================
+445 # ===============  PLAQUETTE CALCULATION SECTION  ==============
+446 # ============================================================
+.PP
+.fi
+
+.SS "QCD_Lattice_SU3\&.tune_eps_su3 ( matrix0,  target = \fR0\&.5\fP,  initial_eps = \fR0\&.06\fP,  tries = \fR10\fP,  test_sweeps = \fR150\fP)"
+
+.PP
+.nf
+@brief Tune the SU(2) proposal amplitude eps so that acceptance fraction ~ target\&.
+@param matrix0 ndarray: initial link matrix copy for tuning (will be copied internally)\&.
+@param target float: desired acceptance fraction (e\&.g\&., 0\&.5)\&.
+@param initial_eps float: starting amplitude\&.
+@param tries int: maximum adjustment attempts\&.
+@param test_sweeps int: sweeps per tuning test\&.
+@return float: tuned eps value\&.
+@details We perform a small number of sweeps and adjust eps multiplicatively to move acceptance
+         fraction towards target\&. This is a heuristic tuner used before a production run\&.
+
+.fi
+.PP
+ 
+.PP
+Definition at line \fB277\fP of file \fBQCD_Lattice_SU3\&.py\fP\&.
+.nf
+277 def tune_eps_su3(matrix0, target=0\&.5, initial_eps=0\&.06, tries=10, test_sweeps=150):
+278     """
+279     @brief Tune the SU(2) proposal amplitude eps so that acceptance fraction ~ target\&.
+280     @param matrix0 ndarray: initial link matrix copy for tuning (will be copied internally)\&.
+281     @param target float: desired acceptance fraction (e\&.g\&., 0\&.5)\&.
+282     @param initial_eps float: starting amplitude\&.
+283     @param tries int: maximum adjustment attempts\&.
+284     @param test_sweeps int: sweeps per tuning test\&.
+285     @return float: tuned eps value\&.
+286     @details We perform a small number of sweeps and adjust eps multiplicatively to move acceptance
+287              fraction towards target\&. This is a heuristic tuner used before a production run\&.
+288     """
+289     eps = initial_eps
+290     for attempt in range(tries):
+291         matrix_copy = matrix0\&.copy()
+292         # quick thermalize copy
+293         for i in range(50):
+294             metropolis_update(matrix_copy, eps_sub=eps)
+295         accepted = proposed = 0
+296         for i in range(test_sweeps):
+297             a, p = metropolis_update(matrix_copy, eps_sub=eps)
+298             accepted += a; proposed += p
+299         fraction = accepted / proposed if proposed > 0 else 0\&.0
+300         if abs(fraction \- target) < 0\&.05:
+301             break
+302         eps *= 1\&.2 if fraction > target else 0\&.8
+303     return eps
+304 
+305 
+.PP
+.fi
+
+.SS "QCD_Lattice_SU3\&.x_neighbor ( x,  mu,  shift = \fR1\fP)"
+
+.PP
+.nf
+@brief Periodic lattice neighbor coordinate\&.
+@param x tuple: Lattice coordinate (length D)\&.
+@param mu int: Direction index (0\&.\&.D-1)\&.
+@param shift int: Integer shift (positive forward, negative backward)\&.
+@return tuple: New lattice coordinate (with periodic wrap)\&.
+@details Implements periodic boundary conditions: (x_mu + shift) mod L\&.
+
+.fi
+.PP
+ 
+.PP
+Definition at line \fB48\fP of file \fBQCD_Lattice_SU3\&.py\fP\&.
+.nf
+48 def x_neighbor(x, mu, shift=1):
+49     """
+50     @brief Periodic lattice neighbor coordinate\&.
+51     @param x tuple: Lattice coordinate (length D)\&.
+52     @param mu int: Direction index (0\&.\&.D\-1)\&.
+53     @param shift int: Integer shift (positive forward, negative backward)\&.
+54     @return tuple: New lattice coordinate (with periodic wrap)\&.
+55     @details Implements periodic boundary conditions: (x_mu + shift) mod L\&.
+56     """
+57     x_new = list(x)
+58     x_new[mu] = (x_new[mu] + shift) % lattice_size_L
+59     return tuple(x_new)
+60 
+61 
+.PP
+.fi
+
+.SH "Variable Documentation"
+.PP 
+.SS "QCD_Lattice_SU3\&.A2_avg"
+
+.PP
+Definition at line \fB595\fP of file \fBQCD_Lattice_SU3\&.py\fP\&.
+.SS "QCD_Lattice_SU3\&.alpha"
+
+.PP
+Definition at line \fB468\fP of file \fBQCD_Lattice_SU3\&.py\fP\&.
+.SS "QCD_Lattice_SU3\&.amplitude"
+
+.PP
+Definition at line \fB448\fP of file \fBQCD_Lattice_SU3\&.py\fP\&.
+.SS "QCD_Lattice_SU3\&.avg_wilson_loops = np\&.mean(\fBwilson_loops_samples\fP, axis=0)"
+
+.PP
+Definition at line \fB484\fP of file \fBQCD_Lattice_SU3\&.py\fP\&.
+.SS "float QCD_Lattice_SU3\&.beta = 6\&.0"
+
+.PP
+Definition at line \fB33\fP of file \fBQCD_Lattice_SU3\&.py\fP\&.
+.SS "QCD_Lattice_SU3\&.bins"
+
+.PP
+Definition at line \fB468\fP of file \fBQCD_Lattice_SU3\&.py\fP\&.
+.SS "QCD_Lattice_SU3\&.burn_in_sweeps = 500"
+
+.PP
+Definition at line \fB35\fP of file \fBQCD_Lattice_SU3\&.py\fP\&.
+.SS "int QCD_Lattice_SU3\&.D = \fBspatial_dims\fP + 1"
+
+.PP
+Definition at line \fB41\fP of file \fBQCD_Lattice_SU3\&.py\fP\&.
+.SS "float QCD_Lattice_SU3\&.eps_initial = 0\&.06"
+
+.PP
+Definition at line \fB34\fP of file \fBQCD_Lattice_SU3\&.py\fP\&.
+.SS "QCD_Lattice_SU3\&.eps_sub"
+
+.PP
+Definition at line \fB452\fP of file \fBQCD_Lattice_SU3\&.py\fP\&.
+.SS "QCD_Lattice_SU3\&.eps_tuned = \fBtune_eps_su3\fP(\fBlink_matrix\fP, initial_eps=\fBeps_initial\fP)"
+
+.PP
+Definition at line \fB450\fP of file \fBQCD_Lattice_SU3\&.py\fP\&.
+.SS "QCD_Lattice_SU3\&.F2_avg"
+
+.PP
+Definition at line \fB595\fP of file \fBQCD_Lattice_SU3\&.py\fP\&.
+.SS "QCD_Lattice_SU3\&.figsize"
+
+.PP
+Definition at line \fB458\fP of file \fBQCD_Lattice_SU3\&.py\fP\&.
+.SS "int QCD_Lattice_SU3\&.lattice_size_L = 8"
+
+.PP
+Definition at line \fB32\fP of file \fBQCD_Lattice_SU3\&.py\fP\&.
+.SS "QCD_Lattice_SU3\&.linestyle"
+
+.PP
+Definition at line \fB459\fP of file \fBQCD_Lattice_SU3\&.py\fP\&.
+.SS "QCD_Lattice_SU3\&.link_matrix = np\&.zeros((\fBD\fP,) + \fBx_shape\fP + (3, 3), dtype=np\&.complex128)"
+
+.PP
+Definition at line \fB44\fP of file \fBQCD_Lattice_SU3\&.py\fP\&.
+.SS "QCD_Lattice_SU3\&.marker"
+
+.PP
+Definition at line \fB459\fP of file \fBQCD_Lattice_SU3\&.py\fP\&.
+.SS "QCD_Lattice_SU3\&.max_R"
+
+.PP
+Definition at line \fB482\fP of file \fBQCD_Lattice_SU3\&.py\fP\&.
+.SS "QCD_Lattice_SU3\&.max_T"
+
+.PP
+Definition at line \fB482\fP of file \fBQCD_Lattice_SU3\&.py\fP\&.
+.SS "int QCD_Lattice_SU3\&.MC_measure_interval = 5"
+
+.PP
+Definition at line \fB37\fP of file \fBQCD_Lattice_SU3\&.py\fP\&.
+.SS "QCD_Lattice_SU3\&.MC_sweeps = 2000"
+
+.PP
+Definition at line \fB36\fP of file \fBQCD_Lattice_SU3\&.py\fP\&.
+.SS "int QCD_Lattice_SU3\&.n_boot = 300"
+
+.PP
+Definition at line \fB38\fP of file \fBQCD_Lattice_SU3\&.py\fP\&.
+.SS "QCD_Lattice_SU3\&.N_correlator"
+
+.PP
+Definition at line \fB453\fP of file \fBQCD_Lattice_SU3\&.py\fP\&.
+.SS "QCD_Lattice_SU3\&.plaq_err"
+
+.PP
+Definition at line \fB451\fP of file \fBQCD_Lattice_SU3\&.py\fP\&.
+.SS "QCD_Lattice_SU3\&.plaq_mean"
+
+.PP
+Definition at line \fB451\fP of file \fBQCD_Lattice_SU3\&.py\fP\&.
+.SS "list QCD_Lattice_SU3\&.potentials = []"
+
+.PP
+Definition at line \fB489\fP of file \fBQCD_Lattice_SU3\&.py\fP\&.
+.SS "QCD_Lattice_SU3\&.R_values"
+
+.PP
+Definition at line \fB479\fP of file \fBQCD_Lattice_SU3\&.py\fP\&.
+.SS "QCD_Lattice_SU3\&.samples"
+
+.PP
+Definition at line \fB451\fP of file \fBQCD_Lattice_SU3\&.py\fP\&.
+.SS "int QCD_Lattice_SU3\&.spatial_dims = 1"
+
+.PP
+Definition at line \fB31\fP of file \fBQCD_Lattice_SU3\&.py\fP\&.
+.SS "QCD_Lattice_SU3\&.T_values"
+
+.PP
+Definition at line \fB479\fP of file \fBQCD_Lattice_SU3\&.py\fP\&.
+.SS "QCD_Lattice_SU3\&.V_R = np\&.zeros(len(\fBR_values\fP))"
+
+.PP
+Definition at line \fB487\fP of file \fBQCD_Lattice_SU3\&.py\fP\&.
+.SS "QCD_Lattice_SU3\&.W_T = \fBavg_wilson_loops\fP[i, j]"
+
+.PP
+Definition at line \fB491\fP of file \fBQCD_Lattice_SU3\&.py\fP\&.
+.SS "QCD_Lattice_SU3\&.W_Tp1 = \fBavg_wilson_loops\fP[i, j + 1]"
+
+.PP
+Definition at line \fB492\fP of file \fBQCD_Lattice_SU3\&.py\fP\&.
+.SS "QCD_Lattice_SU3\&.wilson_loops_samples"
+
+.PP
+Definition at line \fB479\fP of file \fBQCD_Lattice_SU3\&.py\fP\&.
+.SS "tuple QCD_Lattice_SU3\&.x_shape = (\fBlattice_size_L\fP,) * \fBD\fP"
+
+.PP
+Definition at line \fB42\fP of file \fBQCD_Lattice_SU3\&.py\fP\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for QCD Lattice from the source code\&.

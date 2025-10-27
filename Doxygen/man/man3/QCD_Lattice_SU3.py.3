@@ -1,0 +1,191 @@
+.TH "QCD_Lattice_SU3.py" 3 "QCD Lattice" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+QCD_Lattice_SU3.py
+.SH SYNOPSIS
+.br
+.PP
+.SS "Namespaces"
+
+.in +1c
+.ti -1c
+.RI "namespace \fBQCD_Lattice_SU3\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBQCD_Lattice_SU3\&.x_neighbor\fP (x, mu, shift=1)"
+.br
+.ti -1c
+.RI "\fBQCD_Lattice_SU3\&.su3_matrices\fP (M)"
+.br
+.ti -1c
+.RI "\fBQCD_Lattice_SU3\&.su2_random_unitary\fP (eps)"
+.br
+.ti -1c
+.RI "\fBQCD_Lattice_SU3\&.embed_su2_into_su3\fP (R2, i, j)"
+.br
+.ti -1c
+.RI "\fBQCD_Lattice_SU3\&.plaquette_matrix\fP (x, mu, nu, link_sites)"
+.br
+.ti -1c
+.RI "\fBQCD_Lattice_SU3\&.real_trace_plaquette\fP (x, mu, nu, link_sites)"
+.br
+.ti -1c
+.RI "\fBQCD_Lattice_SU3\&.plaquettes_touching_link\fP (x, mu, link_sites)"
+.br
+.ti -1c
+.RI "\fBQCD_Lattice_SU3\&.metropolis_update\fP (link_sites, \fBeps_sub\fP=0\&.06)"
+.br
+.ti -1c
+.RI "\fBQCD_Lattice_SU3\&.average_plaquette_su3\fP (link_sites)"
+.br
+.ti -1c
+.RI "\fBQCD_Lattice_SU3\&.bootstrap_mean_std\fP (values, nboot=300)"
+.br
+.ti -1c
+.RI "\fBQCD_Lattice_SU3\&.tune_eps_su3\fP (matrix0, target=0\&.5, initial_eps=0\&.06, tries=10, test_sweeps=150)"
+.br
+.ti -1c
+.RI "\fBQCD_Lattice_SU3\&.run_su3_simulation\fP (link_sites, \fBeps_sub\fP=0\&.06, \fBburn_in_sweeps\fP=500, \fBMC_sweeps\fP=2000, \fBN_correlator\fP=5)"
+.br
+.ti -1c
+.RI "\fBQCD_Lattice_SU3\&.init_links_identity\fP (link_sites)"
+.br
+.ti -1c
+.RI "\fBQCD_Lattice_SU3\&.randomize_links_small\fP (link_sites, \fBamplitude\fP=0\&.02)"
+.br
+.ti -1c
+.RI "\fBQCD_Lattice_SU3\&.measure_wilson_loop_RT\fP (link_sites, R, T, spatial_direction=0, time_direction=None)"
+.br
+.ti -1c
+.RI "\fBQCD_Lattice_SU3\&.su3_simulation_with_wilson_loops\fP (link_sites, \fBeps_sub\fP=0\&.06, \fBburn_in_sweeps\fP=500, \fBMC_sweeps\fP=2000, \fBN_correlator\fP=5, \fBmax_R\fP=None, \fBmax_T\fP=None)"
+.br
+.ti -1c
+.RI "\fBQCD_Lattice_SU3\&.gell_mann_matrices\fP ()"
+.br
+.ti -1c
+.RI "\fBQCD_Lattice_SU3\&.extract_gluon_field\fP (U, g=1\&.0, a=1\&.0)"
+.br
+.ti -1c
+.RI "\fBQCD_Lattice_SU3\&.field_strength_tensor\fP (link_sites, x, mu, nu, g=1\&.0, a=1\&.0)"
+.br
+.ti -1c
+.RI "\fBQCD_Lattice_SU3\&.measure_avg_A2_and_F2\fP (link_sites, g=1\&.0, a=1\&.0)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBQCD_Lattice_SU3\&.spatial_dims\fP = 1"
+.br
+.ti -1c
+.RI "int \fBQCD_Lattice_SU3\&.lattice_size_L\fP = 8"
+.br
+.ti -1c
+.RI "float \fBQCD_Lattice_SU3\&.beta\fP = 6\&.0"
+.br
+.ti -1c
+.RI "float \fBQCD_Lattice_SU3\&.eps_initial\fP = 0\&.06"
+.br
+.ti -1c
+.RI "int \fBQCD_Lattice_SU3\&.burn_in_sweeps\fP = 500"
+.br
+.ti -1c
+.RI "int \fBQCD_Lattice_SU3\&.MC_sweeps\fP = 2000"
+.br
+.ti -1c
+.RI "int \fBQCD_Lattice_SU3\&.MC_measure_interval\fP = 5"
+.br
+.ti -1c
+.RI "int \fBQCD_Lattice_SU3\&.n_boot\fP = 300"
+.br
+.ti -1c
+.RI "int \fBQCD_Lattice_SU3\&.D\fP = \fBspatial_dims\fP + 1"
+.br
+.ti -1c
+.RI "tuple \fBQCD_Lattice_SU3\&.x_shape\fP = (\fBlattice_size_L\fP,) * \fBD\fP"
+.br
+.ti -1c
+.RI "\fBQCD_Lattice_SU3\&.link_matrix\fP = np\&.zeros((\fBD\fP,) + \fBx_shape\fP + (3, 3), dtype=np\&.complex128)"
+.br
+.ti -1c
+.RI "\fBQCD_Lattice_SU3\&.amplitude\fP"
+.br
+.ti -1c
+.RI "\fBQCD_Lattice_SU3\&.eps_tuned\fP = \fBtune_eps_su3\fP(\fBlink_matrix\fP, initial_eps=\fBeps_initial\fP)"
+.br
+.ti -1c
+.RI "\fBQCD_Lattice_SU3\&.samples\fP"
+.br
+.ti -1c
+.RI "\fBQCD_Lattice_SU3\&.plaq_mean\fP"
+.br
+.ti -1c
+.RI "\fBQCD_Lattice_SU3\&.plaq_err\fP"
+.br
+.ti -1c
+.RI "\fBQCD_Lattice_SU3\&.eps_sub\fP"
+.br
+.ti -1c
+.RI "\fBQCD_Lattice_SU3\&.N_correlator\fP"
+.br
+.ti -1c
+.RI "\fBQCD_Lattice_SU3\&.figsize\fP"
+.br
+.ti -1c
+.RI "\fBQCD_Lattice_SU3\&.marker\fP"
+.br
+.ti -1c
+.RI "\fBQCD_Lattice_SU3\&.linestyle\fP"
+.br
+.ti -1c
+.RI "\fBQCD_Lattice_SU3\&.bins\fP"
+.br
+.ti -1c
+.RI "\fBQCD_Lattice_SU3\&.alpha\fP"
+.br
+.ti -1c
+.RI "\fBQCD_Lattice_SU3\&.wilson_loops_samples\fP"
+.br
+.ti -1c
+.RI "\fBQCD_Lattice_SU3\&.R_values\fP"
+.br
+.ti -1c
+.RI "\fBQCD_Lattice_SU3\&.T_values\fP"
+.br
+.ti -1c
+.RI "\fBQCD_Lattice_SU3\&.max_R\fP"
+.br
+.ti -1c
+.RI "\fBQCD_Lattice_SU3\&.max_T\fP"
+.br
+.ti -1c
+.RI "\fBQCD_Lattice_SU3\&.avg_wilson_loops\fP = np\&.mean(\fBwilson_loops_samples\fP, axis=0)"
+.br
+.ti -1c
+.RI "\fBQCD_Lattice_SU3\&.V_R\fP = np\&.zeros(len(\fBR_values\fP))"
+.br
+.ti -1c
+.RI "list \fBQCD_Lattice_SU3\&.potentials\fP = []"
+.br
+.ti -1c
+.RI "\fBQCD_Lattice_SU3\&.W_T\fP = \fBavg_wilson_loops\fP[i, j]"
+.br
+.ti -1c
+.RI "\fBQCD_Lattice_SU3\&.W_Tp1\fP = \fBavg_wilson_loops\fP[i, j + 1]"
+.br
+.ti -1c
+.RI "\fBQCD_Lattice_SU3\&.A2_avg\fP"
+.br
+.ti -1c
+.RI "\fBQCD_Lattice_SU3\&.F2_avg\fP"
+.br
+.in -1c
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for QCD Lattice from the source code\&.

@@ -1,0 +1,126 @@
+\doxysection{Path integral.\+py}
+\hypertarget{_path_01integral_8py_source}{}\label{_path_01integral_8py_source}\mbox{\hyperlink{_path_01integral_8py}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00001}\mbox{\hyperlink{namespace_path}{00001}}\ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00002}00002\ \textcolor{stringliteral}{@mainpage\ Numerical\ Euclidean\ Path\ Integral\ for\ the\ Harmonic\ Oscillator}}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00003}00003\ \textcolor{stringliteral}{@file\ path\_integral.py}}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00004}00004\ \textcolor{stringliteral}{@brief\ Brute-\/force\ multidimensional\ Euclidean\ path\ integral\ evaluation.}}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00005}00005\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00006}00006\ \textcolor{stringliteral}{@details}}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00007}00007\ \textcolor{stringliteral}{This\ demonstration\ numerically\ evaluates\ the\ diagonal\ propagator}}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00008}00008\ \textcolor{stringliteral}{K(x,\ x;\ T)\ =\ ⟨x|\ e\string^(−H\ T)\ |x⟩}}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00009}00009\ \textcolor{stringliteral}{for\ a\ 1D\ harmonic\ oscillator\ using\ a\ discretized\ Euclidean\ action:}}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00010}00010\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00011}00011\ \textcolor{stringliteral}{\ \ \ \ S\_E\ =\ Σ\_j\ [\ m/(2a)\ (x\_\{j+1\}\ −\ x\_j)²\ +\ a\ V(x\_j)\ ],}}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00012}00012\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00013}00013\ \textcolor{stringliteral}{with\ fixed\ endpoints\ x₀\ =\ x\_N\ =\ x\_fixed\ and\ (N−1)\ internal\ lattice\ points}}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00014}00014\ \textcolor{stringliteral}{integrated\ over\ a\ finite\ domain.\ The\ integral\ is\ computed\ using}}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00015}00015\ \textcolor{stringliteral}{SciPy’s\ multi-\/dimensional\ quadrature\ (\`{}nquad\`{}),\ which\ scales}}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00016}00016\ \textcolor{stringliteral}{exponentially\ with\ N\ and\ serves\ only\ as\ a\ pedagogical\ reference}}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00017}00017\ \textcolor{stringliteral}{(not\ an\ efficient\ Monte\ Carlo\ method).}}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00018}00018\ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00020}00020\ \textcolor{keyword}{import}\ math}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00021}00021\ \textcolor{keyword}{import}\ matplotlib.pyplot\ \textcolor{keyword}{as}\ plt}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00022}00022\ \textcolor{keyword}{from}\ scipy.integrate\ \textcolor{keyword}{import}\ nquad}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00023}00023\ }
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00024}00024\ \textcolor{comment}{\#\ ===============================================================}}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00025}00025\ \textcolor{comment}{\#\ \ \ \ \ \ \ \ \ \ \ \ \ \ Physical\ and\ Discretization\ Parameters}}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00026}00026\ \textcolor{comment}{\#\ ===============================================================}}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00027}00027\ }
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00028}\mbox{\hyperlink{namespace_path_01integral_a72830acc936352e7807100a327811f41}{00028}}\ N\ =\ 4}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00029}00029\ \textcolor{comment}{\#:\ int:\ number\ of\ lattice\ sites\ including\ fixed\ endpoints\ (integration\ dimension\ =\ N−1).}}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00030}00030\ }
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00031}\mbox{\hyperlink{namespace_path_01integral_a4da5b216a15d8340d622d0de125724f5}{00031}}\ lattice\_spacing\_a\ =\ 1\ /\ 2}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00032}00032\ \textcolor{comment}{\#:\ float:\ Euclidean\ time\ spacing,\ total\ extent\ T\ =\ N\ ·\ a.}}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00033}00033\ }
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00034}\mbox{\hyperlink{namespace_path_01integral_a0878b847a23c46db5e4beadf0bf7223f}{00034}}\ particle\_mass\ =\ 1.0}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00035}00035\ \textcolor{comment}{\#:\ float:\ mass\ of\ particle\ (natural\ units\ ℏ\ =\ 1).}}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00036}00036\ }
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00037}\mbox{\hyperlink{namespace_path_01integral_a82466fa9408cf4898992e2c5a05e102c}{00037}}\ bound\_limit\ =\ 5}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00038}00038\ \textcolor{comment}{\#:\ float:\ |x|\ integration\ domain\ bound\ for\ intermediate\ positions.}}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00039}00039\ }
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00040}\mbox{\hyperlink{namespace_path_01integral_a5789247a914b48094a622acd9b2df39b}{00040}}\ bounds\ =\ [(-\/bound\_limit,\ bound\_limit)]\ *\ (N\ -\/\ 1)}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00041}00041\ \textcolor{comment}{\#:\ list(tuple):\ integration\ bounds\ for\ each\ of\ the\ (N−1)\ intermediate\ coordinates.}}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00042}00042\ }
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00043}\mbox{\hyperlink{namespace_path_01integral_a6ba69d45f9f93cb898fe4dae09a35d06}{00043}}\ propagator\ =\ []}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00044}00044\ \textcolor{comment}{\#:\ list(float):\ evaluated\ propagator\ K(x,\ x;\ T)\ at\ each\ fixed\ endpoint\ x.}}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00045}00045\ }
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00046}\mbox{\hyperlink{namespace_path_01integral_a5aa5689b229e26dad41ac28fbffb4009}{00046}}\ normalization\_A\ =\ (particle\_mass\ /\ (2\ *\ math.pi\ *\ lattice\_spacing\_a))\ **\ (N\ /\ 2)}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00047}00047\ \textcolor{comment}{\#:\ float:\ Gaussian\ normalization\ prefactor\ from\ discretized\ measure.}}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00048}00048\ }
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00049}00049\ }
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00050}00050\ \textcolor{comment}{\#\ ===============================================================}}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00051}00051\ \textcolor{comment}{\#\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Potential\ Energy}}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00052}00052\ \textcolor{comment}{\#\ ===============================================================}}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00053}00053\ }
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00054}\mbox{\hyperlink{namespace_path_01integral_a645b6525be032861b9c0744e67d93d0b}{00054}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespace_path_01integral_a645b6525be032861b9c0744e67d93d0b}{potential\_V}}(x):}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00055}00055\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00056}00056\ \textcolor{stringliteral}{\ \ \ \ @brief\ Harmonic\ oscillator\ potential.}}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00057}00057\ \textcolor{stringliteral}{\ \ \ \ @param\ x\ float:\ position\ value.}}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00058}00058\ \textcolor{stringliteral}{\ \ \ \ @return\ float:\ potential\ V(x)\ =\ 1/2\ x².}}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00059}00059\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00060}00060\ \ \ \ \ \textcolor{keywordflow}{return}\ 0.5\ *\ x**2}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00061}00061\ }
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00062}00062\ }
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00063}00063\ \textcolor{comment}{\#\ ===============================================================}}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00064}00064\ \textcolor{comment}{\#\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Euclidean\ Action}}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00065}00065\ \textcolor{comment}{\#\ ===============================================================}}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00066}00066\ }
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00067}\mbox{\hyperlink{namespace_path_01integral_a2b010786c45b7d73a903ad04913f9c67}{00067}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespace_path_01integral_a2b010786c45b7d73a903ad04913f9c67}{S\_lat}}(x\_list,\ x\_fixed,\ *args):}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00068}00068\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00069}00069\ \textcolor{stringliteral}{\ \ \ \ @brief\ Compute\ discretized\ Euclidean\ path\ action.}}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00070}00070\ \textcolor{stringliteral}{\ \ \ \ @param\ x\_list\ list(float):\ internal\ coordinates,\ length\ (N−1).}}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00071}00071\ \textcolor{stringliteral}{\ \ \ \ @param\ x\_fixed\ float:\ fixed\ boundary\ value\ x₀\ =\ x\_N.}}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00072}00072\ \textcolor{stringliteral}{\ \ \ \ @return\ float:\ Euclidean\ action\ S\_E\ for\ given\ path.}}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00073}00073\ \textcolor{stringliteral}{\ \ \ \ @details}}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00074}00074\ \textcolor{stringliteral}{\ \ \ \ Constructs\ full\ path:}}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00075}00075\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ x\ =\ [x\_fixed,\ x₁,\ x₂,\ ...,\ x\_\{N−1\},\ x\_fixed]}}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00076}00076\ \textcolor{stringliteral}{\ \ \ \ and\ applies:}}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00077}00077\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ S\_E\ =\ Σ\_j\ m/(2a)(x\_\{j+1\}\ −\ x\_j)²\ +\ a\ V(x\_j)}}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00078}00078\ \textcolor{stringliteral}{\ \ \ \ without\ periodic\ BCs\ since\ endpoints\ are\ fixed.}}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00079}00079\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00080}00080\ \ \ \ \ x\ =\ [x\_fixed]\ +\ list(x\_list)\ +\ [x\_fixed]}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00081}00081\ \ \ \ \ Action\_S\ =\ 0}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00082}00082\ \ \ \ \ \textcolor{keywordflow}{for}\ j\ \textcolor{keywordflow}{in}\ range(0,\ N\ -\/\ 1):}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00083}00083\ \ \ \ \ \ \ \ \ x\_derivative\ =\ x[j\ +\ 1]\ -\/\ x[j]}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00084}00084\ \ \ \ \ \ \ \ \ Action\_S\ +=\ (particle\_mass\ /\ (2\ *\ lattice\_spacing\_a))\ *\ x\_derivative**2\ \(\backslash\)}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ +\ lattice\_spacing\_a\ *\ \mbox{\hyperlink{namespace_path_01integral_a645b6525be032861b9c0744e67d93d0b}{potential\_V}}(x[j])}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00086}00086\ \ \ \ \ \textcolor{keywordflow}{return}\ Action\_S}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00087}00087\ }
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00088}00088\ }
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00089}00089\ \textcolor{comment}{\#\ ===============================================================}}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00090}00090\ \textcolor{comment}{\#\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Propagator\ Evaluation\ Loop}}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00091}00091\ \textcolor{comment}{\#\ ===============================================================}}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00092}00092\ }
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00093}\mbox{\hyperlink{namespace_path_01integral_a63c11f26ea8de3171c82f1e23898a9ff}{00093}}\ x\_values\ =\ [i\ *\ 0.25\ \textcolor{keywordflow}{for}\ i\ \textcolor{keywordflow}{in}\ range(-\/10,\ 11)]}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00094}00094\ \textcolor{comment}{\#:\ list(float):\ fixed\ endpoint\ values\ used\ to\ evaluate\ K(x,\ x;\ T).}}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00095}00095\ }
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00096}00096\ \textcolor{keywordflow}{for}\ x\_fixed\ \textcolor{keywordflow}{in}\ x\_values:}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00097}00097\ }
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00098}\mbox{\hyperlink{namespace_path_01integral_a2d50734bacfb97c65e72dd5147b0665a}{00098}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespace_path_01integral_a2d50734bacfb97c65e72dd5147b0665a}{integrand}}(*x\_list):}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00099}00099\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00100}00100\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @brief\ Integrand\ exp(−S\_E[x])\ for\ numerical\ quadrature.}}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00101}00101\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @param\ x\_list\ variadic\ float:\ internal\ lattice\ points.}}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00102}00102\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @return\ float:\ value\ of\ exp(−S\_E).}}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00103}00103\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ @details}}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00104}00104\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ This\ closure\ captures\ \`{}x\_fixed\`{}\ from\ the\ loop\ scope.}}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00105}00105\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00106}00106\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ math.exp(-\/\mbox{\hyperlink{namespace_path_01integral_a2b010786c45b7d73a903ad04913f9c67}{S\_lat}}(x\_list,\ x\_fixed))}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00107}00107\ }
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00108}\mbox{\hyperlink{namespace_path_01integral_ada162ae5cb7a099985b1cd6c616cd5b4}{00108}}\ \ \ \ \ result,\ error\ =\ nquad(integrand,\ bounds)}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00109}00109\ \ \ \ \ propagator.append(normalization\_A\ *\ result)}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00110}00110\ }
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00111}00111\ }
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00112}00112\ \textcolor{comment}{\#\ ===============================================================}}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00113}00113\ \textcolor{comment}{\#\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Visualization}}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00114}00114\ \textcolor{comment}{\#\ ===============================================================}}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00115}00115\ }
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00116}00116\ plt.plot(x\_values,\ propagator)}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00117}00117\ plt.xlabel(\textcolor{stringliteral}{"{}Fixed\ endpoint\ position\ x"{}})}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00118}00118\ plt.ylabel(\textcolor{stringliteral}{"{}Normalized\ propagator\ K(x,\ x;\ T)"{}})}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00119}00119\ plt.title(f\textcolor{stringliteral}{"{}Numerical\ Path\ Integral\ (N=\{N\})"{}})}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00120}00120\ plt.grid(\textcolor{keyword}{True})}
+\DoxyCodeLine{\Hypertarget{_path_01integral_8py_source_l00121}00121\ plt.show()}
+
+\end{DoxyCode}
