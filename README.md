@@ -105,3 +105,73 @@ To implement the essential numerical machinery of lattice QCD and demonstrate co
 All simulations run on a standard CPU without external lattice libraries.
 
 ---
+
+## How to Run the Code
+
+### 1. Environment Setup
+
+Ensure Python 3.8 or later is installed.
+
+Install required dependencies using:
+
+```bash
+pip install numpy scipy matplotlib
+```
+
+No external lattice-QCD libraries are required.
+
+---
+
+### 2. Running the Simulations
+
+All simulations are written in pure Python and can be executed directly.
+
+#### (a) Harmonic Oscillator — Direct Path Integral
+```bash
+python Path_integral.py
+```
+
+This computes the Euclidean propagator \( K(x,x;T) \) via brute-force multidimensional integration and produces a plot of the propagator versus endpoint position.
+
+---
+
+#### (b) Anharmonic Oscillator — Monte Carlo Path Integral
+```bash
+python Monte_carlo_path_integral.py
+```
+
+This runs a Metropolis Monte Carlo simulation, computes the two-point correlator, and extracts the ground-state energy from exponential decay.
+
+---
+
+#### (c) Scalar ϕ⁴ Lattice Field Theory
+```bash
+python Lattice_Field_Theory.py
+```
+
+This performs a lattice scalar field simulation, measures two-point correlators, computes the effective mass, and fits the correlator using a cosh model.
+
+---
+
+#### (d) SU(3) Lattice Gauge Theory (QCD Prototype)
+```bash
+python QCD_Lattice_SU3.py
+```
+
+This runs a Wilson-action SU(3) lattice gauge simulation, measures plaquettes, Wilson loops, and extracts the static quark–antiquark potential.
+
+---
+
+### 3. Notes on Runtime
+
+- The direct path integral calculation scales exponentially with lattice size and is intentionally small.
+- Monte Carlo simulations may take several minutes depending on lattice size and number of sweeps.
+- Simulation parameters (lattice size, couplings, number of sweeps) can be modified directly inside the scripts.
+
+---
+
+### 4. Reproducibility
+
+Random seeds are fixed where relevant to ensure reproducibility.  
+Statistical uncertainties arise from finite Monte Carlo sampling and are controlled via ensemble averaging.
+
